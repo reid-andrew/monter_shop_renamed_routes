@@ -8,7 +8,10 @@ class UsersController<ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save
+    if User.where(email:user.email) != []
+      flash[:failure] = "That email address is already registered."
+      render action: 'new'
+    elsif user.save
       session[:id] = user.id
       flash[:success] = "Welcome, #{user.name}! You are registered and logged in."
       redirect_to "/profile"
