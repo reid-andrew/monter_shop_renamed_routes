@@ -7,10 +7,15 @@ class UsersController<ApplicationController
   def new; end
 
   def create
-    user = User.create(user_params)
-    session[:id] = user.id
-    flash[:success] = "Welcome, #{user.name}! You are registered and logged in."
-    redirect_to "/profile"
+    user = User.new(user_params)
+    if user.save
+      session[:id] = user.id
+      flash[:success] = "Welcome, #{user.name}! You are registered and logged in."
+      redirect_to "/profile"
+    else
+      flash[:failure] = "You are missing required fields."
+      redirect_to "/register"
+    end
   end
 
   private
