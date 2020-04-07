@@ -78,8 +78,16 @@ RSpec.describe "test users index", type: :feature do
     expect(page).to_not have_link("Login")
     expect(page).to_not have_link("Register")
   end
-end
 
-# 0 - user
-# 1 - merchant
-# 2 - admin
+  it "shows a 404 error if a visitor tries to visit user, admin, or merchant page" do
+
+    visit "/merchants"
+    expect(page).to have_content("The page you were looking for doesn't exist (404)")
+
+    visit "/admin"
+    expect(page).to have_content("The page you were looking for doesn't exist (404)")
+
+    visit "/profile"
+    expect(page).to have_content("The page you were looking for doesn't exist (404)")
+  end
+end
