@@ -4,16 +4,18 @@ class UsersController<ApplicationController
     @user = User.find(session[:id])
   end
 
-  def new; end
+  def new
+    @user = User.new
+  end
 
   def create
-    user = User.new(user_params)
-    if User.where(email:user.email) != []
+    @user = User.new(user_params)
+    if User.where(email:@user.email) != []
       flash[:failure] = "That email address is already registered."
-      render action: 'new'
-    elsif user.save
-      session[:id] = user.id
-      flash[:success] = "Welcome, #{user.name}! You are registered and logged in."
+      redirect_to "/register"
+    elsif @user.save
+      session[:id] = @user.id
+      flash[:success] = "Welcome, #{@user.name}! You are registered and logged in."
       redirect_to "/profile"
     else
       flash[:failure] = "You are missing required fields."

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'User Registration', type: :feature do
   before(:each) do
-    @user_1 = User.create(  name: "Mike Dao",
+    @user = User.create(  name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
                 state: "CO",
