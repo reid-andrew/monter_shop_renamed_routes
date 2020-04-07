@@ -44,9 +44,11 @@ RSpec.describe 'Site Navigation' do
 
       expect(page).to have_link("Login")
       click_link "Login"
+      expect(current_path).to eq("/login")
 
       expect(page).to have_link("Register")
       click_link "Register"
+      expect(current_path).to eq("/register")
     end
   end
 # - a link to return to the welcome / home page of the application ("/")
