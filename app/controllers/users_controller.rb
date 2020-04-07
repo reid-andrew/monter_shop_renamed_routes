@@ -12,14 +12,14 @@ class UsersController<ApplicationController
     @user = User.new(user_params)
     if User.where(email:@user.email) != []
       flash[:failure] = "That email address is already registered."
-      redirect_to "/register"
+      render :new
     elsif @user.save
       session[:id] = @user.id
       flash[:success] = "Welcome, #{@user.name}! You are registered and logged in."
       redirect_to "/profile"
     else
       flash[:failure] = "You are missing required fields."
-      redirect_to "/register"
+      render :new
     end
   end
 

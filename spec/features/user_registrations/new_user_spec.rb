@@ -46,7 +46,7 @@ RSpec.describe 'User Registration', type: :feature do
       expect(User.count).to eq(1)
     end
 
-    it "returns to reg page if info is incomplete" do
+    it "returns to reg page if info is incomplete or email is invalid" do
       visit "/register"
 
       fill_in :name, with: "Andy Alex Ana Javi"
@@ -60,10 +60,11 @@ RSpec.describe 'User Registration', type: :feature do
       click_button "Register"
 
       expect(page).to have_current_path("/register")
-      expect(page).to have_content("Andy Alex Ana Javi")
-      expect(page).to have_content("123 Main St.")
-      expect(page).to have_content("Denver")
-      expect(page).to have_content("That email address is already registered.")
+      expect(find_field(:name).value).to eq 'Andy Alex Ana Javi'
+      expect(find_field(:street_address).value).to eq '123 Main St.'
+      expect(find_field(:city).value).to eq 'Denver'
+      expect(find_field(:state).value).to eq 'CO'
+      expect(find_field(:zip).value).to eq '80210'
     end
   end
 end

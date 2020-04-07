@@ -1,4 +1,4 @@
-<%= form_tag '/users', method: :post do %>
+<%= form_tag '/register', method: :post do %>
   <%= label_tag :name %>
   <%= text_field_tag :name, "#{@user.name}" %>
 
@@ -21,7 +21,7 @@
   <%= password_field_tag :password_digest, "#{@user.password_digest}" %>
 
   <%= label_tag :password_confirmation %>
-  <%= password_field_tag :password_confirmation, "" %>
+  <%= password_field_tag :password_confirmation %>
 
   <%= submit_tag 'Register' %>
 
