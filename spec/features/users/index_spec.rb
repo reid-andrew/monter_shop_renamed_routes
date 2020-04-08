@@ -81,7 +81,7 @@ RSpec.describe "test users index", type: :feature do
 
   it "shows a 404 error if a visitor tries to visit user, admin, or merchant page" do
 
-    visit "/merchants"
+    visit "/merchant"
     expect(page).to have_content("The page you were looking for doesn't exist (404)")
 
     visit "/admin"
