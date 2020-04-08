@@ -102,5 +102,47 @@ RSpec.describe "As a visitor" do
       expect(page).to have_content("Sorry, your credentials are bad.")
       expect(page).to have_content("Invalid password")
     end
+  describe "When I visit /login when I'm already logged in"
+    it " If I am a regular user, I am redirected to my profile page" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
+      visit "/login"
+
+      fill_in :email, with: "test@turing.com"
+      fill_in :password, with: "123456"
+
+      click_button "Login"
+
+      visit "/login"
+      expect(page).to have_current_path("/profile")
+      expect(page).to have_content("I'm already logged in")
+    end
+    it "If I am a merchant user, I am redirected to my merchant dashboard page" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+
+      visit "/login"
+
+      fill_in :email, with: "test1@turing.com"
+      fill_in :password, with: "123456"
+
+      click_button "Login"
+
+      visit "/login"
+      expect(page).to have_current_path("/merchant")
+      expect(page).to have_content("I'm already logged in")
+    end
+    it "If I am an admin user, I am redirected to my admin dashboard page" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+
+      visit "/login"
+
+      fill_in :email, with: "test2@turing.com"
+      fill_in :password, with: "123456"
+
+      click_button "Login"
+
+      visit "/login"
+      expect(page).to have_current_path("/admin")
+      expect(page).to have_content("I'm already logged in")
+    end
 end
