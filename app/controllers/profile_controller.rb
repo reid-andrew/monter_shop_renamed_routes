@@ -6,5 +6,8 @@ class ProfileController < ApplicationController
     render file: "/public/404" unless current_user?
   end
 
-  def index; end
+  def index
+    # require "pry"; binding.pry
+    @user = current_user
+  end
 end
