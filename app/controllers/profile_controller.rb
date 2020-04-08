@@ -7,7 +7,23 @@ class ProfileController < ApplicationController
   end
 
   def index
-    # require "pry"; binding.pry
     @user = current_user
+  end
+
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    @user.update(user_params)
+    redirect_to '/profile'
+    flash[:error] = "Your profile is updated"
+  end
+
+  private
+
+  def user_params
+    params.permit(:name,:street_address,:city,:state,:zip,:email)
   end
 end
