@@ -8,7 +8,8 @@ RSpec.describe "As a visitor" do
                     state: "CO",
                     zip: "80202",
                     email: "test@turing.com",
-                    password_digest: "123456",
+                    password: "123456",
+                    password_confirmation: "123456",
                     role: 0)
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
@@ -16,7 +17,8 @@ RSpec.describe "As a visitor" do
                 state: "CO",
                 zip: "80202",
                 email: "test1@turing.com",
-                password_digest: "123456",
+                password: "123456",
+                password_confirmation: "123456",
                 role: 1)
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
@@ -24,8 +26,10 @@ RSpec.describe "As a visitor" do
                 state: "CO",
                 zip: "80202",
                 email: "test2@turing.com",
-                password_digest: "123456",
+                password: "123456",
+                password_confirmation: "123456",
                 role: 2)
+
   end
   describe "When I visit /login"
     it "I see a field to enter email and password" do
@@ -72,4 +76,31 @@ RSpec.describe "As a visitor" do
       expect(page).to have_current_path("/admin")
       expect(page).to have_content("Welcome, #{@admin.name}!")
     end
+    it "If I submit invalid email, I'm redirected and get an error message" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit "/login"
+
+      fill_in :email, with: "testttt@turing.com"
+      fill_in :password, with: "123456"
+
+      click_button "Login"
+      expect(page).to have_current_path("/login")
+      expect(page).to have_content("Sorry, your credentials are bad.")
+      expect(page).to have_content("Invalid email")
+    end
+    it "If I submit invalid password, I'm redirected and get an error message" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
+      visit "/login"
+
+      fill_in :email, with: "test@turing.com"
+      fill_in :password, with: "badpassword"
+
+      click_button "Login"
+      expect(page).to have_current_path("/login")
+      expect(page).to have_content("Sorry, your credentials are bad.")
+      expect(page).to have_content("Invalid password")
+    end
+
 end
