@@ -3,4 +3,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   enum role: %w(user merchant admin)
+
+  has_secure_password
+
 end
