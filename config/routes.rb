@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   namespace :user do
     get "/", to: "profile#index"
+    get "/", to: "cart#index"
   end
 
   namespace :merchant do
