@@ -102,4 +102,12 @@ RSpec.describe 'Site Navigation' do
       visit "/admin"
       expect(page).to have_content("The page you were looking for doesn't exist (404)")
     end
+
+    it "shows a 404 error if a merchant tries to visit admin page" do
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+
+      visit "/admin"
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+    end
   end
