@@ -6,6 +6,5 @@ class Admin::DashboardController < ApplicationController
     render file: "/public/404" unless current_admin?
   end
 
-  def index
-  end
+  def index; end
 end

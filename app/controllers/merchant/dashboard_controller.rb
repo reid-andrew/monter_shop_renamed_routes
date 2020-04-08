@@ -6,9 +6,7 @@ class Merchant::DashboardController < ApplicationController
     render file: "/public/404" unless current_merchant?
   end
 
-  def index
-
-  end
+  def index; end
 end
 
 #
