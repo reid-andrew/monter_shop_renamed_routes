@@ -11,6 +11,15 @@ RSpec.describe 'Profile', type: :feature do
                 password_digest: "123456",
                 role: 0)
 
+    @use2 = User.create(name: "Mike Dao",
+                street_address: "1765 Larimer St",
+                city: "Denver",
+                state: "CO",
+                zip: "80202",
+                email: "a@a.com",
+                password_digest: "123456",
+                role: 0)
+
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
 
@@ -62,6 +71,20 @@ RSpec.describe 'Profile', type: :feature do
       expect(page).to have_content("CO")
       expect(page).to have_content("80204")
       expect(page).to have_content("test@test.com")
+    end
+
+    it "and I edit my information with an already existing email, I see an error message" do
+      visit '/profile'
+
+      click_on("Edit My Profile Data")
+
+      fill_in 'Email', with: "a@a.com"
+
+      click_button("Submit Form")
+
+      expect(current_path).to eq("/profile/#{@user.id}/edit")
+
+      expect(page).to have_content("That email already exists")
     end
   end
 
