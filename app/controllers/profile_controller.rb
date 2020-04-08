@@ -7,5 +7,4 @@ class ProfileController < ApplicationController
   end
 
   def index; end
-
 end
