@@ -14,6 +14,7 @@ class CartController < ApplicationController
   end
 
   def show
+    flash[:notice] = "You must #{view_context.link_to 'login', '/login'} or #{view_context.link_to 'register', '/register'} to checkout" unless current_user?
     @items = cart.items
   end
 
@@ -38,6 +39,6 @@ class CartController < ApplicationController
       cart.subtract_quantity(params[:item_id])
       return remove_item if cart.quantity_zero?(params[:item_id])
     end
-    redirect_to "/cart"
+    redirect_to '/cart'
   end
 end

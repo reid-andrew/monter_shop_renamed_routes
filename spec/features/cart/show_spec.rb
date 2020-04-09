@@ -109,6 +109,17 @@ RSpec.describe 'Cart show' do
   end
 end
 
+  it "requires registration or login to checkout items in cart" do
+
+    visit "/cart"
+
+    within ".notice-flash" do
+      expect(page).to have_content("You must login or register to checkout")
+      expect(page).to have_link("login")
+      expect(page).to have_link("register")
+    end
+  end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
