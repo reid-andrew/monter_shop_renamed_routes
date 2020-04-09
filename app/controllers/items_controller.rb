@@ -6,7 +6,8 @@ class ItemsController<ApplicationController
       @items = @merchant.items
     else
       @items = Item.active_items
-      @top_five_items = Item.top_five_items
+      require "pry"; binding.pry
+      @top_five_items = Item.by_qty.limit(5)
     end
   end
 

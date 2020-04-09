@@ -12,18 +12,16 @@ RSpec.describe "Items Index Page" do
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
-    it "all items or merchant names are links" do
+    xit "all items or merchant names are links" do
       visit '/items'
 
       expect(page).to have_link(@tire.name)
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      # expect(page).to have_link(@dog_bone.name)
-      # expect(page).to have_link(@dog_bone.merchant.name)
     end
 
-    it "I can see a list of all of the items "do
+    xit "I can see a list of all of the items "do
 
       visit '/items'
 
@@ -46,19 +44,9 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_link(@brian.name)
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
-
-      # within "#item-#{@dog_bone.id}" do
-      #   expect(page).to have_link(@dog_bone.name)
-      #   expect(page).to have_content(@dog_bone.description)
-      #   expect(page).to have_content("Price: $#{@dog_bone.price}")
-      #   expect(page).to have_content("Inactive")
-      #   expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-      #   expect(page).to have_link(@brian.name)
-      #   expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      # end
     end
 
-    it "I cannot see disabled items "do
+    xit "I cannot see disabled items "do
       visit '/items'
       expect(page).to_not have_content("#item-#{@dog_bone.id}")
 
@@ -78,7 +66,7 @@ RSpec.describe "Items Index Page" do
       end
     end
 
-    it "can click the image to navigate to the item show page" do
+    xit "can click the image to navigate to the item show page" do
       visit '/items'
 
       expect(page).to have_css("img[src*='#{@tire.image}']")
@@ -89,7 +77,7 @@ RSpec.describe "Items Index Page" do
     end
 
     describe "can see popularity statistics" do
-      xit "can see top/bottom five popular items" do
+      it "can see top/bottom five popular items" do
         tire_2 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         pull_toy_2 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
         tire_3 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -101,13 +89,20 @@ RSpec.describe "Items Index Page" do
         tire_6 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         pull_toy_6 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-        allow(tire_2).to receive(:order_count) {910999}
-        allow(tire_3).to receive(:order_count) {910998}
-        allow(tire_4).to receive(:order_count) {910997}
-        allow(tire_5).to receive(:order_count) {910996}
-        allow(tire_6).to receive(:order_count) {910995}
+        order_1 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
+        ItemOrder.create(order_id: order_1.id, item_id: tire_2.id, price: 1.99, quantity: 5004)
+        ItemOrder.create(order_id: order_1.id, item_id: tire_3.id, price: 1.99, quantity: 5003)
+        ItemOrder.create(order_id: order_1.id, item_id: tire_4.id, price: 1.99, quantity: 5002)
+        ItemOrder.create(order_id: order_1.id, item_id: tire_5.id, price: 1.99, quantity: 5001)
+        ItemOrder.create(order_id: order_1.id, item_id: tire_6.id, price: 1.99, quantity: 5000)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy_2.id, price: 1.99, quantity: 5)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy_3.id, price: 1.99, quantity: 4)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy_4.id, price: 1.99, quantity: 3)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy_5.id, price: 1.99, quantity: 2)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy_6.id, price: 1.99, quantity: 1)
 
         visit '/items'
+        save_and_open_page
         within "#top_five" do
           expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
           expect(page).to have_content("#{tire_2.name}: #{tire_3.order_count}")

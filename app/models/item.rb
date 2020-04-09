@@ -17,16 +17,12 @@ class Item <ApplicationRecord
   end
 
   def self.top_five_items
-    # require "pry"; binding.pry
-    Item.select("items.id, items.name, count(item_orders.id) as io_count")
-    .left_joins(:item_orders)
-    .group(:id, :name)
-    .order(count: :desc)
-    .limit(5)
+    require "pry"; binding.pry
+    Item.select('item.id, item.name, SUM(item_orders.quantity) AS qty').joins(:item_orders).group(:id, :name).order(:id)
   end
 
   def order_count
-
+    item_orders.sum(:quantity)
   end
 
   def average_review
