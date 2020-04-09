@@ -8,7 +8,9 @@ RSpec.describe 'User Registration', type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test@turing.com",
-                password: "123456")
+                password: "123456",
+                password_confirmation: "123456",
+                role: 0)
   end
 
   describe "Index Page - A user can" do
