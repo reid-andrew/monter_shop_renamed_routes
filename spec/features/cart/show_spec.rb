@@ -55,8 +55,33 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+    it "shows a button that can change quantity of an item in the cart" do
+
+      visit "/cart"
+
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to have_content("1")
+        click_button "Increase Quantity"
+        expect(page).to have_content("2")
+      end
+
+    10.times do
+      within "#cart-item-#{@tire.id}" do
+        click_button "Increase Quantity"
+      end
+    end
+
+    expect(page).to have_content("12")
+    
+    within "#cart-item-#{@tire.id}" do
+      click_button "Increase Quantity"
+      expect(page).to have_content("12")
+      click_button "Increase Quantity"
+      expect(page).to have_content("12")
     end
   end
+end
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
@@ -68,8 +93,8 @@ RSpec.describe 'Cart show' do
       it "I do NOT see the link to empty my cart" do
         visit '/cart'
         expect(page).to_not have_link("Empty Cart")
+        end
       end
-
     end
   end
 end
