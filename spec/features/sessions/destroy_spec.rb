@@ -52,7 +52,7 @@ RSpec.describe "As a registered user, merchant, or admin" do
 
       expect(page).to have_content("Cart: 2")
 
-      visit "/logout"
+      click_link "Logout"
 
       expect(page).to have_current_path("/")
       expect(page).to have_content("Successfully logged out!")
