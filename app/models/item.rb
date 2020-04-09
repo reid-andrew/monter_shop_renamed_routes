@@ -17,7 +17,7 @@ class Item <ApplicationRecord
   end
 
   def self.top_five_items
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
     Item.select("items.id, items.name, count(item_orders.id) as io_count")
     .left_joins(:item_orders)
     .group(:id, :name)
