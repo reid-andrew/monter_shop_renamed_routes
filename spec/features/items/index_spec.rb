@@ -7,8 +7,8 @@ RSpec.describe "Items Index Page" do
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
@@ -86,9 +86,39 @@ RSpec.describe "Items Index Page" do
 
         find("img[src*='#{@tire.image}']").click
       end
-      save_and_open_page
 
       # expect(page).to have_current_path("/items/#{@tire.id}")
+    end
+
+    describe "can see popularity statistics" do
+      it "can see top/bottom five popular items" do
+        tire_2 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy_2 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        tire_3 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy_3 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        tire_4 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy_4 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        tire_5 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy_5 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+        tire_6 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+        pull_toy_6 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+        allow(tire_2).to receive(:order_count) {910999}
+        allow(tire_3).to receive(:order_count) {910998}
+        allow(tire_4).to receive(:order_count) {910997}
+        allow(tire_5).to receive(:order_count) {910996}
+        allow(tire_6).to receive(:order_count) {910995}
+
+        visit '/items'
+        within "#top_five" do
+          expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
+          expect(page).to have_content("#{tire_2.name}: #{tire_3.order_count}")
+          expect(page).to have_content("#{tire_2.name}: #{tire_4.order_count}")
+          expect(page).to have_content("#{tire_2.name}: #{tire_5.order_count}")
+          expect(page).to have_content("#{tire_2.name}: #{tire_6.order_count}")
+        end
+
+      end
     end
   end
 end

@@ -23,3 +23,8 @@
     </section>
     <% end %>
 </section>
+<section id="top_five">
+  <% @top_five_items.each do |item| %>
+    <p><%= "#{item.name}: #{item.order_count}" %></p>
+  <% end %>
+</section>

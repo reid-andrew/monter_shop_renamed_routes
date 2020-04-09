@@ -6,6 +6,7 @@ class ItemsController<ApplicationController
       @items = @merchant.items
     else
       @items = Item.active_items
+      @top_five_items = Item.top_five_items
     end
   end
 
