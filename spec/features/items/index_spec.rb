@@ -102,7 +102,7 @@ RSpec.describe "Items Index Page" do
         pull_toy_5 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
         tire_6 = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         pull_toy_6 = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-
+        
         allow(tire_2).to receive(:order_count) {910999}
         allow(tire_3).to receive(:order_count) {910998}
         allow(tire_4).to receive(:order_count) {910997}
