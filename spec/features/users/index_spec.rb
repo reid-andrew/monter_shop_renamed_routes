@@ -9,7 +9,8 @@ RSpec.describe "test users index", type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test@turing.com",
-                password_digest: "123456",
+                password: "123456",
+                password_confirmation: "123456",
                 role: 0)
 
     @merchant = User.create(name: "Mike Dao",
@@ -18,7 +19,8 @@ RSpec.describe "test users index", type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test1@turing.com",
-                password_digest: "123456",
+                password: "123456",
+                password_confirmation: "123456",
                 role: 1)
 
     @admin = User.create(name: "Mike Dao",
@@ -27,7 +29,8 @@ RSpec.describe "test users index", type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test2@turing.com",
-                password_digest: "123456",
+                password: "123456",
+                password_confirmation: "123456",
                 role: 2)
   end
 

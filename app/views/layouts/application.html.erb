@@ -12,7 +12,7 @@
     <nav class = "topnav">
        <% if current_user? || current_merchant? || current_admin? %>
          <%= link_to "Profile" %>
-         <%= link_to "Logout" %>
+         <%= link_to "Logout", "/logout"  %>
        <% end %>
          <%= link_to "Home", "/" %>
          <%= link_to "All Merchants", "/merchants"%>
@@ -29,7 +29,6 @@
         <%= link_to "Admin Dashboard" %>
         <%= link_to "All Users" %>
       <% end %>
-      <%= link_to "Logout", "/logout" if logged_in? %>
      </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">

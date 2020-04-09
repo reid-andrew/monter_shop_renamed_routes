@@ -15,6 +15,7 @@ class UsersController<ApplicationController
       render :new
     elsif @user.save
       session[:id] = @user.id
+      @user.update(role: 0)
       flash[:success] = "Welcome, #{@user.name}! You are registered and logged in."
       redirect_to "/profile"
     else
@@ -26,6 +27,6 @@ class UsersController<ApplicationController
   private
 
   def user_params
-    params.permit(:name, :street_address, :city, :state, :zip, :email, :password_digest, :password_confirmation)
+    params.permit(:name, :street_address, :city, :state, :zip, :email, :password, :password_confirmation)
   end
 end
