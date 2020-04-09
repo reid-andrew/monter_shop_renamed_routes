@@ -8,7 +8,7 @@ RSpec.describe 'User Registration', type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test@turing.com",
-                password_digest: "123456")
+                password: "123456")
   end
 
   describe "Index Page - A user can" do
@@ -21,7 +21,7 @@ RSpec.describe 'User Registration', type: :feature do
       fill_in :state, with: "CO"
       fill_in :zip, with: "80210"
       fill_in :email, with: "aaaj@turing.io"
-      fill_in :password_digest, with: "Turing!"
+      fill_in :password, with: "Turing!"
       fill_in :password_confirmation, with: "Turing!"
       click_button "Register"
 
@@ -37,7 +37,7 @@ RSpec.describe 'User Registration', type: :feature do
       fill_in :state, with: "CO"
       fill_in :zip, with: "80210"
       fill_in :email, with: "aaaj@turing.io"
-      fill_in :password_digest, with: "Turing!"
+      fill_in :password, with: "Turing!"
       fill_in :password_confirmation, with: "Turing!"
       click_button "Register"
 
@@ -55,7 +55,7 @@ RSpec.describe 'User Registration', type: :feature do
       fill_in :state, with: "CO"
       fill_in :zip, with: "80210"
       fill_in :email, with: "test@turing.com"
-      fill_in :password_digest, with: "Turing!"
+      fill_in :password, with: "Turing!"
       fill_in :password_confirmation, with: "Turing!"
       click_button "Register"
 

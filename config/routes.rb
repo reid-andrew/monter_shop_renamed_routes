@@ -39,8 +39,11 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
 
   get "/profile", to: "profile#index"
+  get "/profile/:id/password", to: "passwords#edit"
   get "/profile/:id/edit", to: "profile#edit"
   patch "/profile/:id/edit", to: "profile#update"
+  patch "/profile/:id/password", to: "passwords#update"
+
 
   namespace :user do
     get "/", to: "profile#index"

@@ -8,7 +8,7 @@ RSpec.describe 'Profile', type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "test@turing.com",
-                password_digest: "123456",
+                password: "123456",
                 role: 0)
 
     @use2 = User.create(name: "Mike Dao",
@@ -17,7 +17,7 @@ RSpec.describe 'Profile', type: :feature do
                 state: "CO",
                 zip: "80202",
                 email: "a@a.com",
-                password_digest: "123456",
+                password: "123456",
                 role: 0)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
@@ -85,6 +85,41 @@ RSpec.describe 'Profile', type: :feature do
       expect(current_path).to eq("/profile/#{@user.id}/edit")
 
       expect(page).to have_content("That email already exists")
+    end
+
+    it "can update password" do
+      visit '/profile'
+      click_on("Edit My Password")
+
+      expect(current_path).to eq("/profile/#{@user.id}/password")
+
+      fill_in :password, with: "NewPW1234!"
+      fill_in :password_confirmation, with: "NewPW1234!"
+      click_on("Submit")
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Your password has been updated")
+    end
+
+    it "validates password presence and confirmation on update" do
+      visit '/profile'
+      click_on("Edit My Password")
+
+      expect(current_path).to eq("/profile/#{@user.id}/password")
+
+      fill_in :password, with: ""
+      fill_in :password_confirmation, with: ""
+      click_on("Submit")
+
+      expect(current_path).to eq("/profile/#{@user.id}/password")
+      expect(page).to have_content("You are missing required fields.")
+
+      fill_in :password, with: "ABC"
+      fill_in :password_confirmation, with: "123"
+      click_on("Submit")
+
+      expect(current_path).to eq("/profile/#{@user.id}/password")
+      expect(page).to have_content("Password and confirmation must match.")
     end
   end
 
