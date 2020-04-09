@@ -20,7 +20,6 @@
          <%= link_to "Cart: #{cart.total_items}", "/cart" %>
        <% if !current_user? && !current_merchant? && !current_admin? %>
          <%= link_to "Login", "/login" if !logged_in? %>
-         <%= link_to "Logout", "/logout", method: :delete if logged_in? %>
          <%= link_to "Register", "/register" if !logged_in? %>
        <% end %>
        <% if current_merchant? %>
@@ -29,7 +28,8 @@
       <% if current_admin? %>
         <%= link_to "Admin Dashboard" %>
         <%= link_to "All Users" %>
-     <% end %>
+      <% end %>
+      <%= link_to "Logout", "/logout" if logged_in? %>
      </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">

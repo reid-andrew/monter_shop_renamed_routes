@@ -49,10 +49,10 @@ RSpec.describe "As a registered user, merchant, or admin" do
       click_button "Login"
       expect(page).to have_current_path("/profile")
 
-      expect(page).to have_link("Logout")
+      visit "/logout"
 
       expect(page).to have_current_path("/")
-      # expect(page).to have_content("Successfully logged out!")
+      expect(page).to have_content("Successfully logged out!")
 
     end
 

@@ -9,11 +9,10 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-
     if user.present? && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        flash[:success] = "Welcome, #{user.name}!"
-        redirect_by_role
+      session[:user_id] = user.id
+      flash[:success] = "Welcome, #{user.name}!"
+      redirect_by_role
     else
       flash[:error] = "Sorry, your credentials are bad."
       flash[:error] += "Invalid email" if user.nil?
@@ -23,18 +22,17 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    binding.pry
-    #
-    # session.delete(:user_id)
-    # redirect_to "/"
+    session.delete(:user_id)
+    flash[:success] = "Successfully logged out!"
+    redirect_to "/"
   end
 
   private
 
   def redirect_by_role
-    redirect_to '/profile' if current_user?
     redirect_to '/merchant' if current_merchant?
     redirect_to '/admin' if current_admin?
+    redirect_to '/profile' if current_user?
   end
 
 end
