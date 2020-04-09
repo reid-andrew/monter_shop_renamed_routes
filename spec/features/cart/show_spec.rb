@@ -56,7 +56,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Total: $124")
       end
 
-    it "shows a button that can change quantity of an item in the cart" do
+    it "shows a button that can add to quantity of an item in the cart and quantity can't exceed inventory" do
 
       visit "/cart"
 
@@ -73,7 +73,7 @@ RSpec.describe 'Cart show' do
     end
 
     expect(page).to have_content("12")
-    
+
     within "#cart-item-#{@tire.id}" do
       click_button "Increase Quantity"
       expect(page).to have_content("12")
@@ -81,7 +81,34 @@ RSpec.describe 'Cart show' do
       expect(page).to have_content("12")
     end
   end
+
+  it "shows a button that decrement quantity of an item in the cart" do
+
+    visit "/cart"
+
+    within "#cart-item-#{@tire.id}" do
+      expect(page).to have_content("1")
+      click_button "Increase Quantity"
+      expect(page).to have_content("2")
+    end
+
+    10.times do
+      within "#cart-item-#{@tire.id}" do
+        click_button "Increase Quantity"
+      end
+    end
+
+    expect(page).to have_content("12")
+
+    within "#cart-item-#{@tire.id}" do
+      click_button "Decrease Quantity"
+      expect(page).to have_content("11")
+      click_button "Decrease Quantity"
+      expect(page).to have_content("10")
+    end
+  end
 end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do

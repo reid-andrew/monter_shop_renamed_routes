@@ -19,6 +19,7 @@ class CartController < ApplicationController
 
   def update
     cart.add_quantity(params[:item_id]) unless cart.limit_reached?(params[:item_id])
+    require "pry"; binding.pry
     redirect_to '/cart'
   end
 
