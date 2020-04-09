@@ -77,5 +77,18 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@dog_bone.image}']")
       end
     end
+
+    it "can click the image to navigate to the item show page" do
+      visit '/items'
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_css("img[src*='#{@tire.image}']")
+
+        find("img[src*='#{@tire.image}']").click
+      end
+      save_and_open_page
+
+      # expect(page).to have_current_path("/items/#{@tire.id}")
+    end
   end
 end
