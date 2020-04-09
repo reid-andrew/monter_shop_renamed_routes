@@ -12,15 +12,15 @@
     <nav class = "topnav">
        <% if current_user? || current_merchant? || current_admin? %>
          <%= link_to "Profile" %>
-         <%= link_to "Logout" %>
+         <%= link_to "Logout", "/logout"  %>
        <% end %>
          <%= link_to "Home", "/" %>
          <%= link_to "All Merchants", "/merchants"%>
          <%= link_to "All Items", "/items"%>
          <%= link_to "Cart: #{cart.total_items}", "/cart" %>
        <% if !current_user? && !current_merchant? && !current_admin? %>
-         <%= link_to "Login", "/login" %>
-         <%= link_to "Register", "/register" %>
+         <%= link_to "Login", "/login" if !logged_in? %>
+         <%= link_to "Register", "/register" if !logged_in? %>
        <% end %>
        <% if current_merchant? %>
         <%= link_to "Merchant Dashboard" %>
@@ -28,7 +28,7 @@
       <% if current_admin? %>
         <%= link_to "Admin Dashboard" %>
         <%= link_to "All Users" %>
-     <% end %>
+      <% end %>
      </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
