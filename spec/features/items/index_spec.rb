@@ -95,8 +95,8 @@ RSpec.describe "Items Index Page" do
         ItemOrder.create(order_id: order_1.id, item_id: tire_4.id, price: 1.99, quantity: 5002)
         ItemOrder.create(order_id: order_1.id, item_id: tire_5.id, price: 1.99, quantity: 5001)
         ItemOrder.create(order_id: order_1.id, item_id: tire_6.id, price: 1.99, quantity: 5000)
-        ItemOrder.create(order_id: order_1.id, item_id: tire.id, price: 1.99, quantity: 200)
-        ItemOrder.create(order_id: order_1.id, item_id: pull_toy.id, price: 1.99, quantity: 200)
+        ItemOrder.create(order_id: order_1.id, item_id: @tire.id, price: 1.99, quantity: 200)
+        ItemOrder.create(order_id: order_1.id, item_id: @pull_toy.id, price: 1.99, quantity: 200)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_2.id, price: 1.99, quantity: 5)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_3.id, price: 1.99, quantity: 4)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_4.id, price: 1.99, quantity: 3)
@@ -106,12 +106,19 @@ RSpec.describe "Items Index Page" do
         visit '/items'
         within "#top_five" do
           expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
-          expect(page).to have_content("#{tire_2.name}: #{tire_3.order_count}")
-          expect(page).to have_content("#{tire_2.name}: #{tire_4.order_count}")
-          expect(page).to have_content("#{tire_2.name}: #{tire_5.order_count}")
-          expect(page).to have_content("#{tire_2.name}: #{tire_6.order_count}")
+          expect(page).to have_content("#{tire_3.name}: #{tire_3.order_count}")
+          expect(page).to have_content("#{tire_4.name}: #{tire_4.order_count}")
+          expect(page).to have_content("#{tire_5.name}: #{tire_5.order_count}")
+          expect(page).to have_content("#{tire_6.name}: #{tire_6.order_count}")
         end
 
+        within "#bottom_five" do
+          expect(page).to have_content("#{pull_toy_2.name}: #{pull_toy_2.order_count}")
+          expect(page).to have_content("#{pull_toy_3.name}: #{pull_toy_3.order_count}")
+          expect(page).to have_content("#{pull_toy_4.name}: #{pull_toy_4.order_count}")
+          expect(page).to have_content("#{pull_toy_5.name}: #{pull_toy_5.order_count}")
+          expect(page).to have_content("#{pull_toy_6.name}: #{pull_toy_6.order_count}")
+        end
       end
     end
   end

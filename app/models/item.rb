@@ -16,9 +16,21 @@ class Item <ApplicationRecord
     Item.where(active?:true)
   end
 
-  # def self.top_five_items
-  #   Item.select('item.id, item.name, SUM(item_orders.quantity) AS qty').joins(:item_orders).group(:id, :name).order(:id)
-  # end
+  def self.top_five_items
+    Item.select("items.*, SUM(quantity) AS qty")
+    .joins(:item_orders)
+    .group(:id)
+    .order("qty DESC")
+    .limit(5)
+  end
+
+  def self.bottom_five_items
+    Item.select("items.*, SUM(quantity) AS qty")
+    .joins(:item_orders)
+    .group(:id)
+    .order("qty ASC")
+    .limit(5)
+  end
 
   def order_count
     item_orders.sum(:quantity)
