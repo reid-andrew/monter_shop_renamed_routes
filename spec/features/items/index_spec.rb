@@ -95,6 +95,8 @@ RSpec.describe "Items Index Page" do
         ItemOrder.create(order_id: order_1.id, item_id: tire_4.id, price: 1.99, quantity: 5002)
         ItemOrder.create(order_id: order_1.id, item_id: tire_5.id, price: 1.99, quantity: 5001)
         ItemOrder.create(order_id: order_1.id, item_id: tire_6.id, price: 1.99, quantity: 5000)
+        ItemOrder.create(order_id: order_1.id, item_id: tire.id, price: 1.99, quantity: 200)
+        ItemOrder.create(order_id: order_1.id, item_id: pull_toy.id, price: 1.99, quantity: 200)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_2.id, price: 1.99, quantity: 5)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_3.id, price: 1.99, quantity: 4)
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_4.id, price: 1.99, quantity: 3)
