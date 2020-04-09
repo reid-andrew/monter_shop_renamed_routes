@@ -12,7 +12,7 @@ RSpec.describe "Items Index Page" do
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
-    xit "all items or merchant names are links" do
+    it "all items or merchant names are links" do
       visit '/items'
 
       expect(page).to have_link(@tire.name)
@@ -21,7 +21,7 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@pull_toy.merchant.name)
     end
 
-    xit "I can see a list of all of the items "do
+    it "I can see a list of all of the items "do
 
       visit '/items'
 
@@ -46,7 +46,7 @@ RSpec.describe "Items Index Page" do
       end
     end
 
-    xit "I cannot see disabled items "do
+    it "I cannot see disabled items "do
       visit '/items'
       expect(page).to_not have_content("#item-#{@dog_bone.id}")
 
@@ -66,7 +66,7 @@ RSpec.describe "Items Index Page" do
       end
     end
 
-    xit "can click the image to navigate to the item show page" do
+    it "can click the image to navigate to the item show page" do
       visit '/items'
 
       expect(page).to have_css("img[src*='#{@tire.image}']")
@@ -102,7 +102,6 @@ RSpec.describe "Items Index Page" do
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_6.id, price: 1.99, quantity: 1)
 
         visit '/items'
-        save_and_open_page
         within "#top_five" do
           expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
           expect(page).to have_content("#{tire_2.name}: #{tire_3.order_count}")
