@@ -11,25 +11,25 @@
   <body>
     <nav class = "topnav">
       <%= link_to "Home", "/" %>
-       <% if current_user? || current_merchant? || current_admin? %>
-         <%= link_to "Profile", "/profile"%>
-         <%= link_to "Logout", "/logout"  %>
-       <% end %>
-         <%= link_to "All Merchants", "/merchants"%>
-         <%= link_to "All Items", "/items"%>
-         <%= link_to "Cart: #{cart.total_items}", "/cart" %>
-       <% if !current_user? && !current_merchant? && !current_admin? %>
-         <%= link_to "Login", "/login" if !logged_in? %>
-         <%= link_to "Register", "/register" if !logged_in? %>
-       <% end %>
-       <% if current_merchant? %>
-        <%= link_to "Merchant Dashboard" %>
-      <% end %>
+      <%= link_to "Profile", "/profile" if current_user %>
+      <%= link_to "All Items", "/items"%>
+      <%= link_to "All Merchants", "/merchants"%>
+      <%= link_to "Merchant Dashboard" if current_merchant? %>
       <% if current_admin? %>
-        <%= link_to "Admin Dashboard" %>
         <%= link_to "All Users" %>
+        <%= link_to "Admin Dashboard" %>
       <% end %>
-     </nav>
+      <% unless current_user %>
+        <%= link_to "Login", "/login" %>
+        <%= link_to "Register", "/register" %>
+      <% end %>
+      <%= link_to "Cart: #{cart.total_items}", "/cart" unless current_admin? %>
+      <%= link_to "Logout", "/logout" if current_user %>
+      <div id = "logged-as">
+        <p><%= "Logged in as #{current_user.name}" if current_user %></p>
+      </div>
+    </nav>
+
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
         <p><%= msg.html_safe %></p>

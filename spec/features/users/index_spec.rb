@@ -40,13 +40,17 @@ RSpec.describe "test users index", type: :feature do
 
       visit "/"
 
-      expect(page).to have_link("All Merchants")
-      expect(page).to have_link("All Items")
+      expect(page).to have_link("Home")
       expect(page).to have_link("Profile")
+      expect(page).to have_link("All Items")
+      expect(page).to have_link("All Merchants")
+      expect(page).to have_link("Cart: 0")
       expect(page).to have_link("Logout")
+      expect(page).to have_content("Logged in as #{@user.name}")
 
       expect(page).to_not have_link("Login")
       expect(page).to_not have_link("Register")
+
   end
 
     it "shows merchants same links as a regular user plus link to merchant dashboard" do
@@ -55,14 +59,18 @@ RSpec.describe "test users index", type: :feature do
 
       visit "/"
 
-      expect(page).to have_link("All Merchants")
-      expect(page).to have_link("All Items")
+      expect(page).to have_link("Home")
       expect(page).to have_link("Profile")
-      expect(page).to have_link("Logout")
+      expect(page).to have_link("All Items")
+      expect(page).to have_link("All Merchants")
       expect(page).to have_link("Merchant Dashboard")
+      expect(page).to have_link("Cart: 0")
+      expect(page).to have_link("Logout")
+      expect(page).to have_content("Logged in as #{@user.name}")
 
       expect(page).to_not have_link("Login")
       expect(page).to_not have_link("Register")
+
   end
 
   it "shows admins same links as a regular user plus links to admin dashboard and all users page" do
@@ -71,14 +79,18 @@ RSpec.describe "test users index", type: :feature do
 
     visit "/"
 
-    expect(page).to have_link("All Merchants")
-    expect(page).to have_link("All Items")
+    expect(page).to have_link("Home")
     expect(page).to have_link("Profile")
-    expect(page).to have_link("Logout")
-    expect(page).to have_link("Admin Dashboard")
+    expect(page).to have_link("All Items")
+    expect(page).to have_link("All Merchants")
     expect(page).to have_link("All Users")
+    expect(page).to have_link("Admin Dashboard")
+    expect(page).to have_link("Logout")
+    expect(page).to have_content("Logged in as #{@user.name}")
 
+    expect(page).to_not have_link("Cart: 0")
     expect(page).to_not have_link("Login")
     expect(page).to_not have_link("Register")
+
   end
 end

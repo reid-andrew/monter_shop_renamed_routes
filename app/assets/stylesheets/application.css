@@ -15,7 +15,8 @@
  */
 
  body {
- background-color: white;
+   background-color: white;
+   margin: 0;
  }
 
  h1 {
@@ -155,4 +156,10 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+#logged-as {
+  float: right;
+  color: white;
+  padding-right: 20px;
 }
