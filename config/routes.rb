@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
 
   get "/orders/new", to: "orders#new"
+  get "/profile/orders", to: "orders#index"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
 

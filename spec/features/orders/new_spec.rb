@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe("New Order Page") do
   describe "When I check out from my cart" do
     before(:each) do
@@ -81,7 +83,7 @@ RSpec.describe("New Order Page") do
 
         visit "/cart"
 
-        click_button "Checkout"
+        click_link "Checkout"
 
         fill_in :name, with: "Mike Dao"
         fill_in :address, with: "1765 Larimer St"
@@ -97,6 +99,6 @@ RSpec.describe("New Order Page") do
 
         expect(page).to have_content("Cart: 0")
       end
-
+    end
   end
 end
