@@ -9,7 +9,7 @@
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <img src= <%= item.image %>>
+      <%= link_to image_tag("#{item.image}"), "/items/#{item.id}", id: item.id %>
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
@@ -22,4 +22,20 @@
       <% end %>
     </section>
     <% end %>
+</section>
+<section id="top_five">
+  <h2>Top Five Items</h2>
+  <% if @top_five_items %>
+    <% @top_five_items.each do |item| %>
+      <p><%= "#{item.name}: #{item.qty}" %></p>
+    <% end %>
+  <% end %>
+</section>
+<section id="bottom_five">
+  <h2>Bottom Five Items</h2>
+  <% if @bottom_five_items %>
+    <% @bottom_five_items.each do |item| %>
+      <p><%= "#{item.name}: #{item.qty}" %></p>
+    <% end %>
+  <% end %>
 </section>

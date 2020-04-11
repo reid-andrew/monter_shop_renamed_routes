@@ -5,7 +5,10 @@ class ItemsController<ApplicationController
       @merchant = Merchant.find(params[:merchant_id])
       @items = @merchant.items
     else
-      @items = Item.all
+      @items = Item.active_items
+      @top_five_items = Item.top_five_items
+      @bottom_five_items = Item.bottom_five_items
+
     end
   end
 
