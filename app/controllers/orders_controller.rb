@@ -25,7 +25,7 @@ class OrdersController <ApplicationController
   end
 
   def index
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 
 
