@@ -11,7 +11,7 @@ RSpec.describe 'Profile', type: :feature do
                 password: "123456",
                 role: 0)
 
-    @use2 = User.create(name: "Mike Dao",
+    @user2 = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
                 state: "CO",

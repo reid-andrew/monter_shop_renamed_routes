@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
+  get "/profile/orders", to: "orders#index"
   get "/orders/:id", to: "orders#show"
 
   get "/register", to: "users#new"
@@ -47,7 +48,6 @@ Rails.application.routes.draw do
   get "/profile/:id/edit", to: "profile#edit"
   patch "/profile/:id/edit", to: "profile#update"
   patch "/profile/:id/password", to: "passwords#update"
-
 
   namespace :user do
     get "/", to: "profile#index"
