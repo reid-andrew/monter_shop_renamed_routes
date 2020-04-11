@@ -1,1 +1,6 @@
 <h1> Your Orders </h1>
+
+  <% @orders.each do |order| %>
+    <div id= "order_<%= order.id %>">
+    </div>
+  <% end %>

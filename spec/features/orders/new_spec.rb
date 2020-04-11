@@ -95,8 +95,8 @@ RSpec.describe("New Order Page") do
 
         expect(current_path).to eq("/profile/orders")
         expect(page).to have_content("Your order has been submitted!")
-        expect(page).to have_content("Order ID ##{fill_in}")
-
+        order = Order.last
+        expect(page).to have_css("#order_#{order.id}")
         expect(page).to have_content("Cart: 0")
       end
     end
