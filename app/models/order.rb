@@ -1,5 +1,5 @@
 class Order <ApplicationRecord
-  validates_presence_of :name, :address, :city, :state, :zip
+  validates_presence_of :name, :address, :city, :state, :zip, :status
 
   belongs_to :user
   has_many :item_orders
@@ -12,8 +12,5 @@ class Order <ApplicationRecord
   def total_quantity
     item_orders.sum('quantity')
   end
-
-  def status
-    "Pending"
-  end
+  
 end

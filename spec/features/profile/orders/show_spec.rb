@@ -146,8 +146,16 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
       expect(current_path).to eq("/profile")
       expect(page).to have_content("Order ##{@order_1.id} has been canceled.")
-      expect(@order_1.status).to eq("Canceled")
 
+      updated_order = Order.find(@order_1.id)
+      updated_line_1 = ItemOrder.find(@line_item_1.id)
+      updated_line_2 = ItemOrder.find(@line_item_2.id)
+      updated_line_3 = ItemOrder.find(@line_item_3.id)
+
+      expect(updated_order.status).to eq("Canceled")
+      expect(updated_line_1.status).to eq("Unfulfilled")
+      expect(updated_line_2.status).to eq("Unfulfilled")
+      expect(updated_line_3.status).to eq("Unfulfilled")
 # - Each row in the "order items" table is given a status of "unfulfilled"
 # - The order itself is given a status of "cancelled"
 # - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
