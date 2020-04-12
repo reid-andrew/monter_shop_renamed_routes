@@ -49,6 +49,9 @@ Rails.application.routes.draw do
   patch "/profile/:id/edit", to: "profile#update"
   patch "/profile/:id/password", to: "passwords#update"
 
+  get "/item_order/:item_order_id", to: "item_orders#show"
+  patch "/item_orders/:item_order_id", to: "item_orders#update"
+
   namespace :profile do
     get "/", to: "profile#index"
     get "/", to: "cart#index"
