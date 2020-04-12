@@ -168,6 +168,10 @@ tr:nth-child(even) {
   background-color: #F0F8FF;
 }
 
+section {
+  padding: 25px;
+}
+
 #logged-as {
   float: right;
   color: white;
