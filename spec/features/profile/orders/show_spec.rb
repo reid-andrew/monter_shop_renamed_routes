@@ -85,7 +85,24 @@ RSpec.describe 'User Order Show Page', type: :feature do
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
 
-      expect(current_path).to eq("/orders/#{@order_1.id}")
+      expect(current_path).to eq("/profile/orders/#{@order_1.id}")
+    end
+
+    it "can see user profile orders show page with order details" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/profile"
+      click_link("My Orders")
+      click_link("Order #: #{@order_1.id}")
+
+      expect(page).to have_content("Order #: #{@order_1.id}")
+      expect(page).to have_content(@order_1.created_at.strftime("%m/%d/%Y"))
+      expect(page).to have_content(@order_1.updated_at.strftime("%m/%d/%Y"))
+      expect(page).to have_content(@order_1.status)
+      expect(page).to have_content(@order_1.total_quantity)
+      expect(page).to have_content(@order_1.grandtotal)
     end
   end
 end

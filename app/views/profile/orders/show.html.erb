@@ -1,0 +1,6 @@
+<h1>Order #: <%= @order.id %></h1>
+<p>Order Placed: <%= @order.created_at.strftime("%m/%d/%Y") %></p>
+<p>Order Last Updated: <%= @order.updated_at.strftime("%m/%d/%Y") %></p>
+<p>Order Status: <%= @order.status %></p>
+<p>Order Quantity: <%= @order.total_quantity %></p>
+<p>Order Grand Total: <%= @order.grandtotal %></p>

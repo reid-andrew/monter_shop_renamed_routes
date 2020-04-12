@@ -2,7 +2,7 @@
 
   <% @orders.each do |order| %>
     <div id= "order_<%= order.id %>">
-      <h3><%=link_to "Order #: #{order.id}", "/orders/#{order.id}" %></h3>
+      <h3><%=link_to "Order #: #{order.id}", "/profile/orders/#{order.id}" %></h3>
       <p>Order Placed: <%= order.created_at.strftime("%m/%d/%Y") %></p>
       <p>Order Last Updated: <%= order.updated_at.strftime("%m/%d/%Y") %></p>
       <p>Order Status: <%= order.status %></p>
