@@ -156,9 +156,19 @@ RSpec.describe 'User Order Show Page', type: :feature do
       expect(updated_line_1.status).to eq("Unfulfilled")
       expect(updated_line_2.status).to eq("Unfulfilled")
       expect(updated_line_3.status).to eq("Unfulfilled")
-# - Each row in the "order items" table is given a status of "unfulfilled"
-# - The order itself is given a status of "cancelled"
-# - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
+    end
+
+    it "cannot cancel and order that's been shipped" do
+      @order_1.update(:status => "Shipped")
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/profile"
+      click_link("My Orders")
+      click_link("Order #: #{@order_1.id}")
+
+      expect(page).to_not have_button("Cancel Order")
     end
   end
 end

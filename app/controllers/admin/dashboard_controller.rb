@@ -6,5 +6,7 @@ class Admin::DashboardController < ApplicationController
     render file: "/public/404" unless current_admin?
   end
 
-  def index; end
+  def index
+    @orders = Order.orders_sorted_for_admin_display
+  end
 end

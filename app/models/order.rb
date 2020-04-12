@@ -5,6 +5,15 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
+  def self.orders_sorted_for_admin_display
+    sorted_orders = []
+    sorted_orders << Order.where("status = 'Packaged'")
+    sorted_orders << Order.where("status = 'Pending'")
+    sorted_orders << Order.where("status = 'Shipped'")
+    sorted_orders << Order.where("status = 'Cancelled'")
+    sorted_orders.flatten
+  end
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
@@ -12,5 +21,7 @@ class Order <ApplicationRecord
   def total_quantity
     item_orders.sum('quantity')
   end
-  
+
+
+
 end
