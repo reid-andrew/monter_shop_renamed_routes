@@ -17,14 +17,11 @@ class ProfileController < ApplicationController
   def update
     @user = current_user
     @user.update(user_params)
-    if User.where(email:@user.email).where.not(id:@user.id) != []
-      flash[:failure] = "That email already exists"
-      render :edit
-    elsif @user.save
-      redirect_to '/profile'
-      flash[:error] = "Your profile is updated"
+    if @user.save
+      flash[:success] = "Your profile is updated"
+      redirect_to "/profile"
     else
-      flash[:failure] = "You are missing required fields."
+      flash[:error] = @user.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -32,6 +29,6 @@ class ProfileController < ApplicationController
   private
 
   def user_params
-    params.permit(:name,:street_address,:city,:state,:zip,:email)
+    params.permit(:name, :street_address, :city, :state, :zip, :email)
   end
 end
