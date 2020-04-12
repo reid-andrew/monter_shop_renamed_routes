@@ -84,7 +84,7 @@ RSpec.describe 'Profile', type: :feature do
 
       expect(current_path).to eq("/profile/#{@user.id}/edit")
 
-      expect(page).to have_content("That email already exists")
+      expect(page).to have_content("Email has already been taken")
     end
 
     it "can update password" do

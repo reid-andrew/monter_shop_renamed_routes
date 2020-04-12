@@ -10,8 +10,3 @@ class Merchant::DashboardController < ApplicationController
   end
 
 end
-
-#
-# before_action :admin
-# before_action :merchant
-# before_action :user

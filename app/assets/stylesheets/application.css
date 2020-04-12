@@ -15,7 +15,8 @@
  */
 
  body {
- background-color: white;
+   background-color: white;
+   margin: 0;
  }
 
  h1 {
@@ -141,6 +142,16 @@ form {
   color: white;
 }
 
+.login {
+  padding-top: 45px;
+  margin: auto;
+  width: 35%;
+}
+
+.login form {
+  width: 100%;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -155,4 +166,14 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+section {
+  padding: 25px;
+}
+
+#logged-as {
+  float: right;
+  color: white;
+  padding-right: 20px;
 }
