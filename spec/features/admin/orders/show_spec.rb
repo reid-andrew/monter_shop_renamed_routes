@@ -25,12 +25,40 @@ RSpec.describe("Admin Show Orderes") do
                   password: "123456",
                   role: 0)
 
+# Pending Orders
       @order_1 = @user2.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_1 = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
       @line_item_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, price: 20, quantity: 500)
 
       @order_2 = @user2.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_3 = ItemOrder.create(order_id: @order_2.id, item_id: @pencil.id, price: 2, quantity: 50)
+
+# Packaged Orders
+      @order_3 = @user2.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_4 = ItemOrder.create(order_id: @order_3.id, item_id: @tire.id, price: 100, quantity: 4)
+      @order_3.update(:status => "Packaged")
+
+      @order_4 = @user2.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_5 = ItemOrder.create(order_id: @order_4.id, item_id: @pencil.id, price: 2, quantity: 50)
+      @order_4.update(:status => "Packaged")
+
+# Cancelled Orders
+      @order_5 = @user2.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_6 = ItemOrder.create(order_id: @order_5.id, item_id: @tire.id, price: 100, quantity: 4)
+      @order_5.update(:status => "Cancelled")
+
+      @order_6 = @user2.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_7 = ItemOrder.create(order_id: @order_6.id, item_id: @pencil.id, price: 2, quantity: 50)
+      @order_6.update(:status => "Cancelled")
+
+# Shipped Orders
+      @order_7 = @user2.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_8 = ItemOrder.create(order_id: @order_7.id, item_id: @paper.id, price: 20, quantity: 500)
+      @order_7.update(:status => "Shipped")
+
+      @order_8 = @user2.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
+      @line_item_9 = ItemOrder.create(order_id: @order_8.id, item_id: @pencil.id, price: 2, quantity: 50)
+      @order_8.update(:status => "Shipped")
     end
 
     it "I can see info on all orders in the system" do
@@ -54,6 +82,24 @@ RSpec.describe("Admin Show Orderes") do
         click_link("#{@order_2.user.name}")
         expect(current_path).to eq("/admin/profile/#{@order_2.user.id}")
       end
+    end
+
+    it "can see orders sorted correctly" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/admin"
+
+      expect(page.text.index("#{@order_3.id}")).to be < page.text.index("#{@order_1.id}")
+      expect(page.text.index("#{@order_4.id}")).to be < page.text.index("#{@order_2.id}")
+
+      expect(page.text.index("#{@order_1.id}")).to be < page.text.index("#{@order_7.id}")
+      expect(page.text.index("#{@order_2.id}")).to be < page.text.index("#{@order_8.id}")
+
+      expect(page.text.index("#{@order_7.id}")).to be < page.text.index("#{@order_5.id}")
+      expect(page.text.index("#{@order_8.id}")).to be < page.text.index("#{@order_6.id}")
+      save_and_open_page
     end
   end
 end

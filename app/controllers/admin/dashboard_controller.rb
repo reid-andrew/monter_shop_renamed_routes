@@ -7,6 +7,6 @@ class Admin::DashboardController < ApplicationController
   end
 
   def index
-    @orders = Order.all
+    @orders = Order.orders_sorted_for_admin_display
   end
 end
