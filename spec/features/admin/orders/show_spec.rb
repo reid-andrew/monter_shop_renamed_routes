@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe("Admin Show Orderes") do
+RSpec.describe("Admin Show Orders") do
   describe "As an admin when I visit the order show page " do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -99,7 +99,27 @@ RSpec.describe("Admin Show Orderes") do
 
       expect(page.text.index("#{@order_7.id}")).to be < page.text.index("#{@order_5.id}")
       expect(page.text.index("#{@order_8.id}")).to be < page.text.index("#{@order_6.id}")
+    end
+
+    it "can ship packaged orders" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/admin"
+
+      within "#order_#{@order_3.id}" do
+        expect(page).to have_content("Order Status: Packaged")
+        click_button "Ship Order"
+      end
       save_and_open_page
+
+      expect(current_path).to eq("/admin")
+      expect(page.text.index("#{@order_1.id}")).to be < page.text.index("#{@order_3.id}")
+      within "#order_#{@order_3.id}" do
+        expect(page).to have_content("Order Status: Shipped")
+        expect(page).to_not have_button("Ship Order")
+      end
     end
   end
 end
