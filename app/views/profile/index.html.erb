@@ -8,4 +8,7 @@
   <p>Email: <%=@user.email%></p>
   <%= link_to "Edit My Profile Data", "/profile/#{@user.id}/edit"%> |
   <%= link_to "Edit My Password", "/profile/#{@user.id}/password"%>
+  <% if @user.order_count > 0 %>
+    <%= link_to "My Orders", "profile/orders" %>
+  <% end %>
 </section>

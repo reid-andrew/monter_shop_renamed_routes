@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  patch "/orders/:order_id", to:"orders#update"
 
   get "/register", to: "users#new"
   post "/register", to: "users#create"
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
     get "/", to: "profile#index"
     get "/", to: "cart#index"
     get "/orders", to: "orders#index"
+    get "/orders/:order_id", to: "orders#show"
   end
 
   namespace :merchant do
