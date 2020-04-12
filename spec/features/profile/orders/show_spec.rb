@@ -53,5 +53,24 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
       expect(page).to_not have_link("My Orders")
     end
+
+    it "sees correct details on orders show page" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/profile"
+
+      expect(page).to have_link("My Orders")
+
+      click_link("My Orders")
+
+      expect(page).to have_content(@order_1.id) #id
+      expect(page).to have_content(@order_1.id) #date
+      expect(page).to have_content(@order_1.id) #updated date
+      expect(page).to have_content(@order_1.id) #current status
+      expect(page).to have_content(@order_1.id) #total qty
+      expect(page).to have_content(@order_1.grandtotal) #grandtotal
+    end
   end
 end
