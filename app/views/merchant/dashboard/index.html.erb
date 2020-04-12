@@ -12,7 +12,7 @@
     <% item.orders.each do |order| %>
       <p>Order ID: #<%= order.id %></p>
       <p><%= link_to "View Order", "/merchant/orders/#{order.id}" %></p>
-      <p>Date: <%= order.created_at %></p>
+      <p>Date: <%= order.created_at.strftime("%m/%d/%Y") %></p>
       <p>Total Quantity: <%= order.total_quantity_by_merchant(@current_user.merchant.id) %></p>
       <p>Total Value: $<%= order.total_value_by_merchant(@current_user.merchant.id) %></p>
     <% end %>

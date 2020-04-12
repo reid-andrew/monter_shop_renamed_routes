@@ -78,7 +78,7 @@ RSpec.describe 'As a merchant', type: :feature do
         of these orders' do
       expect(page).to have_content("Order ID: ##{@order_1.id}")
       expect(page).to have_link("View Order", href: "/merchant/orders/#{@order_1.id}")
-      expect(page).to have_content("Date: #{@order_1.created_at}")
+      expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
       expect(page).to have_content("Total Quantity: 5")
       expect(page).to have_content("Total Value: $700")
     end
@@ -181,7 +181,7 @@ RSpec.describe 'As an admin user', type: :feature do
 
       expect(page).to have_content("Order ID: ##{@order_1.id}")
       expect(page).to have_link("View Order", href: "/merchant/orders/#{@order_1.id}")
-      expect(page).to have_content("Date: #{@order_1.created_at}")
+      expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
       expect(page).to have_content("Total Quantity: 5")
       expect(page).to have_content("Total Value: $700")
 
