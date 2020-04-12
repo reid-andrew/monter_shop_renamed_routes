@@ -25,10 +25,6 @@ class OrdersController <ApplicationController
     end
   end
 
-  def index
-    @orders = current_user.orders
-  end
-
   def update
     @order = Order.find(order_params[:order_id])
     if order_params[:type] == "cancel"
