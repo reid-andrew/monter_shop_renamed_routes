@@ -142,6 +142,12 @@ form {
   color: white;
 }
 
+.login {
+  padding-top: 45px;
+  margin: auto;
+  width: 50%;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
