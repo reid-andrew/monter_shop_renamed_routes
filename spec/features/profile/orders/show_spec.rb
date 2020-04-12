@@ -133,5 +133,24 @@ RSpec.describe 'User Order Show Page', type: :feature do
         expect(page).to have_css("img[src*='#{@line_item_3.item.image}']")
       end
     end
+
+    it "can cancel an order" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/profile"
+      click_link("My Orders")
+      click_link("Order #: #{@order_1.id}")
+      click_button("Cancel Order")
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Order ##{@order_1.id} has been canceled.")
+      expect(@order_1.status).to eq("Canceled")
+
+# - Each row in the "order items" table is given a status of "unfulfilled"
+# - The order itself is given a status of "cancelled"
+# - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
+    end
   end
 end

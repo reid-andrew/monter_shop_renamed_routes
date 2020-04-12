@@ -17,3 +17,6 @@
     </section>
   </tr>
 <% end %>
+<br>
+<br>
+<p><%= button_to "Cancel Order", "/orders/#{@order.id}", params: {type: :cancel}, method: :patch %></p>
