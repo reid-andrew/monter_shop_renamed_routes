@@ -25,9 +25,9 @@ RSpec.describe 'User Order Show Page', type: :feature do
                 role: 0)
 
     @order_1 = @user.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
-    ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
-    ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, price: 20, quantity: 500)
-    ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, price: 2, quantity: 50)
+    @line_item_1 = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
+    @line_item_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, price: 20, quantity: 500)
+    @line_item_3 = ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, price: 2, quantity: 50)
   end
   describe "as a user when I " do
     it "visit my profile I see a link that takes me to my orders" do
@@ -103,6 +103,35 @@ RSpec.describe 'User Order Show Page', type: :feature do
       expect(page).to have_content(@order_1.status)
       expect(page).to have_content(@order_1.total_quantity)
       expect(page).to have_content(@order_1.grandtotal)
+    end
+
+    it "can see user profile orders show page with line item details" do
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
+      visit "/profile"
+      click_link("My Orders")
+      click_link("Order #: #{@order_1.id}")
+
+      within "#item-#{@line_item_1.id}" do
+        expect(page).to have_content(@line_item_1.item.name)
+        expect(page).to have_content(@line_item_1.item.description)
+        expect(page).to have_content(@line_item_1.quantity)
+        expect(page).to have_content(@line_item_1.price)
+        expect(page).to have_content(@line_item_1.subtotal)
+        expect(page).to have_css("img[src*='#{@line_item_1.item.image}']")
+
+      end
+
+      within "#item-#{@line_item_3.id}" do
+        expect(page).to have_content(@line_item_3.item.name)
+        expect(page).to have_content(@line_item_3.item.description)
+        expect(page).to have_content(@line_item_3.quantity)
+        expect(page).to have_content(@line_item_3.price)
+        expect(page).to have_content(@line_item_3.subtotal)
+        expect(page).to have_css("img[src*='#{@line_item_3.item.image}']")
+      end
     end
   end
 end

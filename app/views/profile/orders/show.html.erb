@@ -4,3 +4,16 @@
 <p>Order Status: <%= @order.status %></p>
 <p>Order Quantity: <%= @order.total_quantity %></p>
 <p>Order Grand Total: <%= @order.grandtotal %></p>
+
+<% @order.item_orders.each do |item_order|%>
+  <tr>
+  <section id = "item-<%=item_order.id%>">
+      <td><h3><%=link_to item_order.item.name, "/items/#{item_order.item.id}"%></h3></td>
+      <td><p><%= "Item Description: #{item_order.item.description}" %></p></td>
+      <td><p><%= "Total Quantity Ordered: #{item_order.quantity}" %></p></td>
+      <td><p><%= "Price Per Item: #{number_to_currency(item_order.price)}" %></p></td>
+      <td><p><%= "Subtotal: #{number_to_currency(item_order.subtotal)}" %></p></td>
+      <td><p><%= image_tag(item_order.item.image)%></p></td>
+    </section>
+  </tr>
+<% end %>
