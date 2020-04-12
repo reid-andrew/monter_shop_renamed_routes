@@ -7,6 +7,7 @@ class Merchant::DashboardController < ApplicationController
   end
 
   def index
+    
   end
 
 end

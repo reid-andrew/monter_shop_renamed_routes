@@ -1,1 +1,9 @@
 <h1>Merchant Dashboard</h1>
+
+<% if defined? @current_user.merchant %>
+  <%= @current_user.merchant.name %>
+  <%= @current_user.merchant.address %>
+  <%= @current_user.merchant.city %>
+  <%= @current_user.merchant.state %>
+  <%= @current_user.merchant.zip %>
+<% end %>
