@@ -112,7 +112,6 @@ RSpec.describe("Admin Show Orders") do
         expect(page).to have_content("Order Status: Packaged")
         click_button "Ship Order"
       end
-      save_and_open_page
 
       expect(current_path).to eq("/admin")
       expect(page.text.index("#{@order_1.id}")).to be < page.text.index("#{@order_3.id}")
