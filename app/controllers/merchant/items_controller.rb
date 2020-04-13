@@ -27,20 +27,33 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    if params[:status] == "deactivate"
-      item.update(:active? => false)
-    elsif params[:status] == "activate"
-      item.update(:active? => true)
-    end
-    if item.save && params[:status] == "deactivate"
-      flash[:success] = "#{item.name} is no longer for sale"
-    elsif item.save && params[:status] == "activate"
-      flash[:success] = "#{item.name} is now available for sale"
-    else
-      flash[:error] = "An error occurred"
-    end
+    @item = Item.find(params[:id])
+    if params[:status]
+      if params[:status] == "deactivate"
+        @item.update(:active? => false)
+      elsif params[:status] == "activate"
+        @item.update(:active? => true)
+      end
+      if @item.save && params[:status] == "deactivate"
+        flash[:success] = "#{@item.name} is no longer for sale"
+      elsif @item.save && params[:status] == "activate"
+        flash[:success] = "#{@item.name} is now available for sale"
+      end
       redirect_to "/merchant/items"
+    else
+      @item.update(item_params)
+      if @item.save
+        flash[:success] = "#{@item.name} is updated"
+        redirect_to "/merchant/items"
+      else
+        flash[:error] = @item.errors.full_messages.to_sentence
+        render :edit
+      end
+    end
+  end
+
+  def edit
+    @item = Item.find(params[:id])
   end
 
   def destroy
