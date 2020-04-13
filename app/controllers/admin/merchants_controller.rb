@@ -21,6 +21,9 @@ class Admin::MerchantsController < ApplicationController
     elsif
       merchant_params[:type] == "enable"
       @merchant.update(:active => true)
+      @merchant.items.each do |item|
+        item.update(:active? => true)
+      end
       flash[:success] = "#{@merchant.name}'s account has been enabled."
     end
       redirect_to "/admin/merchants"
