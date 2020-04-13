@@ -89,8 +89,6 @@ RSpec.describe "As a merchant employee" do
 
       item = Item.all.last
 
-      save_and_open_page
-
       within("#item-#{item.id}") do
         expect(page).to have_content("Bike Handles")
         expect(page).to have_content("Leather Grip")
@@ -100,6 +98,30 @@ RSpec.describe "As a merchant employee" do
         expect(page).to have_content("Active")
       end
 
+    end
+    # User Story 46, Merchant cannot add an item if details are bad/missing
+    it "When I try to add a new item and any data is missing, I return to the form
+        and see messages indicating the error. Fields are also re-populated" do
+
+        click_link "Add New Item"
+
+        fill_in :description, with: "Leather Grip"
+        fill_in :image, with: ""
+        fill_in :inventory, with: 25
+
+        click_button "Create Item"
+
+        within(".error-flash") do
+          expect(page).to have_content("Name can't be blank")
+          expect(page).to have_content("Price can't be blank")
+        end
+
+        expect(find_field(:name).value).to eq ""
+        expect(find_field(:description).value).to eq "Leather Grip"
+        expect(find_field(:price).value).to eq nil
+        expect(find_field(:image).value).to eq nil
+        expect(find_field(:inventory).value).to eq "25"
+        
     end
 
 end
