@@ -1,0 +1,16 @@
+<h1>All Orders</h1>
+
+<% @orders.each do |order|%>
+  <tr>
+  <section id = "order_<%=order.id%>">
+      <td><p><%=link_to order.user.name, "/admin/profile/#{order.user.id}"%></p></td>
+      <td><p><%= "Order Number: #{order.id}" %></p></td>
+      <td><p><%= "Date Created: #{order.created_at.strftime("%m/%d/%Y")}" %></p></td>
+      <td><p><%= "Order Status: #{order.status}" %></p></td>
+      <% if order.status == "Packaged" %>
+        <%= button_to "Ship Order", "/admin/orders/#{order.id}", params: {type: :ship}, method: :patch%>
+      <% end %>
+
+    </section>
+  </tr>
+<% end %>
