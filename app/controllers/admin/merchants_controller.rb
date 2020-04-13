@@ -17,9 +17,13 @@ class Admin::MerchantsController < ApplicationController
       @merchant.items.each do |item|
         item.update(:active? => false)
       end
-      redirect_to "/admin/merchants"
       flash[:success] = "#{@merchant.name}'s account has been disabled."
+    elsif
+      merchant_params[:type] == "enable"
+      @merchant.update(:active => true)
+      flash[:success] = "#{@merchant.name}'s account has been enabled."
     end
+      redirect_to "/admin/merchants"
   end
 
   def show

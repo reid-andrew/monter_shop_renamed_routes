@@ -7,7 +7,7 @@
       <% if merchant.active %>
         <p><%= button_to "Disable", "/admin/merchants/#{merchant.id}", params: {type: :disable}, method: :patch %></p>
       <% else %>
-        <p>This account has been disabled.</p>
+        <p><%= button_to "Enable", "/admin/merchants/#{merchant.id}", params: {type: :enable}, method: :patch %></p>
       <% end %>
     </section>
   <% end %>

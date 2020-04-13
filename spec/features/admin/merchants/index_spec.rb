@@ -49,7 +49,7 @@ RSpec.describe("Admin Merchants Index Page") do
       end
       within "#merchant_#{@cory.id}" do
         expect(page).to_not have_button("Disable")
-        expect(page).to have_content("This account has been disabled.")
+        expect(page).to have_button("Enable")
       end
     end
 
@@ -71,10 +71,40 @@ RSpec.describe("Admin Merchants Index Page") do
       @tire.reload
       @paper.reload
       @pencil.reload
-      
+
       expect(@tire.active?).to eq(false)
       expect(@paper.active?).to eq(false)
       expect(@pencil.active?).to eq(false)
     end
+
+    it "I can enable a disabled merchant" do
+      visit "/login"
+      fill_in :email, with: @admin.email
+      fill_in :password, with: @admin.password
+      click_button "Login"
+      @cory.update(:active => false)
+      visit "/admin/merchants"
+
+      within "#merchant_#{@cory.id}" do
+        expect(page).to have_button("Enable")
+        click_button "Enable"
+      end
+      expect(current_path).to eq("/admin/merchants")
+
+      @cory.reload
+      expect(@cory.active).to eq(true)
+
+      expect(page).to have_content("#{@cory.name}'s account has been enabled.")
+      expect(page).to_not have_button("Enable")
+      expect(page).to have_button("Disable")
+    end
   end
+
+
+#   As an admin
+# When I visit the merchant index page
+# I see an "enable" button next to any merchants whose accounts are disabled
+# When I click on the "enable" button
+# I am returned to the admin's merchant index page where I see that the merchant's account is now enabled
+# And I see a flash message that the merchant's account is now enabled
 end
