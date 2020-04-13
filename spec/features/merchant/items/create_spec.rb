@@ -51,32 +51,55 @@ RSpec.describe "As a merchant employee" do
     click_button "Login"
     visit "/merchant/items"
   end
-  # User Story 44, Merchant deletes an item
+  # User Story 45, Merchant adds an item
   describe "When I visit my items page /merchant/items"
-    it "I see a button to delete next to an item that has never been ordered" do
+    it "I see a link to add a new item" do
+      expect(page).to have_link "Add New Item"
+    end
+    it "I can click the link to add a new item, which brings me to a form" do
+      click_link "Add New Item"
 
-      within("#item-#{@helmet.id}") do
-        expect(page).to have_button "Delete Item"
-      end
+      expect(current_path).to eq("/merchant/items/new")
+
+      expect(page).to have_field :name
+      expect(page).to have_field :description
+      expect(page).to have_field :image
+      expect(page).to have_field :price
+      expect(page).to have_field :inventory
+
+      click_button "Create Item"
 
     end
-    it "I can delete an item, which returns me to my items page with a message
-        and I no longer see the item on the page" do
+    it "I can submit the form with valid information, which creates a new item" do
+      click_link "Add New Item"
 
-        within("#item-#{@helmet.id}") do
-          click_button "Delete Item"
-        end
+      fill_in :name, with: "Bike Handles"
+      fill_in :description, with: "Leather Grip"
+      fill_in :image, with: ""
+      fill_in :price, with: 18
+      fill_in :inventory, with: 25
 
-        expect(current_path).to eq("/merchant/items")
+      click_button "Create Item"
 
-        within(".success-flash") do
-          expect(page).to have_content("#{@helmet.name} is now deleted")
-        end
+      expect(current_path).to eq("/merchant/items")
 
-        within(".grid-container") do
-          expect(page).to have_no_content(@helmet.name)
-          expect(page).to have_no_content(@helmet.description)
-        end
+      within(".success-flash") do
+        expect(page).to have_content("Bike Handles is saved")
+      end
+
+      item = Item.all.last
+
+      save_and_open_page
+
+      within("#item-#{item.id}") do
+        expect(page).to have_content("Bike Handles")
+        expect(page).to have_content("Leather Grip")
+        expect(page).to have_css("img[src*='https://semantic-ui.com/images/wireframe/image.png']")
+        expect(page).to have_content("18")
+        expect(page).to have_content("25")
+        expect(page).to have_content("Active")
+      end
+
     end
 
 end
