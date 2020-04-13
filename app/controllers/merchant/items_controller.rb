@@ -1,4 +1,4 @@
-class Merchant::DashboardController < ApplicationController
+class Merchant::ItemsController < ApplicationController
 
   before_action :require_merchant
 
@@ -7,7 +7,7 @@ class Merchant::DashboardController < ApplicationController
   end
 
   def index
-    
+
   end
 
 end

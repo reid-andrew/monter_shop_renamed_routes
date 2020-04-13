@@ -2,15 +2,20 @@ require 'rails_helper'
 
 RSpec.describe "As a visitor" do
   before do
+    @bike_shop = Merchant.create(name: "Brian's Bike Shop",
+                                 address: '123 Bike Rd.',
+                                 city: 'Richmond',
+                                 state: 'VA',
+                                 zip: 23137)
     @user = User.create(name: "Mike Dao",
-                    street_address: "1765 Larimer St",
-                    city: "Denver",
-                    state: "CO",
-                    zip: "80202",
-                    email: "test@turing.com",
-                    password: "123456",
-                    password_confirmation: "123456",
-                    role: 0)
+                street_address: "1765 Larimer St",
+                city: "Denver",
+                state: "CO",
+                zip: "80202",
+                email: "test@turing.com",
+                password: "123456",
+                password_confirmation: "123456",
+                role: 0)
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -19,7 +24,8 @@ RSpec.describe "As a visitor" do
                 email: "test1@turing.com",
                 password: "123456",
                 password_confirmation: "123456",
-                role: 1)
+                role: 1,
+                merchant_id: @bike_shop.id)
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",

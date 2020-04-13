@@ -1,1 +1,23 @@
 <h1>Merchant Dashboard</h1>
+
+<% if defined? @current_user.merchant %>
+  <%= @current_user.merchant.name %>
+  <%= @current_user.merchant.address %>
+  <%= @current_user.merchant.city %>
+  <%= @current_user.merchant.state %>
+  <%= @current_user.merchant.zip %>
+
+  <h2>Pending Orders:</h2>
+  <% @current_user.merchant.items.each do |item| %>
+    <% item.orders.each do |order| %>
+      <p>Order ID: #<%= order.id %></p>
+      <p><%= link_to "View Order", "/merchant/orders/#{order.id}" %></p>
+      <p>Date: <%= order.created_at.strftime("%m/%d/%Y") %></p>
+      <p>Total Quantity: <%= order.total_quantity_by_merchant(@current_user.merchant.id) %></p>
+      <p>Total Value: $<%= order.total_value_by_merchant(@current_user.merchant.id) %></p>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= link_to "View Merchant Items", "/merchant/items" %>
+
