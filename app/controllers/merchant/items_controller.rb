@@ -12,11 +12,19 @@ class Merchant::ItemsController < ApplicationController
 
   def update
     item = Item.find(params[:id])
-    item.update(:active? => false)
-    if item.save
-      flash[:success] = "#{item.name} is no longer for sale"
-      redirect_to "/merchant/items"
+    if params[:status] == "deactivate"
+      item.update(:active? => false)
+    elsif params[:status] == "activate"
+      item.update(:active? => true)
     end
+    if item.save && params[:status] == "deactivate"
+      flash[:success] = "#{item.name} is no longer for sale"
+    elsif item.save && params[:status] == "activate"
+      flash[:success] = "#{item.name} is now available for sale"
+    else
+      flash[:error] = "An error occurred"
+    end
+      redirect_to "/merchant/items"
   end
 
 end
