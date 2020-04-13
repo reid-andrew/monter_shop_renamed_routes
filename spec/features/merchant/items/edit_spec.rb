@@ -96,6 +96,12 @@ RSpec.describe "As a merchant employee" do
         expect(page).to have_content("Price must be greater than 0")
       end
 
+      expect(find_field(:name).value).to eq ""
+      expect(find_field(:description).value).to eq ""
+      expect(find_field(:price).value).to eq "-18"
+      expect(find_field(:image).value).to eq ""
+      expect(find_field(:inventory).value).to eq "-20"
+
       name =  "Javier's Specialty Goggles"
       description = "Goggles"
       price = 10
