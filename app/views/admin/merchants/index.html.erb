@@ -6,6 +6,8 @@
       <h2><%= link_to merchant.name, "/admin/merchants/#{merchant.id}" %></h2>
       <% if merchant.active %>
         <p><%= button_to "Disable", "/admin/merchants/#{merchant.id}", params: {type: :disable}, method: :patch %></p>
+      <% else %>
+        <p>This account has been disabled.</p>
       <% end %>
     </section>
   <% end %>

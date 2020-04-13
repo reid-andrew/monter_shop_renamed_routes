@@ -7,12 +7,14 @@ RSpec.describe 'As a merchant', type: :feature do
                                    address: '123 Bike Rd.',
                                    city: 'Richmond',
                                    state: 'VA',
-                                   zip: 23137)
+                                   zip: 23137,
+                                   active: true)
       @clothing_store = Merchant.create(name: "Clothing Store",
                                   address: '123 Shirt Rd.',
                                   city: 'Houston',
                                   state: 'TX',
-                                  zip: 80802)
+                                  zip: 80802,
+                                  active: true)
       @employee = User.create(name: "Mike Dao",
                  street_address: "1765 Larimer St",
                  city: "Denver",
