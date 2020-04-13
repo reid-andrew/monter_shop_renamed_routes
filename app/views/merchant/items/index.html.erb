@@ -17,6 +17,9 @@
         <%=button_to "Activate Item", "/merchant/items/#{item.id}", params: { status: :activate}, method: :patch %>
       <% end %>
 
+      <% if item.no_orders? %>
+        | <%=button_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
+      <% end %>
     </section>
   <% end %>
 </section>
