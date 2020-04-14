@@ -76,11 +76,13 @@ RSpec.describe 'As a merchant', type: :feature do
     # User Story 35
     it 'If any users have pending orders with items I sell, I will see a list
         of these orders' do
-      expect(page).to have_content("Order ID: ##{@order_1.id}")
-      expect(page).to have_link("View Order", href: "/merchant/orders/#{@order_1.id}")
-      expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
-      expect(page).to have_content("Total Quantity: 5")
-      expect(page).to have_content("Total Value: $700")
+
+      within("#order-#{@order_1.id}") do
+        expect(page).to have_link("Order ID: ##{@order_1.id}", href: "/merchant/orders/#{@order_1.id}")
+        expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
+        expect(page).to have_content("Total Quantity: 5")
+        expect(page).to have_content("Total Value: $700")
+      end
     end
     # User Story 36
     it 'I see a link to view my own items' do
@@ -179,11 +181,12 @@ RSpec.describe 'As an admin user', type: :feature do
       expect(page).to have_content(@bike_shop.state)
       expect(page).to have_content(@bike_shop.zip)
 
-      expect(page).to have_content("Order ID: ##{@order_1.id}")
-      expect(page).to have_link("View Order", href: "/merchant/orders/#{@order_1.id}")
-      expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
-      expect(page).to have_content("Total Quantity: 5")
-      expect(page).to have_content("Total Value: $700")
+      within("#order-#{@order_1.id}") do
+        expect(page).to have_link("Order ID: ##{@order_1.id}", href: "/merchant/orders/#{@order_1.id}")
+        expect(page).to have_content("Date: #{@order_1.created_at.strftime("%m/%d/%Y")}")
+        expect(page).to have_content("Total Quantity: 5")
+        expect(page).to have_content("Total Value: $700")
+      end
 
     end
   end

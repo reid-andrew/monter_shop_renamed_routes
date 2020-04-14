@@ -10,40 +10,65 @@ Item.destroy_all
 Order.destroy_all
 Merchant.destroy_all
 
+# Merchants
+bike_shop = Merchant.create(name: "Brian's Bike Shop",
+                             address: '123 Bike Rd.',
+                             city: 'Richmond',
+                             state: 'VA',
+                             zip: 23137)
+clothing_store = Merchant.create(name: "Clothing Store",
+                            address: '123 Shirt Rd.',
+                            city: 'Houston',
+                            state: 'TX',
+                            zip: 80802)
 
-#merchants
-bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+# Users
+employee = User.create(name: "Mike Dao",
+           street_address: "1765 Larimer St",
+           city: "Denver",
+           state: "CO",
+           zip: "80202",
+           email: "mike@example.com",
+           password: "123456",
+           password_confirmation: "123456",
+           role: 1,
+           merchant_id: bike_shop.id)
+user = User.create(name: "Meg",
+           street_address: "123 Stang Ave",
+           city: "Hershey",
+           state: "PA",
+           zip: "17033",
+           email: "meg@example.com",
+           password: "123456",
+           role: 0)
 
-#bike_shop items
-tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+# Bike Store Items
+tire = bike_shop.items.create(name: "Bike Tire",
+                        description: "They'll never pop!",
+                        price: 200,
+                        image: "https://mk0completetrid5cejy.kinstacdn.com/wp-content/uploads/2013-Shimano-Wheels-WH9000-C50-tubular-clincher.jpg",
+                        inventory: 10)
+helmet = bike_shop.items.create(name: "Bike Helmet",
+                        description: "They'll never crack!",
+                        price: 100,
+                        image: "https://cdn.shopify.com/s/files/1/0836/6919/products/vintage_bike_helmet_001_2000x.jpg?v=1585087482",
+                        inventory: 12)
 
-#dog_shop items
-pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
-tire_2 = dog_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-pull_toy_2 = bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-tire_3 = dog_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-pull_toy_3 = bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-tire_4 = dog_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-pull_toy_4 = bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-tire_5 = dog_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-pull_toy_5 = bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-tire_6 = dog_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-pull_toy_6 = bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+# Clothing Store Items
+shirt = clothing_store.items.create(name: "Red T-Shirt",
+                        description: "Super soft",
+                        price: 100,
+                        image: "https://cdn.shopify.com/s/files/1/0836/6919/products/vintage_bike_helmet_001_2000x.jpg?v=1585087482",
+                        inventory: 1)
 
-#orders & order items
-order_1 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
-ItemOrder.create(order_id: order_1.id, item_id: tire_2.id, price: 1.99, quantity: 5004)
-ItemOrder.create(order_id: order_1.id, item_id: tire_3.id, price: 1.99, quantity: 5003)
-ItemOrder.create(order_id: order_1.id, item_id: tire_4.id, price: 1.99, quantity: 5002)
-ItemOrder.create(order_id: order_1.id, item_id: tire_5.id, price: 1.99, quantity: 5001)
-ItemOrder.create(order_id: order_1.id, item_id: tire_6.id, price: 1.99, quantity: 5000)
-ItemOrder.create(order_id: order_1.id, item_id: tire.id, price: 1.99, quantity: 200)
-ItemOrder.create(order_id: order_1.id, item_id: dog_bone.id, price: 1.99, quantity: 200)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy.id, price: 1.99, quantity: 200)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy_2.id, price: 1.99, quantity: 4)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy_3.id, price: 1.99, quantity: 3)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy_4.id, price: 1.99, quantity: 2)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy_5.id, price: 1.99, quantity: 1)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy_6.id, price: 1.99, quantity: 0)
+# Orders
+order_1 = Order.create(name: 'Meg',
+                        address: '123 Stang Ave',
+                        city: 'Hershey',
+                        state: 'PA',
+                        zip: "17033",
+                        user: user)
+order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
+order_1.item_orders.create!(item: helmet, price: helmet.price, quantity: 3)
+order_1.item_orders.create!(item: shirt, price: shirt.price, quantity: 1)
+

@@ -59,7 +59,6 @@ RSpec.describe "As a visitor" do
       expect(page).to have_content("Welcome, #{@user.name}!")
     end
     it "If I am a merchant user, I am redirected to my merchant dashboard page" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
 
       visit "/login"
 
@@ -124,8 +123,6 @@ RSpec.describe "As a visitor" do
       expect(page).to have_content("I'm already logged in")
     end
     it "If I am a merchant user, I am redirected to my merchant dashboard page" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
-
       visit "/login"
 
       fill_in :email, with: "test1@turing.com"
@@ -134,6 +131,7 @@ RSpec.describe "As a visitor" do
       click_button "Login"
 
       visit "/login"
+
       expect(page).to have_current_path("/merchant")
       expect(page).to have_content("I'm already logged in")
     end
