@@ -73,7 +73,7 @@ RSpec.describe "As a merchant employee" do
           expect(page).to have_content("#{@helmet.name} is now deleted")
         end
 
-        within(".grid-container") do
+        within(".items") do
           expect(page).to have_no_content(@helmet.name)
           expect(page).to have_no_content(@helmet.description)
         end

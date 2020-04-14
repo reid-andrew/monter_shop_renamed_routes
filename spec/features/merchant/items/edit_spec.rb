@@ -55,12 +55,12 @@ RSpec.describe "As a merchant employee" do
   describe "When I visit my items page /merchant/items"
     it "I can see an edit button next to any item" do
       within("#item-#{@tire.id}") do
-        expect(page).to have_link "Edit Item"
+        expect(page).to have_button "Edit Item"
       end
     end
     it "When click an edit button next to an item, I'm taken to a pre-populated form" do
       within("#item-#{@tire.id}") do
-        click_link "Edit Item"
+        click_button "Edit Item"
       end
 
       expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
@@ -74,12 +74,9 @@ RSpec.describe "As a merchant employee" do
     end
     it "When I submit the form, I'm taken back to merchant/items and I see a full_message
         indicating my item is updated. I also see the item's new information" do
-      # - name and description cannot be blank
-      # - price cannot be less than $0.00
-      # - inventory must be 0 or greater
 
       within("#item-#{@tire.id}") do
-        click_link "Edit Item"
+        click_button "Edit Item"
       end
 
       fill_in :name, with: ""

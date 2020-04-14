@@ -131,6 +131,11 @@ form {
   width: 60%;
 }
 
+.button_to {
+  padding: 0px;
+  background-color: #ffffff;
+}
+
 .error-flash {
   padding: 10px;
   background-color: red;
