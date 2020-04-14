@@ -11,10 +11,10 @@
           <%= image_tag item.image %>
           <h5>Price: <%= item.price %></h5>
           <h5>Quantity: <%= item.order_count %></h5>
-          <% if item.fulfillable?(item.order_count) && order.status != "Fulfilled" %>
-          <%= button_to "Fulfill", "/merchant/orders/#{order.id}", item_order_params: { item_order_id: :type}, method: :post %>
+          <% if item.fulfillable?(item.order_count) && item.item_order(order.id).status != "Fulfilled" %>
+          <%= button_to "Fulfill", "/merchant/orders/#{order.id}", params: { item_order_id: item.id }, method: :post %>
           <% end %>
-          <% if order.status == "Fulfilled" %>
+          <% if item.item_order(order.id).status == "Fulfilled" %>
           <h5>Status: <%= "Fulfilled" %></h5>
           <% end %>
         <% end %>

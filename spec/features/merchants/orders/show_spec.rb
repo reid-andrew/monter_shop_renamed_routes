@@ -126,9 +126,12 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
     within("#item-#{@helmet.id}") do
       expect(page).to have_content("Fulfilled")
     end
+
+    visit "/merchant/items"
+
+    within("#item-#{@helmet.id}") do
+      expect(page).to have_content("9")
+    end
   end
 
 end
-# - the item's inventory quantity is permanently reduced by the user's desired quantity
-#
-# If I have already fulfilled this item, I see text indicating such.

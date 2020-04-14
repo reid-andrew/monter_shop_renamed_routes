@@ -33,6 +33,6 @@ class Order <ApplicationRecord
   end
 
   def items_by_merchant(merchant_id)
-    items.where(:merchant_id => merchant_id)    
+    items.where(:merchant_id => merchant_id)
   end
 end
