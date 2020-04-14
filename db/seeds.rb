@@ -23,6 +23,15 @@ clothing_store = Merchant.create(name: "Clothing Store",
                             zip: 80802)
 
 # Users
+admin = User.create(name: "The Boss",
+           street_address: "1765 Larimer St",
+           city: "Denver",
+           state: "CO",
+           zip: "80202",
+           email: "admin@example.com",
+           password: "123456",
+           password_confirmation: "123456",
+           role: 2)
 employee = User.create(name: "Mike Dao",
            street_address: "1765 Larimer St",
            city: "Denver",
