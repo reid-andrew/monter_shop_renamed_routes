@@ -1,4 +1,4 @@
-class UsersController<ApplicationController
+class UsersController < ApplicationController
 
   def new
     @user = User.new
@@ -12,6 +12,7 @@ class UsersController<ApplicationController
     elsif @user.save
       session[:id] = @user.id
       @user.update(role: 0)
+      session[:user_id] = @user.id
       flash[:success] = "Welcome, #{@user.name}! You are registered and logged in."
       redirect_to "/profile"
     else
