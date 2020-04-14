@@ -7,7 +7,7 @@ class Merchant::DashboardController < ApplicationController
   end
 
   def index
-    
+    @merchant = @current_user.merchant
   end
 
 end

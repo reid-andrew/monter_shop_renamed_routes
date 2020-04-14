@@ -1,21 +1,22 @@
-<h1>Merchant Dashboard</h1>
+<section>
+  <h1>Merchant Dashboard</h1>
 
-<%= @merchant.name %>
-<%= @merchant.address %>
-<%= @merchant.city %>
-<%= @merchant.state %>
-<%= @merchant.zip %>
+  <h2>Merchant:</h2>
+  <%= @merchant.name %>
+  <br />
+  <%= @merchant.address %>
+  <%= @merchant.city %>
+  <%= @merchant.state %>
+  <%= @merchant.zip %>
 
-<h2>Pending Orders:</h2>
-<% @merchant.items.each do |item| %>
-  <% item.orders.each do |order| %>
-    <p>Order ID: #<%= order.id %></p>
-    <p><%= link_to "View Order", "/merchant/orders/#{order.id}" %></p>
-    <p>Date: <%= order.created_at.strftime("%m/%d/%Y") %></p>
-    <p>Total Quantity: <%= order.total_quantity_by_merchant(@merchant.id) %></p>
-    <p>Total Value: $<%= order.total_value_by_merchant(@merchant.id) %></p>
+  <h2>Pending Orders:</h2>
+  <% @merchant.orders.distinct.each do |order| %>
+    <div id='order-<%= order.id %>'>
+      <p><%= link_to "Order ID: ##{order.id}", "/merchant/orders/#{order.id}" %></p>
+      <p>Date: <%= order.created_at.strftime("%m/%d/%Y") %></p>
+      <p>Total Quantity: <%= order.total_quantity_by_merchant(@merchant.id) %></p>
+      <p>Total Value: $<%= order.total_value_by_merchant(@merchant.id) %></p>
+    </div>
   <% end %>
-<% end %>
 
-<%= link_to "View Merchant Items", "/merchant/items" %>
-
+</section>

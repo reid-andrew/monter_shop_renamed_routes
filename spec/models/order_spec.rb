@@ -79,14 +79,23 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
-    it 'grandtotal' do
+    it 'order#grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
 
-    it 'total_quantity' do
+    it 'order#total_quantity' do
       expect(@order_1.total_quantity).to eq(5)
     end
 
+    it 'order#total_quantity_by_merchant(merchant_id)' do
+      expect(@order_1.total_quantity_by_merchant(@meg)).to eq(2)
+      expect(@order_1.total_quantity_by_merchant(@brian)).to eq(3)
+    end
+
+    it 'order#total_value_by_merchant(merchant_id)' do
+      expect(@order_1.total_value_by_merchant(@meg)).to eq(200)
+      expect(@order_1.total_value_by_merchant(@brian)).to eq(30)
+    end
 
   end
 end
