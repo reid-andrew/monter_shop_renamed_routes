@@ -5,6 +5,10 @@ class Admin::ProfileController < ApplicationController
     render file: "/public/404" unless current_admin?
   end
 
+  def index
+    @users = User.all
+  end
+
   def show
     @profile = User.find(user_params[:profile_id])
   end
