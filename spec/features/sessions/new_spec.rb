@@ -6,7 +6,8 @@ RSpec.describe "As a visitor" do
                                  address: '123 Bike Rd.',
                                  city: 'Richmond',
                                  state: 'VA',
-                                 zip: 23137)
+                                 zip: 23137,
+                                 active: true)
     @user = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
