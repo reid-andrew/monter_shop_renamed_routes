@@ -6,6 +6,9 @@
     <br/>
       <h2>Items:</h2>
       <% order.items_by_merchant(@current_user.merchant.id).each do |item| %>
-      <p><%= item.name %></p>
+      <h5>Item: <%= item.name %></h5>
+      <%= image_tag item.image %>
+      <h5>Price: <%= item.price %></h5>
+      <h5>Quantity: <%= order.total_quantity %></h5>
       <% end %>
   <% end %>
