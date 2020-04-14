@@ -134,4 +134,31 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
     end
   end
 
+  it "does not show a fulfill button for orders where desired quantity is greater than inventory" do
+
+    @book = @bike_shop.items.create(name: "The Life & Times of Javier Aguilar",
+                            description: "An extensive biography",
+                            price: 15,
+                            image: "https://elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-e1464023124869.jpeg",
+                            inventory: 1)
+
+    @order_1.item_orders.create!(item: @book, price: @book.price, quantity: 2)
+
+    visit "/merchant/orders/#{@order_1.id}"
+
+    within("#item-#{@tire.id}") do
+      expect(page).to have_button("Fulfill")
+    end
+
+    within("#item-#{@helmet.id}") do
+      expect(page).to have_button("Fulfill")
+      click_button "Fulfill"
+    end
+
+    within("#item-#{@book.id}") do
+      expect(page).to_not have_button("Fulfill")
+      expect(page).to have_content("This item can not be fulfilled")
+    end
+  end
+  
 end
