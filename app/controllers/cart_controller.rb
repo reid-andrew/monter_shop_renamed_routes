@@ -14,7 +14,7 @@ class CartController < ApplicationController
   end
 
   def show
-    flash[:notice] = "You must #{view_context.link_to 'login', '/login'} or #{view_context.link_to 'register', '/register'} to checkout" unless current_user?
+    flash[:notice] = "You must #{view_context.link_to 'login', '/login'} or #{view_context.link_to 'register', '/register'} to checkout" unless current_user
     @items = cart.items
   end
 
