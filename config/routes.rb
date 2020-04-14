@@ -1,13 +1,7 @@
 Rails.application.routes.draw do
   root "welcome#index"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -21,9 +15,7 @@ Rails.application.routes.draw do
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :reviews, only: [:edit, :update, :destroy]
 
   post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
@@ -31,9 +23,7 @@ Rails.application.routes.draw do
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
+  resources :orders, only: [:new, :create, :show]
   patch "/orders/:order_id", to:"orders#update"
 
   get "/register", to: "users#new"
@@ -61,12 +51,7 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get "/", to: "dashboard#index"
-    get "items", to: "items#index"
-    get "items/new", to: "items#new"
-    post "items", to: "items#create"
-    get "items/:id/edit", to: "items#edit"
-    patch "items/:id", to: "items#update"
-    delete "items/:id", to: "items#destroy"
+    resources :items
   end
 
   namespace :admin do
