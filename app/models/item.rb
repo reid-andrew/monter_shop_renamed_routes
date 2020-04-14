@@ -53,4 +53,16 @@ class Item < ApplicationRecord
     item_orders.empty?
   end
 
+  def fulfillable?(num)
+    num <= inventory
+  end
+
+  def item_order(order_id)
+    Order.find(order_id).item_orders.where(:item_id => id).first
+  end
+
+  def fulfilled_inventory(order_id)
+    self.inventory -= item_order(order_id).quantity
+  end
+
 end
