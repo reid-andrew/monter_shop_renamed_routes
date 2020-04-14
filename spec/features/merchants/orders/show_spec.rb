@@ -70,19 +70,19 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
 
   it "shows recipient's name and address, and do not see orders from other merchants" do
 
-      click_link("View Order", href: "/merchant/orders/#{@order_1.id}")
+      click_link("#{@order_1.id}")      
 
-      expect(page).to have_content("#{@user.name}")
-      expect(page).to have_content("#{@user.address}")
+      expect(page).to have_content("#{@order_1.name}")
+      expect(page).to have_content("#{@order_1.address}")
 
       expect(page).to have_content("#{@tire.name}")
       expect(page).to have_content("#{@helmet.name}")
       expect(page).to_not have_content("#{@shirt.name}")
   end
 
-  it "items show name as a link to item show page, image, price, and quantity desired" do
+  xit "items show name as a link to item show page, image, price, and quantity desired" do
 
-    click_link("View Order", href: "/merchant/orders/#{@order_1.id}")
+    click_link("#{@order_1.id}")
 
     expect(page).to have_content("#{@tire.name}")
     expect(page).to have_css("img[src*='#{@tire.image}']")

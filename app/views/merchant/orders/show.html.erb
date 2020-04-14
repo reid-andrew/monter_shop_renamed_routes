@@ -1,0 +1,11 @@
+<h1>Merchant Orders</h1>
+
+  <% @orders.each do |order| %>
+    <p><%= order.name %></p>
+    <p><%= order.address %></p>
+    <br/>
+      <h2>Items:</h2>
+      <% order.items_by_merchant(@current_user.merchant.id).each do |item| %>
+      <p><%= item.name %></p>
+      <% end %>
+  <% end %>

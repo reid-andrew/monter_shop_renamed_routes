@@ -31,4 +31,8 @@ class Order <ApplicationRecord
     merchant_items = items.select(:id).where(:merchant_id => merchant_id)
     ItemOrder.where(:item_id => merchant_items).sum('price * quantity').to_i
   end
+
+  def items_by_merchant(merchant_id)
+    items.where(:merchant_id => merchant_id)    
+  end
 end
