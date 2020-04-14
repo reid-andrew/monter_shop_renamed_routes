@@ -130,5 +130,28 @@ RSpec.describe("Admin Merchants Index Page") do
       expect(@paper.active?).to eq(true)
       expect(@pencil.active?).to eq(true)
     end
+
+    it "I see all merchants in the system as links to their show pages" do
+      visit "/login"
+      fill_in :email, with: @admin.email
+      fill_in :password, with: @admin.password
+      click_button "Login"
+      visit "/admin/merchants"
+
+      within "#merchant_#{@cory.id}" do
+        expect(page).to have_link("#{@cory.name}")
+        expect(page).to have_content("#{@cory.city}")
+        expect(page).to have_content("#{@cory.state}")
+      end
+
+      within "#merchant_#{@meg.id}" do
+        expect(page).to have_link("#{@meg.name}")
+        expect(page).to have_content("#{@meg.city}")
+        expect(page).to have_content("#{@meg.state}")
+      end
+
+      click_link "#{@cory.name}"
+      expect(current_path).to eq("/admin/merchants/#{@cory.id}")
+    end
   end
 end
