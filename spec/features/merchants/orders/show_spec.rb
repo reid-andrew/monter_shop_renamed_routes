@@ -58,7 +58,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
     @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
     @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
 
-
     visit "/login"
 
     fill_in :email, with: @employee.email
@@ -82,7 +81,7 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
 
   it "items show name as a link to item show page, image, price, and quantity desired" do
 
-    click_link("#{@order_1.id}")    
+    click_link("#{@order_1.id}")
 
     expect(page).to have_content("#{@tire.name}")
     expect(page).to have_css("img[src*='#{@tire.image}']")
@@ -94,4 +93,42 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
     expect(page).to have_content("#{@helmet.price}")
     expect(page).to have_content("3")
   end
+
+  it "shows fulfill button for unfulfilled items, routes to order showpage and flashes" do
+
+    @book = @bike_shop.items.create(name: "The Life & Times of Javier Aguilar",
+                            description: "An extensive biography",
+                            price: 15,
+                            image: "https://elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-e1464023124869.jpeg",
+                            inventory: 1)
+
+    @order_1.item_orders.create!(item: @book, price: @book.price, quantity: 2)
+
+    click_link("#{@order_1.id}")
+
+    within("#item-#{@book.id}") do
+      expect(page).to_not have_button("Fulfill")
+    end
+
+    within("#item-#{@tire.id}") do
+      expect(page).to have_button("Fulfill")
+    end
+
+    within("#item-#{@helmet.id}") do
+      expect(page).to have_button("Fulfill")
+      click_button "Fulfill"
+    end
+
+    expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
+
+    expect(page).to have_content("Item has been fulfilled")
+
+    within("#item-#{@helmet.id}") do
+      expect(page).to have_content("Fulfilled")
+    end
+  end
+
 end
+# - the item's inventory quantity is permanently reduced by the user's desired quantity
+#
+# If I have already fulfilled this item, I see text indicating such.

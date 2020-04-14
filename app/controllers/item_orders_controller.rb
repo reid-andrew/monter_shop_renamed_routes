@@ -5,7 +5,6 @@ class ItemOrdersController <ApplicationController
   end
 
   def update
-    # require "pry"; binding.pry
     @item_order = ItemOrder.find(item_order_params[:item_order_id])
     if item_order_params[:type] == "fulfill"
       @item_order.update(:status => "Fulfilled")

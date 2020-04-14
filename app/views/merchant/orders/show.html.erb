@@ -1,14 +1,22 @@
 <h1>Merchant Orders</h1>
 
-  <% @orders.each do |order| %>
-    <p><%= order.name %></p>
-    <p><%= order.address %></p>
-    <br/>
+    <% @orders.each do |order| %>
+      <p><%= order.name %></p>
+      <p><%= order.address %></p>
+        <br/>
       <h2>Items:</h2>
-      <% order.items_by_merchant(@current_user.merchant.id).each do |item| %>
-      <h5>Item: <%= item.name %></h5>
-      <%= image_tag item.image %>
-      <h5>Price: <%= item.price %></h5>
-      <h5>Quantity: <%= order.total_quantity %></h5>
+        <% order.items_by_merchant(@current_user.merchant.id).each do |item| %>
+        <section id= 'item-<%=item.id%>'>
+          <h5>Item: <%= item.name %></h5>
+          <%= image_tag item.image %>
+          <h5>Price: <%= item.price %></h5>
+          <h5>Quantity: <%= item.order_count %></h5>
+          <% if item.fulfillable?(item.order_count) && order.status != "Fulfilled" %>
+          <%= button_to "Fulfill", "/merchant/orders/#{order.id}", item_order_params: { item_order_id: :type}, method: :post %>
+          <% end %>
+          <% if order.status == "Fulfilled" %>
+          <h5>Status: <%= "Fulfilled" %></h5>
+          <% end %>
+        <% end %>
       <% end %>
-  <% end %>
+    </section>

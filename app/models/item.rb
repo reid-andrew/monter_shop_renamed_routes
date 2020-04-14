@@ -53,4 +53,7 @@ class Item < ApplicationRecord
     item_orders.empty?
   end
 
+  def fulfillable?(num)
+    num <= inventory
+  end
 end
