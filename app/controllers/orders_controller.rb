@@ -2,10 +2,6 @@ class OrdersController < ApplicationController
 
   def new; end
 
-  def show
-    @order = Order.find(params[:id])
-  end
-
   def create
     order = current_user.orders.new(order_params)
     if order.save
@@ -23,6 +19,10 @@ class OrdersController < ApplicationController
       flash[:notice] = "Please complete address form to create an order."
       render :new
     end
+  end
+
+  def show
+    @order = Order.find(params[:id])
   end
 
   def update

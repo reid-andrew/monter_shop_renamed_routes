@@ -1,6 +1,10 @@
 class Merchant::ItemsController < ApplicationController
 
   before_action :require_merchant
+  
+  def index
+    @items = @current_user.merchant.items
+  end
 
   def new
     @item = Item.new
@@ -18,17 +22,13 @@ class Merchant::ItemsController < ApplicationController
     end
   end
 
-  def index
-    @items = @current_user.merchant.items
+  def edit
+    @item = Item.find(params[:id])
   end
 
   def update
     @item = Item.find(params[:id])
     params[:status] ? status_param_update(params) : item_param_update(item_params)
-  end
-
-  def edit
-    @item = Item.find(params[:id])
   end
 
   def destroy

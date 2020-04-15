@@ -6,6 +6,10 @@ class Admin::MerchantsController < ApplicationController
     @merchants = Merchant.all
   end
 
+  def show
+    @merchant = Merchant.find(params[:id])
+  end
+
   def update
     @merchant = Merchant.find(merchant_params[:merchant_id])
     if merchant_params[:type]
@@ -16,11 +20,7 @@ class Admin::MerchantsController < ApplicationController
       redirect_to "/admin/merchants"
     end
   end
-
-  def show
-    @merchant = Merchant.find(params[:id])
-  end
-
+  
   private
 
   def merchant_params

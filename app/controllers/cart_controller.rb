@@ -2,13 +2,6 @@ class CartController < ApplicationController
 
   before_action :require_not_admin
 
-  def add_item
-    item = Item.find(params[:item_id])
-    cart.add_item(item.id.to_s)
-    flash[:success] = "#{item.name} was successfully added to your cart"
-    redirect_to "/items"
-  end
-
   def show
     flash[:notice] = "You must #{view_context.link_to 'login', '/login'} or #{view_context.link_to 'register', '/register'} to checkout" unless current_user
     @items = cart.items
@@ -16,6 +9,13 @@ class CartController < ApplicationController
 
   def update
     increment_decrement
+  end
+
+  def add_item
+    item = Item.find(params[:item_id])
+    cart.add_item(item.id.to_s)
+    flash[:success] = "#{item.name} was successfully added to your cart"
+    redirect_to "/items"
   end
 
   def empty

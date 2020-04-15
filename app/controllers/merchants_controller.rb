@@ -4,10 +4,6 @@ class MerchantsController < ApplicationController
     @merchants = Merchant.all
   end
 
-  def show
-    @merchant = Merchant.find(params[:id])
-  end
-
   def new; end
 
   def create
@@ -18,6 +14,10 @@ class MerchantsController < ApplicationController
       flash[:error] = merchant.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def show
+    @merchant = Merchant.find(params[:id])
   end
 
   def edit
