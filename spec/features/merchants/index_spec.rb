@@ -9,7 +9,7 @@ RSpec.describe 'merchant index page', type: :feature do
 
     it 'I can see a list of merchants in the system' do
       visit '/merchants'
-
+      
       expect(page).to have_link("Brian's Bike Shop")
       expect(page).to have_link("Meg's Dog Shop")
     end
