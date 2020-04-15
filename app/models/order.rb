@@ -1,4 +1,4 @@
-class Order <ApplicationRecord
+class Order < ApplicationRecord
   validates_presence_of :name, :address, :city, :state, :zip, :status
 
   belongs_to :user
