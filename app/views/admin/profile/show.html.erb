@@ -1,13 +1,1 @@
-<h1><%=@profile.name%></h1>
-
-<section>
-  <p>Address: <%=@profile.street_address%></p>
-  <p>City: <%=@profile.city%></p>
-  <p>State: <%=@profile.state%></p>
-  <p>Zip: <%=@profile.zip%></p>
-  <p>Email: <%=@profile.email%></p>
-  <% if current_user.id == @profile.id%>
-    <%= link_to "Edit My Profile Data", "/profile/#{@profile.id}/edit"%> |
-    <%= link_to "Edit My Password", "/profile/#{@profile.id}/password"%>
-  <% end %>
-</section>
+<%= render partial: '/profile/profile' %>

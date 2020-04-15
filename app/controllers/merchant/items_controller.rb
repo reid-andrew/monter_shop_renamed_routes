@@ -1,9 +1,9 @@
 class Merchant::ItemsController < ApplicationController
 
   before_action :require_merchant
-
-  def require_merchant
-    render file: "/public/404" unless current_merchant? || current_admin?
+  
+  def index
+    @items = @current_user.merchant.items
   end
 
   def new
@@ -22,46 +22,19 @@ class Merchant::ItemsController < ApplicationController
     end
   end
 
-  def index
-    @items = @current_user.merchant.items
+  def edit
+    @item = Item.find(params[:id])
   end
 
   def update
     @item = Item.find(params[:id])
-    if params[:status]
-      if params[:status] == "deactivate"
-        @item.update(:active? => false)
-      elsif params[:status] == "activate"
-        @item.update(:active? => true)
-      end
-      if @item.save && params[:status] == "deactivate"
-        flash[:success] = "#{@item.name} is no longer for sale"
-      elsif @item.save && params[:status] == "activate"
-        flash[:success] = "#{@item.name} is now available for sale"
-      end
-      redirect_to "/merchant/items"
-    else
-      @item.update(item_params)
-      if @item.save
-        flash[:success] = "#{@item.name} is updated"
-        redirect_to "/merchant/items"
-      else
-        flash[:error] = @item.errors.full_messages.to_sentence
-        render :edit
-      end
-    end
-  end
-
-  def edit
-    @item = Item.find(params[:id])
+    params[:status] ? status_param_update(params) : item_param_update(item_params)
   end
 
   def destroy
     item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
-    if item.destroy
-      flash[:success] = "#{item.name} is now deleted"
-    end
+    flash[:success] = "#{item.name} is now deleted" if item.destroy
     redirect_to "/merchant/items"
   end
 
@@ -71,5 +44,24 @@ class Merchant::ItemsController < ApplicationController
     params.permit(:name, :description, :price, :inventory, :image)
   end
 
+  def item_param_update(item_params)
+    @item.update(item_params)
+    if @item.save
+      flash[:success] = "#{@item.name} is updated"
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
 
+  def status_param_update(params)
+    update = params[:status] == "activate" ? true : false
+    @item.update(:active? => update)
+    if @item.save
+        flash[:success] = "#{@item.name} is now available for sale" if update
+        flash[:success] = "#{@item.name} is no longer for sale" if !update
+        redirect_to "/merchant/items"
+    end
+  end
 end

@@ -64,5 +64,4 @@ class Item < ApplicationRecord
   def fulfilled_inventory(order_id)
     self.inventory -= item_order(order_id).quantity
   end
-
 end

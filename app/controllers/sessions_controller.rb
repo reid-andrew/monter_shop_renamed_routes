@@ -2,8 +2,8 @@ class SessionsController < ApplicationController
 
   def new
     if logged_in?
-      redirect_by_role
       flash[:error] = "I'm already logged in"
+      redirect_by_role
     end
   end
 
@@ -35,5 +35,4 @@ class SessionsController < ApplicationController
     redirect_to '/admin' if current_admin?
     redirect_to '/profile' if current_user?
   end
-
 end

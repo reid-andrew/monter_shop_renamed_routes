@@ -47,5 +47,4 @@ class Cart
   def subtract_quantity(item_id)
     @contents[item_id] -= 1 unless quantity_zero?(item_id)
   end
-
 end

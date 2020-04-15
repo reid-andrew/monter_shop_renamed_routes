@@ -1,4 +1,4 @@
-class ItemsController<ApplicationController
+class ItemsController < ApplicationController
 
   def index
     if params[:merchant_id]
@@ -8,12 +8,7 @@ class ItemsController<ApplicationController
       @items = Item.active_items
       @top_five_items = Item.top_five_items
       @bottom_five_items = Item.bottom_five_items
-
     end
-  end
-
-  def show
-    @item = Item.find(params[:id])
   end
 
   def new
@@ -31,6 +26,10 @@ class ItemsController<ApplicationController
     end
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
+  
   def edit
     @item = Item.find(params[:id])
   end
@@ -58,6 +57,4 @@ class ItemsController<ApplicationController
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
   end
-
-
 end

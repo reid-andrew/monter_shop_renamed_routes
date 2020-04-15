@@ -1,9 +1,6 @@
 class Admin::ProfileController < ApplicationController
-  before_action :require_admin
 
-  def require_admin
-    render file: "/public/404" unless current_admin?
-  end
+  before_action :require_admin
 
   def index
     @users = User.all
@@ -18,5 +15,4 @@ class Admin::ProfileController < ApplicationController
   def user_params
     params.permit(:profile_id)
   end
-
 end

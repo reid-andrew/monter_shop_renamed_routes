@@ -1,5 +1,4 @@
 <h1>All Orders</h1>
-
 <% @orders.each do |order|%>
   <tr>
   <section id = "order_<%=order.id%>">
@@ -10,7 +9,6 @@
       <% if order.status == "Packaged" %>
         <%= button_to "Ship Order", "/admin/orders/#{order.id}", params: {type: :ship}, method: :patch%>
       <% end %>
-
     </section>
   </tr>
 <% end %>

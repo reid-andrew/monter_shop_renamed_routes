@@ -1,11 +1,7 @@
-class MerchantsController <ApplicationController
+class MerchantsController < ApplicationController
 
   def index
     @merchants = Merchant.all
-  end
-
-  def show
-    @merchant = Merchant.find(params[:id])
   end
 
   def new; end
@@ -18,6 +14,10 @@ class MerchantsController <ApplicationController
       flash[:error] = merchant.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def show
+    @merchant = Merchant.find(params[:id])
   end
 
   def edit
@@ -43,6 +43,6 @@ class MerchantsController <ApplicationController
   private
 
   def merchant_params
-    params.permit(:name,:address,:city,:state,:zip)
+    params.permit(:name, :address, :city, :state, :zip)
   end
 end
