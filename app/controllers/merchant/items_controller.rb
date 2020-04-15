@@ -2,10 +2,6 @@ class Merchant::ItemsController < ApplicationController
 
   before_action :require_merchant
 
-  def require_merchant
-    render file: "/public/404" unless current_merchant? || current_admin?
-  end
-
   def new
     @item = Item.new
   end
@@ -38,7 +34,7 @@ class Merchant::ItemsController < ApplicationController
   def destroy
     item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
-    flash[:success] = "#{item.name} is now deleted" if item.destroy 
+    flash[:success] = "#{item.name} is now deleted" if item.destroy
     redirect_to "/merchant/items"
   end
 

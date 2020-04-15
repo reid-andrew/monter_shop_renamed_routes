@@ -2,10 +2,6 @@ class Admin::OrdersController < ApplicationController
 
   before_action :require_admin
 
-  def require_admin
-    render file: "/public/404" unless current_admin?
-  end
-
   def update
     @order = Order.find(order_params[:order_id])
     if order_params[:type] == "ship"

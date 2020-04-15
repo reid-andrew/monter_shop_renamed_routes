@@ -15,8 +15,4 @@ class Profile::OrdersController < ApplicationController
   def order_params
     params.permit(:order_id)
   end
-
-  def require_current_user
-    render file: "/public/404" unless current_user
-  end
 end
