@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if User.where(email:@user.email) != []
-      flash[:failure] = "That email address is already registered."
+      flash[:error] = "That email address is already registered."
       render :new
     elsif @user.save
       session[:id] = @user.id
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome, #{@user.name}! You are registered and logged in."
       redirect_to "/profile"
     else
-      flash[:failure] = "You are missing required fields."
+      flash[:error] = "You are missing required fields."
       render :new
     end
   end
