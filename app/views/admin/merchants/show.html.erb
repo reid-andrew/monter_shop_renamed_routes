@@ -1,13 +1,7 @@
 <section>
   <h1>Merchant Dashboard</h1>
 
-  <h2>Merchant:</h2>
-  <%= @merchant.name %>
-  <br />
-  <%= @merchant.address %>
-  <%= @merchant.city %>
-  <%= @merchant.state %>
-  <%= @merchant.zip %>
+<%= render partial: '/merchants/merchants_address' %>
 
   <h2>Pending Orders:</h2>
   <% @merchant.orders.distinct.each do |order| %>
