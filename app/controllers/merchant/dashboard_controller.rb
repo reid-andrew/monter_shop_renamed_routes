@@ -9,5 +9,4 @@ class Merchant::DashboardController < ApplicationController
   def index
     @merchant = @current_user.merchant
   end
-
 end

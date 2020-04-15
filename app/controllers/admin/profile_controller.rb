@@ -1,4 +1,5 @@
 class Admin::ProfileController < ApplicationController
+
   before_action :require_admin
 
   def require_admin
@@ -18,5 +19,4 @@ class Admin::ProfileController < ApplicationController
   def user_params
     params.permit(:profile_id)
   end
-
 end

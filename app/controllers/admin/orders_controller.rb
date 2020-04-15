@@ -1,4 +1,5 @@
 class Admin::OrdersController < ApplicationController
+
   before_action :require_admin
 
   def require_admin
