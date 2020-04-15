@@ -7,7 +7,7 @@ class ProfileController < ApplicationController
   end
 
   def index
-    @user = current_user
+    @profile = current_user
   end
 
   def edit
