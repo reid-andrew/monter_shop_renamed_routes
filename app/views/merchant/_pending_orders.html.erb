@@ -1,0 +1,9 @@
+<h2>Pending Orders:</h2>
+<% @merchant.orders.distinct.each do |order| %>
+  <div id='order-<%= order.id %>'>
+    <p><%= link_to "Order ID: ##{order.id}", "/merchant/orders/#{order.id}" %></p>
+    <p>Date: <%= order.created_at.strftime("%m/%d/%Y") %></p>
+    <p>Total Quantity: <%= order.total_quantity_by_merchant(@merchant.id) %></p>
+    <p>Total Value: $<%= order.total_value_by_merchant(@merchant.id) %></p>
+  </div>
+<% end %>
