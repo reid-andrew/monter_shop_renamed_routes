@@ -1,4 +1,4 @@
-class ReviewsController<ApplicationController
+class ReviewsController < ApplicationController
 
   def new
     @item = Item.find(params[:item_id])
@@ -42,7 +42,7 @@ class ReviewsController<ApplicationController
   private
 
   def review_params
-    params.permit(:title,:content,:rating)
+    params.permit(:title, :content,:rating)
   end
 
   def field_empty?
