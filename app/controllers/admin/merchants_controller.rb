@@ -12,13 +12,13 @@ class Admin::MerchantsController < ApplicationController
 
   def update
     @merchant = Merchant.find(merchant_params[:merchant_id])
-    update = merchant_params[:type] == "enable" ? true : false
-    @merchant.update(:active => update)
-      @merchant.items.each do |item|
-        item.update(:active? => update)
-      end
-    flash[:update] = "#{@merchant.name}'s account has been #{merchant_params[:type]}d."
-    redirect_to "/admin/merchants"
+    if merchant_params[:type]
+      update = merchant_params[:type] == "enable" ? true : false
+      @merchant.update(:active => update)
+      @merchant.items.each { |item| item.update(:active? => update) }
+      flash[:update] = "#{@merchant.name}'s account has been #{merchant_params[:type]}d."
+      redirect_to "/admin/merchants"
+    end
   end
 
   def show
@@ -30,5 +30,4 @@ class Admin::MerchantsController < ApplicationController
   def merchant_params
     params.permit(:type, :merchant_id)
   end
-
 end
