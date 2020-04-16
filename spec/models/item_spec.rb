@@ -130,5 +130,10 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it 'item#fulfillable?(num)' do
+      expect(@chain.fulfillable?(51)).to eq(false)
+      expect(@chain.fulfillable?(5)).to eq(true)
+    end
   end
 end
