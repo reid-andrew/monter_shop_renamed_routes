@@ -35,7 +35,6 @@ RSpec.describe "test users index", type: :feature do
   end
 
     it "shows links to home, all merchants, all items, profile, logout, and no links to login or register" do
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit "/"
@@ -50,11 +49,9 @@ RSpec.describe "test users index", type: :feature do
 
       expect(page).to_not have_link("Login")
       expect(page).to_not have_link("Register")
-
   end
 
     it "shows merchants same links as a regular user plus link to merchant dashboard" do
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
 
       visit "/"
@@ -70,11 +67,9 @@ RSpec.describe "test users index", type: :feature do
 
       expect(page).to_not have_link("Login")
       expect(page).to_not have_link("Register")
-
   end
 
   it "shows admins same links as a regular user plus links to admin dashboard and all users page" do
-
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
 
     visit "/"
@@ -91,6 +86,5 @@ RSpec.describe "test users index", type: :feature do
     expect(page).to_not have_link("Cart: 0")
     expect(page).to_not have_link("Login")
     expect(page).to_not have_link("Register")
-
   end
 end

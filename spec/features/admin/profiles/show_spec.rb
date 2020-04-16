@@ -24,8 +24,10 @@ RSpec.describe("Admin User Show Page") do
 
     it "I see a user's information without edit link" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       visit ("/admin/users/#{@user.id}")
 
@@ -38,8 +40,3 @@ RSpec.describe("Admin User Show Page") do
     end
   end
 end
-
-# As an admin user
-# When I visit a user's profile page ("/admin/users/5")
-# I see the same information the user would see themselves
-# I do not see a link to edit their profile

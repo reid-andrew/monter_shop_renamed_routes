@@ -5,6 +5,7 @@ RSpec.describe("New Order Page") do
     before(:each) do
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
       @user = User.create(name: "Mike Dao",
                   street_address: "1765 Larimer St",
                   city: "Denver",
@@ -28,9 +29,9 @@ RSpec.describe("New Order Page") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
     end
+
     it "I see all the information about my current cart" do
       visit "/cart"
-
       click_on "Checkout"
 
       within "#order-item-#{@tire.id}" do
@@ -82,8 +83,7 @@ RSpec.describe("New Order Page") do
         click_on "Add To Cart"
 
         visit "/cart"
-
-        click_link "Checkout"
+        click_on "Checkout"
 
         fill_in :name, with: "Mike Dao"
         fill_in :address, with: "1765 Larimer St"
@@ -99,7 +99,6 @@ RSpec.describe("New Order Page") do
         order = Order.last
 
         expect(order.status).to eq("Pending")
-
         expect(page).to have_css("#order_#{order.id}")
         expect(page).to have_content("Cart: 0")
       end

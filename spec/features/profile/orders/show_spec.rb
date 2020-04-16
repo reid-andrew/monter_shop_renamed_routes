@@ -15,6 +15,7 @@ RSpec.describe 'User Order Show Page', type: :feature do
                 email: "test@turing.com",
                 password: "123456",
                 role: 0)
+
     @user2 = User.create(name: "Ana",
                 street_address: "2222 Rails St.",
                 city: "Denver",
@@ -29,11 +30,14 @@ RSpec.describe 'User Order Show Page', type: :feature do
     @line_item_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, price: 20, quantity: 500)
     @line_item_3 = ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, price: 2, quantity: 50)
   end
+
   describe "as a user when I " do
     it "visit my profile I see a link that takes me to my orders" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
 
@@ -46,8 +50,10 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "visit visit my profile without having placed any orders I don't see the link" do
       visit "/login"
+
       fill_in :email, with: @user2.email
       fill_in :password, with: @user2.password
+
       click_button "Login"
       visit "/profile"
 
@@ -56,8 +62,10 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "sees correct details on orders show page" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
 
@@ -75,8 +83,10 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "can click prior order id to see order show page" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
 
@@ -90,10 +100,13 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "can see user profile orders show page with order details" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
+
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
 
@@ -107,10 +120,13 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "can see user profile orders show page with line item details" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
+
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
 
@@ -121,7 +137,6 @@ RSpec.describe 'User Order Show Page', type: :feature do
         expect(page).to have_content(@line_item_1.price)
         expect(page).to have_content(@line_item_1.subtotal)
         expect(page).to have_css("img[src*='#{@line_item_1.item.image}']")
-
       end
 
       within "#item-#{@line_item_3.id}" do
@@ -136,10 +151,13 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
     it "can cancel an order" do
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
+
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
       click_button("Cancel Order")
@@ -161,10 +179,13 @@ RSpec.describe 'User Order Show Page', type: :feature do
     it "cannot cancel and order that's been shipped" do
       @order_1.update(:status => "Shipped")
       visit "/login"
+
       fill_in :email, with: @user.email
       fill_in :password, with: @user.password
+
       click_button "Login"
       visit "/profile"
+      
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
 

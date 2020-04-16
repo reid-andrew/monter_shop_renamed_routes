@@ -27,11 +27,11 @@ describe ItemOrder, type: :model do
                   email: "test@turing.com",
                   password: "123456",
                   role: 0)
+                  
       order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: user)
       item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
 
       expect(item_order_1.subtotal).to eq(200)
     end
   end
-
 end

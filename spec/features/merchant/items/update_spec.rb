@@ -30,6 +30,7 @@ RSpec.describe "As a merchant employee" do
                email: "meg@example.com",
                password: "123456",
                role: 0)
+
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
                             price: 200,
@@ -63,6 +64,7 @@ RSpec.describe "As a merchant employee" do
     click_button "Login"
     visit "/merchant/items"
   end
+
   describe "When I visit my items page /merchant/items"
     it "I see the following: name, description, price, image, status, inventory" do
 
@@ -84,7 +86,7 @@ RSpec.describe "As a merchant employee" do
         expect(page).to have_content(@helmet.inventory)
       end
     end
-    # User Story 42, Merchant deactivates an item
+
     it "I see a link to deactivate the item next to each active item" do
       within("#item-#{@tire.id}") do
         expect(page).to have_button "Deactivate Item"
@@ -94,6 +96,7 @@ RSpec.describe "As a merchant employee" do
         expect(page).to have_button "Deactivate Item"
       end
     end
+
     it "I can deactivate an item by clicking a link next to the item" do
       within("#item-#{@tire.id}") do
         click_button "Deactivate Item"
@@ -107,11 +110,9 @@ RSpec.describe "As a merchant employee" do
       within("#item-#{@tire.id}") do
         expect(page).to have_content("Inactive")
       end
-
     end
-    # User Story 43, Merchant activates an item
-    it "I see a link to activate the item next to each active item" do
 
+    it "I see a link to activate the item next to each active item" do
       within("#item-#{@tire.id}") do
         click_button "Deactivate Item"
       end
@@ -119,8 +120,8 @@ RSpec.describe "As a merchant employee" do
       within("#item-#{@tire.id}") do
         expect(page).to have_button "Activate Item"
       end
-
     end
+
     it "I can activate an item by clicking a link next to the item" do
       within("#item-#{@tire.id}") do
         click_button "Deactivate Item"
@@ -138,7 +139,5 @@ RSpec.describe "As a merchant employee" do
       within("#item-#{@tire.id}") do
         expect(page).to have_content("Active")
       end
-
     end
-
 end

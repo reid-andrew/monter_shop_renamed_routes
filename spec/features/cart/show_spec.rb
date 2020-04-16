@@ -41,6 +41,7 @@ RSpec.describe 'Cart show' do
             expect(page).to have_content("$#{item.price}")
           end
         end
+
         expect(page).to have_content("Total: $122")
 
         visit "/items/#{@pencil.id}"
@@ -57,7 +58,6 @@ RSpec.describe 'Cart show' do
       end
 
     it "shows a button that can add to quantity of an item in the cart and quantity can't exceed inventory" do
-
       visit "/cart"
 
       within "#cart-item-#{@tire.id}" do
@@ -83,7 +83,6 @@ RSpec.describe 'Cart show' do
   end
 
   it "shows a button that decrement quantity of an item in the cart" do
-
     visit "/cart"
 
     within "#cart-item-#{@tire.id}" do
@@ -110,7 +109,6 @@ RSpec.describe 'Cart show' do
 end
 
   it "requires registration or login to checkout items in cart" do
-
     visit "/cart"
 
     within ".notice-flash" do
