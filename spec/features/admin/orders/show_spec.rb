@@ -25,7 +25,6 @@ RSpec.describe("Admin Show Orders") do
                   password: "123456",
                   role: 0)
 
-
       @order_1 = @user2.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_1 = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
       @line_item_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, price: 20, quantity: 500)
@@ -56,9 +55,7 @@ RSpec.describe("Admin Show Orders") do
       @order_8 = @user2.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_9 = ItemOrder.create(order_id: @order_8.id, item_id: @pencil.id, price: 2, quantity: 50)
       @order_8.update(:status => "Shipped")
-    end
 
-    it "I can see info on all orders in the system" do
       visit "/login"
 
       fill_in :email, with: @user.email
@@ -66,7 +63,9 @@ RSpec.describe("Admin Show Orders") do
 
       click_button "Login"
       visit "/admin"
+    end
 
+    it "I can see info on all orders in the system" do
       within "#order_#{@order_1.id}" do
         expect(page).to have_link("#{@order_1.user.name}")
         expect(page).to have_content("#{@order_1.id}")
@@ -105,14 +104,6 @@ RSpec.describe("Admin Show Orders") do
     end
 
     it "can ship packaged orders" do
-      visit "/login"
-
-      fill_in :email, with: @user.email
-      fill_in :password, with: @user.password
-
-      click_button "Login"
-      visit "/admin"
-
       within "#order_#{@order_3.id}" do
         expect(page).to have_content("Order Status: Packaged")
         click_button "Ship Order"
@@ -120,6 +111,7 @@ RSpec.describe("Admin Show Orders") do
 
       expect(current_path).to eq("/admin")
       expect(page.text.index("#{@order_1.id}")).to be < page.text.index("#{@order_3.id}")
+
       within "#order_#{@order_3.id}" do
         expect(page).to have_content("Order Status: Shipped")
         expect(page).to_not have_button("Ship Order")

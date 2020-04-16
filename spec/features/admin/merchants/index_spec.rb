@@ -19,15 +19,16 @@ RSpec.describe("Admin Merchants Index Page") do
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @meg.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @meg.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
-    end
 
-    it "I can disable merchants who are not yet disabled" do
       visit "/login"
 
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
 
       click_button "Login"
+    end
+
+    it "I can disable merchants who are not yet disabled" do
       visit "/admin/merchants"
 
       within "#merchant_#{@meg.id}" do
@@ -57,12 +58,6 @@ RSpec.describe("Admin Merchants Index Page") do
     end
 
     it "I can disable all merchant items when I disable the merchant" do
-      visit "/login"
-
-      fill_in :email, with: @admin.email
-      fill_in :password, with: @admin.password
-
-      click_button "Login"
       visit "/admin/merchants"
 
       expect(@tire.active?).to eq(true)
@@ -83,12 +78,6 @@ RSpec.describe("Admin Merchants Index Page") do
     end
 
     it "I can enable a disabled merchant" do
-      visit "/login"
-
-      fill_in :email, with: @admin.email
-      fill_in :password, with: @admin.password
-
-      click_button "Login"
       @cory.update(:active => false)
       visit "/admin/merchants"
 
@@ -108,12 +97,6 @@ RSpec.describe("Admin Merchants Index Page") do
     end
 
     it "I can enable an enabled merhant's items" do
-      visit "/login"
-
-      fill_in :email, with: @admin.email
-      fill_in :password, with: @admin.password
-
-      click_button "Login"
       visit "/admin/merchants"
 
       within "#merchant_#{@meg.id}" do
@@ -142,12 +125,6 @@ RSpec.describe("Admin Merchants Index Page") do
     end
 
     it "I see all merchants in the system as links to their show pages" do
-      visit "/login"
-
-      fill_in :email, with: @admin.email
-      fill_in :password, with: @admin.password
-
-      click_button "Login"
       visit "/admin/merchants"
 
       within "#merchant_#{@cory.id}" do

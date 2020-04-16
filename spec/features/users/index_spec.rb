@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "test users index", type: :feature do
   before(:each) do
-
     @user = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -12,7 +11,6 @@ RSpec.describe "test users index", type: :feature do
                 password: "123456",
                 password_confirmation: "123456",
                 role: 0)
-
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -22,7 +20,6 @@ RSpec.describe "test users index", type: :feature do
                 password: "123456",
                 password_confirmation: "123456",
                 role: 1)
-
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",

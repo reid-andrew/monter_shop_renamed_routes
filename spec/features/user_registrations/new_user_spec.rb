@@ -11,12 +11,12 @@ RSpec.describe 'User Registration', type: :feature do
                 password: "123456",
                 password_confirmation: "123456",
                 role: 0)
+                
+    visit "/register"
   end
 
   describe "Index Page - A user can" do
     it "register a new user" do
-      visit "/register"
-
       fill_in :name, with: "Andy Alex Ana Javi"
       fill_in :street_address, with: "123 Main St."
       fill_in :city, with: "Denver"
@@ -33,8 +33,6 @@ RSpec.describe 'User Registration', type: :feature do
     end
 
     it "returns to reg page if info is incomplete" do
-      visit "/register"
-
       fill_in :city, with: "Denver"
       fill_in :state, with: "CO"
       fill_in :zip, with: "80210"
@@ -49,8 +47,6 @@ RSpec.describe 'User Registration', type: :feature do
     end
 
     it "returns to reg page if info is incomplete or email is invalid" do
-      visit "/register"
-
       fill_in :name, with: "Andy Alex Ana Javi"
       fill_in :street_address, with: "123 Main St."
       fill_in :city, with: "Denver"

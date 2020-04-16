@@ -18,7 +18,6 @@ RSpec.describe "As a visitor" do
                 password: "123456",
                 password_confirmation: "123456",
                 role: 0)
-
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -29,7 +28,6 @@ RSpec.describe "As a visitor" do
                 password_confirmation: "123456",
                 role: 1,
                 merchant_id: @bike_shop.id)
-
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -43,7 +41,6 @@ RSpec.describe "As a visitor" do
 
   describe "When I visit /login"
     it "I see a field to enter email and password" do
-
       visit "/login"
 
       expect(page).to have_field(:email)
