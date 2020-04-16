@@ -1,5 +1,7 @@
 class PasswordsController < ApplicationController
 
+  before_action :require_current_user
+
   def edit
     @user = current_user
   end
