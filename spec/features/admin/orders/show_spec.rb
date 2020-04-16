@@ -92,14 +92,16 @@ RSpec.describe("Admin Show Orders") do
       click_button "Login"
       visit "/admin"
 
-      expect(page.text.index("#{@order_3.id}")).to be < page.text.index("#{@order_1.id}")
-      expect(page.text.index("#{@order_4.id}")).to be < page.text.index("#{@order_2.id}")
-
-      expect(page.text.index("#{@order_1.id}")).to be < page.text.index("#{@order_7.id}")
-      expect(page.text.index("#{@order_2.id}")).to be < page.text.index("#{@order_8.id}")
-
-      expect(page.text.index("#{@order_7.id}")).to be < page.text.index("#{@order_5.id}")
-      expect(page.text.index("#{@order_8.id}")).to be < page.text.index("#{@order_6.id}")
+      within(".orders") do
+        expect(page.all('.order')[0]).to have_content("#{@order_3.id}")
+        expect(page.all('.order')[1]).to have_content("#{@order_4.id}")
+        expect(page.all('.order')[2]).to have_content("#{@order_1.id}")
+        expect(page.all('.order')[3]).to have_content("#{@order_2.id}")
+        expect(page.all('.order')[4]).to have_content("#{@order_7.id}")
+        expect(page.all('.order')[5]).to have_content("#{@order_8.id}")
+        expect(page.all('.order')[6]).to have_content("#{@order_5.id}")
+        expect(page.all('.order')[7]).to have_content("#{@order_6.id}")
+      end
     end
 
     it "can ship packaged orders" do
