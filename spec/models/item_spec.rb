@@ -135,5 +135,12 @@ describe Item, type: :model do
       expect(@chain.fulfillable?(51)).to eq(false)
       expect(@chain.fulfillable?(5)).to eq(true)
     end
+
+    it 'item#item_order(order_id)' do
+      @order_1 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201", user: @user)
+      @item_order = ItemOrder.create(order_id: @order_1.id, item_id: @chain.id, price: 1.99, quantity: 5)
+
+      expect(@chain.item_order(@order_1.id)).to eq(@item_order)
+    end
   end
 end
