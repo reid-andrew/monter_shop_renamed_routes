@@ -14,11 +14,11 @@ class OrdersController < ApplicationController
           price: item.price
           })
       end
-      flash[:notice] = "Your order has been submitted!"
+      flash[:success] = "Your order has been submitted!"
       session.delete(:cart)
       redirect_to "/profile/orders"
     else
-      flash[:notice] = "Please complete address form to create an order."
+      flash[:error] = "Please complete address form to create an order."
       render :new
     end
   end
