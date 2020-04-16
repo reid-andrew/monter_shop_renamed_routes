@@ -15,14 +15,15 @@
  */
 
  body {
- background-color: white;
+   background-color: white;
+   margin: 0;
+   font-family: sans-serif;
  }
 
  h1 {
   text-align: center;
  	font-size: 40px;
  	color: #002244;
- 	font-family: "Marker Felt", fantasy;
  }
 
 ul{
@@ -99,7 +100,7 @@ section[id*='review'] {
    text-align: center;
  }
 
- input[type=text], select {
+ input[type=text], select, input[type=password], input[type=number] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -110,11 +111,11 @@ section[id*='review'] {
 }
 
 input[type=submit] {
+  font-size: 16px;
   width: 100%;
   background-color: #17BEBB;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -130,6 +131,11 @@ form {
   width: 60%;
 }
 
+.button_to {
+  padding: 0px;
+  background-color: #ffffff;
+}
+
 .error-flash {
   padding: 10px;
   background-color: red;
@@ -139,6 +145,16 @@ form {
   padding: 10px;
   background-color: green;
   color: white;
+}
+
+.login {
+  padding-top: 45px;
+  margin: auto;
+  width: 35%;
+}
+
+.login form {
+  width: 100%;
 }
 
 table {
@@ -155,4 +171,14 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+section {
+  padding: 25px;
+}
+
+#logged-as {
+  float: right;
+  color: white;
+  padding-right: 20px;
 }

@@ -1,16 +1,12 @@
-class ItemsController<ApplicationController
+class ItemsController < ApplicationController
 
   def index
     if params[:merchant_id]
       @merchant = Merchant.find(params[:merchant_id])
       @items = @merchant.items
     else
-      @items = Item.all
+      @items = Item.active_items
     end
-  end
-
-  def show
-    @item = Item.find(params[:id])
   end
 
   def new
@@ -26,6 +22,10 @@ class ItemsController<ApplicationController
       flash[:error] = item.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def show
+    @item = Item.find(params[:id])
   end
 
   def edit
@@ -55,6 +55,4 @@ class ItemsController<ApplicationController
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
   end
-
-
 end

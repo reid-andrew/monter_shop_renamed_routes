@@ -4,17 +4,15 @@ RSpec.describe "Create Merchant Items" do
   describe "When I visit the merchant items index page" do
     before(:each) do
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
+      visit "/merchants/#{@brian.id}/items"
     end
 
     it 'I see a link to add a new item for that merchant' do
-      visit "/merchants/#{@brian.id}/items"
-
       expect(page).to have_link "Add New Item"
     end
 
     it 'I can add a new item by filling out a form' do
-      visit "/merchants/#{@brian.id}/items"
-
       name = "Chamois Buttr"
       price = 18
       description = "No more chaffin'!"
@@ -52,8 +50,6 @@ RSpec.describe "Create Merchant Items" do
     end
 
     it 'I get an alert if I dont fully fill out the form' do
-      visit "/merchants/#{@brian.id}/items"
-
       name = ""
       price = 18
       description = "No more chaffin'!"

@@ -1,0 +1,20 @@
+<section>
+<h1>Merchant Dashboard</h1>
+
+  <center>
+    <%= link_to "View Merchant Items", "/merchant/items" %>
+  </center>
+
+  <section>
+      <h2>Merchant:</h2>
+      <%= @merchant.name %>
+      <br />
+      <%= @merchant.address %>
+      <%= @merchant.city %>
+      <%= @merchant.state %>
+      <%= @merchant.zip %>
+
+      <%= render partial: '/merchant/pending_orders' %>
+
+    </section>
+</section>
