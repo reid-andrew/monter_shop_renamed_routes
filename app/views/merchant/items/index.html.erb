@@ -11,10 +11,10 @@
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
       <% if item.active? %>
-        <p>Status: Active</p>
+        Status: <span style= "color:green">Active</span>
         <%= button_to "Deactivate Item", "/merchant/items/#{item.id}", params: { status: :deactivate}, method: :patch %>
       <% else %>
-        <p>Status: Inactive</p>
+        Status: <span style= "color:red">Inactive</span>
         <%= button_to "Activate Item", "/merchant/items/#{item.id}", params: { status: :activate}, method: :patch %>
       <% end %>
         <%= button_to "Edit Item", "/merchant/items/#{item.id}/edit", method: :get %>

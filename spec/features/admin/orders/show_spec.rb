@@ -83,14 +83,6 @@ RSpec.describe("Admin Show Orders") do
     end
 
     it "can see orders sorted correctly" do
-      visit "/login"
-
-      fill_in :email, with: @user.email
-      fill_in :password, with: @user.password
-
-      click_button "Login"
-      visit "/admin"
-
       within(".orders") do
         expect(page.all('.order')[0]).to have_content("#{@order_3.id}")
         expect(page.all('.order')[1]).to have_content("#{@order_4.id}")
