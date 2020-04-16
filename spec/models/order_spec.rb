@@ -97,5 +97,10 @@ describe Order, type: :model do
       expect(@order_1.total_value_by_merchant(@brian)).to eq(30)
     end
 
+    it 'order#items_by_merchant(merchant_id)' do
+      expect(@order_1.items_by_merchant(@meg.id)).to eq([@tire])
+      expect(@order_1.items_by_merchant(@meg.id)).not_to eq([@tire, @pull_toy])
+    end
+
   end
 end

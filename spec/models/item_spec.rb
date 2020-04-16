@@ -130,5 +130,29 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it 'item#fulfillable?(num)' do
+      expect(@chain.fulfillable?(51)).to eq(false)
+      expect(@chain.fulfillable?(5)).to eq(true)
+    end
+
+    it 'item#item_order(order_id)' do
+      @order_1 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201", user: @user)
+      @item_order = ItemOrder.create(order_id: @order_1.id, item_id: @chain.id, price: 1.99, quantity: 5)
+
+      expect(@chain.item_order(@order_1.id)).to eq(@item_order)
+    end
+
+    it 'item#fulfilled_inventory(order_id)' do
+      @order_1 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201", user: @user)
+      @item_order = ItemOrder.create(order_id: @order_1.id, item_id: @chain.id, price: 1.99, quantity: 4)
+
+      expect(@chain.fulfilled_inventory(@order_1.id)).to eq(1)
+
+      @order_2 = Order.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201", user: @user)
+      @item_order = ItemOrder.create(order_id: @order_2.id, item_id: @chain.id, price: 1.99, quantity: 1)
+
+      expect(@chain.fulfilled_inventory(@order_2.id)).to eq(0)
+    end
   end
 end
