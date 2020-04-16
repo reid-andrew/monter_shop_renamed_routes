@@ -23,8 +23,10 @@ RSpec.describe("Admin Merchants Index Page") do
 
     it "I can disable merchants who are not yet disabled" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       visit "/admin/merchants"
 
@@ -41,6 +43,7 @@ RSpec.describe("Admin Merchants Index Page") do
 
       expect(current_path).to eq("/admin/merchants")
       expect(page).to have_content("#{@cory.name}'s account has been disabled.")
+
       within "#merchant_#{@meg.id}" do
         expect(page).to have_button("Disable")
       end
@@ -55,8 +58,10 @@ RSpec.describe("Admin Merchants Index Page") do
 
     it "I can disable all merchant items when I disable the merchant" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       visit "/admin/merchants"
 
@@ -79,8 +84,10 @@ RSpec.describe("Admin Merchants Index Page") do
 
     it "I can enable a disabled merchant" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       @cory.update(:active => false)
       visit "/admin/merchants"
@@ -89,6 +96,7 @@ RSpec.describe("Admin Merchants Index Page") do
         expect(page).to have_button("Enable")
         click_button "Enable"
       end
+
       expect(current_path).to eq("/admin/merchants")
 
       @cory.reload
@@ -101,8 +109,10 @@ RSpec.describe("Admin Merchants Index Page") do
 
     it "I can enable an enabled merhant's items" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       visit "/admin/merchants"
 
@@ -133,8 +143,10 @@ RSpec.describe("Admin Merchants Index Page") do
 
     it "I see all merchants in the system as links to their show pages" do
       visit "/login"
+
       fill_in :email, with: @admin.email
       fill_in :password, with: @admin.password
+
       click_button "Login"
       visit "/admin/merchants"
 
@@ -143,7 +155,6 @@ RSpec.describe("Admin Merchants Index Page") do
         expect(page).to have_content("#{@cory.city}")
         expect(page).to have_content("#{@cory.state}")
       end
-
       within "#merchant_#{@meg.id}" do
         expect(page).to have_link("#{@meg.name}")
         expect(page).to have_content("#{@meg.city}")

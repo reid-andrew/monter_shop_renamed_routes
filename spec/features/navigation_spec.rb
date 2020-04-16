@@ -64,7 +64,6 @@ RSpec.describe 'Site Navigation' do
   end
 
     it "shows link to home, link to login, link to register" do
-
       visit '/items'
 
       expect(page).to have_link("Home")
@@ -81,7 +80,6 @@ RSpec.describe 'Site Navigation' do
     end
 
     it "shows a 404 error if a visitor tries to visit user, admin, or merchant page" do
-
       visit "/merchant"
       expect(page).to have_content("The page you were looking for doesn't exist (404)")
 
@@ -93,7 +91,6 @@ RSpec.describe 'Site Navigation' do
     end
 
     it "shows a 404 error if a user tries to visit admin or merchant page" do
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit "/merchant"
@@ -104,7 +101,6 @@ RSpec.describe 'Site Navigation' do
     end
 
     it "shows a 404 error if a merchant tries to visit admin page" do
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
 
       visit "/admin"
@@ -112,7 +108,6 @@ RSpec.describe 'Site Navigation' do
     end
 
     it "shows a 404 error if an admin tries to visit merchant or cart page" do
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
 
       visit "/merchant"

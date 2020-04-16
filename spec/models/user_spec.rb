@@ -31,6 +31,7 @@ describe User, type: :model do
       @order_1 = @user.orders.create(name: "Javi", address: "1111 Rails St.", city: "Denver", state: "CO", zip: "80201")
       ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
     end
+
     it "user#order_count" do
       expect(@user.order_count).to eq(1)
 

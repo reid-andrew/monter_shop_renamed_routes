@@ -67,7 +67,7 @@ RSpec.describe 'As a merchant', type: :feature do
       click_button "Login"
       visit "/merchant"
     end
-    # User Story 34
+
     it 'I see the name and full address of the merchant I work for' do
       expect(page).to have_content(@bike_shop.name)
       expect(page).to have_content(@bike_shop.address)
@@ -75,7 +75,7 @@ RSpec.describe 'As a merchant', type: :feature do
       expect(page).to have_content(@bike_shop.state)
       expect(page).to have_content(@bike_shop.zip)
     end
-    # User Story 35
+
     it 'If any users have pending orders with items I sell, I will see a list
         of these orders' do
 
@@ -86,7 +86,7 @@ RSpec.describe 'As a merchant', type: :feature do
         expect(page).to have_content("Total Value: $700")
       end
     end
-    # User Story 36
+
     it 'I see a link to view my own items' do
       click_link "View Merchant Items"
 
@@ -161,7 +161,6 @@ RSpec.describe 'As an admin user', type: :feature do
       @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
       @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
 
-
       visit "/login"
 
       fill_in :email, with: @admin.email
@@ -169,9 +168,8 @@ RSpec.describe 'As an admin user', type: :feature do
 
       click_button "Login"
     end
-    # User Story 37
-    it "I see everything that merchant would see" do
 
+    it "I see everything that merchant would see" do
       visit "/merchants"
       click_link "#{@bike_shop.name}"
 
@@ -189,7 +187,6 @@ RSpec.describe 'As an admin user', type: :feature do
         expect(page).to have_content("Total Quantity: 5")
         expect(page).to have_content("Total Value: $700")
       end
-
     end
   end
 end

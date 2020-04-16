@@ -25,6 +25,7 @@ RSpec.describe "As a merchant employee" do
                email: "meg@example.com",
                password: "123456",
                role: 0)
+
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
                             price: "200",
@@ -51,13 +52,14 @@ RSpec.describe "As a merchant employee" do
     click_button "Login"
     visit "/merchant/items"
   end
-  # User Story 47, Merchant edits an item
+
   describe "When I visit my items page /merchant/items"
     it "I can see an edit button next to any item" do
       within("#item-#{@tire.id}") do
         expect(page).to have_button "Edit Item"
       end
     end
+
     it "When click an edit button next to an item, I'm taken to a pre-populated form" do
       within("#item-#{@tire.id}") do
         click_button "Edit Item"
@@ -70,8 +72,8 @@ RSpec.describe "As a merchant employee" do
       expect(find_field(:price).value).to eq "#{@tire.price}"
       expect(find_field(:image).value).to eq @tire.image
       expect(find_field(:inventory).value).to eq "#{@tire.inventory}"
-
     end
+
     it "When I submit the form, I'm taken back to merchant/items and I see a full_message
         indicating my item is updated. I also see the item's new information" do
 
@@ -124,9 +126,5 @@ RSpec.describe "As a merchant employee" do
         expect(page).to have_content(inventory)
         expect(page).to have_content("Active")
       end
-
-
     end
-
-
 end

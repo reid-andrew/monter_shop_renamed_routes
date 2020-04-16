@@ -44,7 +44,6 @@ RSpec.describe 'Profile', type: :feature do
       click_on("Edit My Profile Data")
 
       expect(current_path).to eq("/profile/#{@user.id}/edit")
-
       expect(find_field('Name').value).to eq "#{@user.name}"
       expect(find_field('street_address').value).to eq "#{@user.street_address}"
       expect(find_field('City').value).to eq "#{@user.city}"
@@ -64,7 +63,6 @@ RSpec.describe 'Profile', type: :feature do
       expect(current_path).to eq("/profile")
 
       expect(page).to have_content("Your profile is updated")
-
       expect(page).to have_content("Ana")
       expect(page).to have_content("1234 New Bike Rd.")
       expect(page).to have_content("Denver")
@@ -83,7 +81,6 @@ RSpec.describe 'Profile', type: :feature do
       click_button("Submit Form")
 
       expect(current_path).to eq("/profile/#{@user.id}/edit")
-
       expect(page).to have_content("Email has already been taken")
     end
 

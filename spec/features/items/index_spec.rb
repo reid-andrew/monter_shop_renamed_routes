@@ -30,7 +30,6 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I can see a list of all of the items "do
-
       visit '/items'
 
       within "#item-#{@tire.id}" do
@@ -112,6 +111,7 @@ RSpec.describe "Items Index Page" do
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_6.id, price: 1.99, quantity: 1)
 
         visit '/items'
+        
         within "#top_five" do
           expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
           expect(page).to have_content("#{tire_3.name}: #{tire_3.order_count}")

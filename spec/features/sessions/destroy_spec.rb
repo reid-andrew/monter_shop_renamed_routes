@@ -11,6 +11,7 @@ RSpec.describe "As a registered user, merchant, or admin" do
                     password: "123456",
                     password_confirmation: "123456",
                     role: 0)
+
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -20,6 +21,7 @@ RSpec.describe "As a registered user, merchant, or admin" do
                 password: "123456",
                 password_confirmation: "123456",
                 role: 1)
+
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -33,6 +35,7 @@ RSpec.describe "As a registered user, merchant, or admin" do
     @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
   end
+
   describe "When I visit /logout as a user"
     it "I am redirected to home page and see flash message that I'm logged out" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
@@ -57,7 +60,5 @@ RSpec.describe "As a registered user, merchant, or admin" do
       expect(page).to have_current_path("/")
       expect(page).to have_content("Successfully logged out!")
       expect(page).to have_content("Cart: 0")
-
     end
-
 end

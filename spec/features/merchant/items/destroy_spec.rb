@@ -25,6 +25,7 @@ RSpec.describe "As a merchant employee" do
                email: "meg@example.com",
                password: "123456",
                role: 0)
+
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
                             price: 200,
@@ -51,15 +52,15 @@ RSpec.describe "As a merchant employee" do
     click_button "Login"
     visit "/merchant/items"
   end
-  # User Story 44, Merchant deletes an item
+
   describe "When I visit my items page /merchant/items"
     it "I see a button to delete next to an item that has never been ordered" do
 
       within("#item-#{@helmet.id}") do
         expect(page).to have_button "Delete Item"
       end
-
     end
+
     it "I can delete an item, which returns me to my items page with a message
         and I no longer see the item on the page" do
 
@@ -78,5 +79,4 @@ RSpec.describe "As a merchant employee" do
           expect(page).to have_no_content(@helmet.description)
         end
     end
-
 end

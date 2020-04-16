@@ -26,6 +26,7 @@ describe Merchant, type: :model do
                   password: "123456",
                   role: 0)
     end
+
     it 'merchant#no_orders?' do
       expect(@meg.no_orders?).to eq(true)
 
