@@ -16,7 +16,7 @@ describe Order, type: :model do
     it {should have_many(:items).through(:item_orders)}
   end
 
-  describe 'class methods' do
+  describe 'class methods: ' do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -48,12 +48,12 @@ describe Order, type: :model do
       @order_4.update(:status => "Shipped")
     end
 
-    it '.orders_sorted_for_admin_display' do
+    it 'order.orders_sorted_for_admin_display' do
       expect(Order.orders_sorted_for_admin_display).to eq([@order_2, @order_1, @order_4, @order_3])
     end
   end
 
-  describe 'instance methods' do
+  describe 'instance methods: ' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
