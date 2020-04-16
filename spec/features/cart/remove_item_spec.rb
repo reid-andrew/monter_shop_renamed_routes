@@ -19,11 +19,11 @@ RSpec.describe 'Cart show' do
         click_on "Add To Cart"
 
         @items_in_cart = [@paper,@tire,@pencil]
+
+        visit "/cart"
       end
 
       it 'there is a button to delete the item next to each item' do
-        visit "/cart"
-
         @items_in_cart.each do |item|
           within "#cart-item-#{item.id}" do
             expect(page).to have_link("Remove")
@@ -32,8 +32,6 @@ RSpec.describe 'Cart show' do
       end
 
       it 'I can delete individual items from my cart' do
-        visit "/cart"
-
         within "#cart-item-#{@tire.id}" do
           click_on "Remove"
         end
