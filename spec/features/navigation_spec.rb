@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Site Navigation' do
   before(:each) do
-
     @user = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -11,7 +10,6 @@ RSpec.describe 'Site Navigation' do
                 email: "test@turing.com",
                 password_digest: "123456",
                 role: 0)
-
     @merchant = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -20,7 +18,6 @@ RSpec.describe 'Site Navigation' do
                 email: "test1@turing.com",
                 password_digest: "123456",
                 role: 1)
-
     @admin = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",

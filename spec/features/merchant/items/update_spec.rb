@@ -12,6 +12,7 @@ RSpec.describe "As a merchant employee" do
                                 city: 'Houston',
                                 state: 'TX',
                                 zip: 80802)
+
     @employee = User.create(name: "Mike Dao",
                street_address: "1765 Larimer St",
                city: "Denver",
@@ -52,6 +53,7 @@ RSpec.describe "As a merchant employee" do
                             state: 'PA',
                             zip: "17033",
                             user: @user)
+
     @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
     @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
     @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
@@ -67,7 +69,6 @@ RSpec.describe "As a merchant employee" do
 
   describe "When I visit my items page /merchant/items"
     it "I see the following: name, description, price, image, status, inventory" do
-
       within("#item-#{@tire.id}") do
         expect(page).to have_content(@tire.name)
         expect(page).to have_content(@tire.description)

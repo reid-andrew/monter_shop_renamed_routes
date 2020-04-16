@@ -10,7 +10,6 @@ RSpec.describe 'Profile', type: :feature do
                 email: "test@turing.com",
                 password: "123456",
                 role: 0)
-
     @user2 = User.create(name: "Mike Dao",
                 street_address: "1765 Larimer St",
                 city: "Denver",
@@ -21,12 +20,11 @@ RSpec.describe 'Profile', type: :feature do
                 role: 0)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    visit '/profile'
   end
 
   describe 'as a registered user when I visit my profile page' do
     it "I see my profile information except password" do
-
-      visit '/profile'
 
       expect(page).to have_content(@user.name)
       expect(page).to have_content(@user.street_address)
@@ -38,8 +36,6 @@ RSpec.describe 'Profile', type: :feature do
     end
 
     it "and I click on edit, I can edit my profile information" do
-
-      visit '/profile'
 
       click_on("Edit My Profile Data")
 
@@ -72,8 +68,6 @@ RSpec.describe 'Profile', type: :feature do
     end
 
     it "and I edit my information with an already existing email, I see an error message" do
-      visit '/profile'
-
       click_on("Edit My Profile Data")
 
       fill_in 'Email', with: "a@a.com"
@@ -85,7 +79,6 @@ RSpec.describe 'Profile', type: :feature do
     end
 
     it "can update password" do
-      visit '/profile'
       click_on("Edit My Password")
 
       expect(current_path).to eq("/profile/#{@user.id}/password")
@@ -99,7 +92,6 @@ RSpec.describe 'Profile', type: :feature do
     end
 
     it "validates password presence and confirmation on update" do
-      visit '/profile'
       click_on("Edit My Password")
 
       expect(current_path).to eq("/profile/#{@user.id}/password")
@@ -119,5 +111,4 @@ RSpec.describe 'Profile', type: :feature do
       expect(page).to have_content("Password and confirmation must match.")
     end
   end
-
 end

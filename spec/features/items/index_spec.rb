@@ -5,6 +5,7 @@ RSpec.describe "Items Index Page" do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
       @user = User.create(name: "Mike Dao",
                   street_address: "1765 Larimer St",
                   city: "Denver",
@@ -16,7 +17,6 @@ RSpec.describe "Items Index Page" do
 
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
     end
 
@@ -111,7 +111,7 @@ RSpec.describe "Items Index Page" do
         ItemOrder.create(order_id: order_1.id, item_id: pull_toy_6.id, price: 1.99, quantity: 1)
 
         visit '/items'
-        
+
         within "#top_five" do
           expect(page).to have_content("#{tire_2.name}: #{tire_2.order_count}")
           expect(page).to have_content("#{tire_3.name}: #{tire_3.order_count}")

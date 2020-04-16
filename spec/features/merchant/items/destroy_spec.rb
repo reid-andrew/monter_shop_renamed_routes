@@ -7,6 +7,7 @@ RSpec.describe "As a merchant employee" do
                                  city: 'Richmond',
                                  state: 'VA',
                                  zip: 23137)
+
     @employee = User.create(name: "Mike Dao",
                street_address: "1765 Larimer St",
                city: "Denver",
@@ -42,6 +43,7 @@ RSpec.describe "As a merchant employee" do
                             state: 'PA',
                             zip: "17033",
                             user: @user)
+
     @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 
     visit "/login"
@@ -55,7 +57,6 @@ RSpec.describe "As a merchant employee" do
 
   describe "When I visit my items page /merchant/items"
     it "I see a button to delete next to an item that has never been ordered" do
-
       within("#item-#{@helmet.id}") do
         expect(page).to have_button "Delete Item"
       end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'As a merchant', type: :feature do
   describe 'when I visit merchant dashboard /merchant' do
-    before do
+    before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop",
                                    address: '123 Bike Rd.',
                                    city: 'Richmond',
@@ -15,6 +15,7 @@ RSpec.describe 'As a merchant', type: :feature do
                                   state: 'TX',
                                   zip: 80802,
                                   active: true)
+
       @employee = User.create(name: "Mike Dao",
                  street_address: "1765 Larimer St",
                  city: "Denver",
@@ -33,6 +34,7 @@ RSpec.describe 'As a merchant', type: :feature do
                  email: "meg@example.com",
                  password: "123456",
                  role: 0)
+
       @tire = @bike_shop.items.create(name: "Bike Tire",
                               description: "They'll never pop!",
                               price: 200,
@@ -54,10 +56,10 @@ RSpec.describe 'As a merchant', type: :feature do
                               state: 'PA',
                               zip: "17033",
                               user: @user)
+
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
       @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
-
 
       visit "/login"
 
@@ -92,13 +94,12 @@ RSpec.describe 'As a merchant', type: :feature do
 
       expect(current_path).to eq("/merchant/items")
     end
-
   end
 end
 
 RSpec.describe 'As an admin user', type: :feature do
   describe 'when I visit /merchants' do
-    before do
+    before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop",
                                    address: '123 Bike Rd.',
                                    city: 'Richmond',
@@ -109,6 +110,7 @@ RSpec.describe 'As an admin user', type: :feature do
                                   city: 'Houston',
                                   state: 'TX',
                                   zip: 80802)
+
       @user = User.create(name: "Meg",
                  street_address: "123 Stang Ave",
                  city: "Hershey",
@@ -157,6 +159,7 @@ RSpec.describe 'As an admin user', type: :feature do
                               state: 'PA',
                               zip: "17033",
                               user: @user)
+                              
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
       @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
