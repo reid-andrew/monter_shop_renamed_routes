@@ -8,7 +8,8 @@ class ItemOrdersController <ApplicationController
     @item_order = ItemOrder.find(item_order_params[:item_order_id])
     if item_order_params[:type] == "fulfill"
       @item_order.update(:status => "Fulfilled")
-      if @item_order.order.item_orders.count == @item_order.order.item_orders.where("status = 'Fulfilled'").count
+      line_items = @item_order.order.item_orders
+      if line_items.count == line_items.where("status = 'Fulfilled'").count
         @item_order.order.update(:status => "Packaged")
       end
     end
