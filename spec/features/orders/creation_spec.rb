@@ -26,7 +26,10 @@ RSpec.describe("Order Creation") do
       click_on "Add To Cart"
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
-
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
       visit "/cart"
       click_on "Checkout"
     end
