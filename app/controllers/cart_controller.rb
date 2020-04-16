@@ -3,7 +3,6 @@ class CartController < ApplicationController
   before_action :require_not_admin
 
   def show
-    flash[:notice] = "You must #{view_context.link_to 'login', '/login'} or #{view_context.link_to 'register', '/register'} to checkout" unless current_user
     @items = cart.items
   end
 

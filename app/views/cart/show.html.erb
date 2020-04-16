@@ -1,5 +1,9 @@
 <h1>Cart</h1>
-
+<% unless current_user %>
+ <section class = "notice">
+   You must <%= link_to "login", "/login" %> or <%= link_to "register", "/register" %> to checkout
+ </section>
+<% end %>
 <% if !@items.empty? %>
 <center>
 <table class = "cart-items">

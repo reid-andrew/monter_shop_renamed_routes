@@ -111,7 +111,7 @@ end
   it "requires registration or login to checkout items in cart" do
     visit "/cart"
 
-    within ".notice-flash" do
+    within ".notice" do
       expect(page).to have_content("You must login or register to checkout")
       expect(page).to have_link("login")
       expect(page).to have_link("register")
