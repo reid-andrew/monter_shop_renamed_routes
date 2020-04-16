@@ -6,8 +6,6 @@ class ItemsController < ApplicationController
       @items = @merchant.items
     else
       @items = Item.active_items
-      @top_five_items = Item.top_five_items
-      @bottom_five_items = Item.bottom_five_items
     end
   end
 
@@ -29,7 +27,7 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
   end
-  
+
   def edit
     @item = Item.find(params[:id])
   end

@@ -25,17 +25,13 @@
 </section>
 <section id="top_five">
   <h2>Top Five Items</h2>
-  <% if @top_five_items %>
-    <% @top_five_items.each do |item| %>
-      <p><%= "#{item.name}: #{item.qty}" %></p>
-    <% end %>
+  <% @items.top_five_items.each do |item| %>
+    <p><%= "#{item.name}: #{item.qty}" %></p>
   <% end %>
 </section>
 <section id="bottom_five">
   <h2>Bottom Five Items</h2>
-  <% if @bottom_five_items %>
-    <% @bottom_five_items.each do |item| %>
-      <p><%= "#{item.name}: #{item.qty}" %></p>
-    <% end %>
+  <% @items.bottom_five_items.each do |item| %>
+    <p><%= "#{item.name}: #{item.qty}" %></p>
   <% end %>
 </section>
