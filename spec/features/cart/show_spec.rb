@@ -61,22 +61,22 @@ RSpec.describe 'Cart show' do
     it "shows a button that can add to quantity of an item in the cart and quantity can't exceed inventory" do
       within "#cart-item-#{@tire.id}" do
         expect(page).to have_content("1")
-        click_button "Increase Quantity"
+        click_button "+"
         expect(page).to have_content("2")
       end
 
     10.times do
       within "#cart-item-#{@tire.id}" do
-        click_button "Increase Quantity"
+        click_button "+"
       end
     end
 
     expect(page).to have_content("12")
 
     within "#cart-item-#{@tire.id}" do
-      click_button "Increase Quantity"
+      click_button "+"
       expect(page).to have_content("12")
-      click_button "Increase Quantity"
+      click_button "+"
       expect(page).to have_content("12")
     end
   end
@@ -84,22 +84,22 @@ RSpec.describe 'Cart show' do
   it "shows a button that decrement quantity of an item in the cart" do
     within "#cart-item-#{@tire.id}" do
       expect(page).to have_content("1")
-      click_button "Increase Quantity"
+      click_button "+"
       expect(page).to have_content("2")
     end
 
     10.times do
       within "#cart-item-#{@tire.id}" do
-        click_button "Increase Quantity"
+        click_button "+"
       end
     end
 
     expect(page).to have_content("12")
 
     within "#cart-item-#{@tire.id}" do
-      click_button "Decrease Quantity"
+      click_button "-"
       expect(page).to have_content("11")
-      click_button "Decrease Quantity"
+      click_button "-"
       expect(page).to have_content("10")
     end
   end
@@ -108,7 +108,7 @@ end
   it "requires registration or login to checkout items in cart" do
     visit "/cart"
 
-    within ".notice-flash" do
+    within ".notice" do
       expect(page).to have_content("You must login or register to checkout")
       expect(page).to have_link("login")
       expect(page).to have_link("register")

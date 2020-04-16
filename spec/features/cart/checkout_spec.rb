@@ -10,6 +10,19 @@ RSpec.describe 'Cart show' do
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
+      @user = User.create(name: "Mike Dao",
+                  street_address: "1765 Larimer St",
+                  city: "Denver",
+                  state: "CO",
+                  zip: "80202",
+                  email: "test@turing.com",
+                  password: "123456",
+                  role: 0)
+                  
+      visit "/login"
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+      click_button "Login"
       visit "/items/#{@paper.id}"
       click_on "Add To Cart"
       visit "/items/#{@tire.id}"

@@ -84,7 +84,7 @@ RSpec.describe "As a visitor" do
       expect(page).to have_content("Welcome, #{@admin.name}!")
     end
 
-    it "If I submit invalid email, I'm redirected and get an error message" do
+    it "If I submit invalid credentials, I'm redirected and get an error message" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit "/login"
@@ -95,23 +95,7 @@ RSpec.describe "As a visitor" do
       click_button "Login"
       expect(page).to have_current_path("/login")
       expect(page).to have_content("Sorry, your credentials are bad.")
-      expect(page).to have_content("Invalid email")
     end
-
-    it "If I submit invalid password, I'm redirected and get an error message" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
-
-      visit "/login"
-
-      fill_in :email, with: "test@turing.com"
-      fill_in :password, with: "badpassword"
-
-      click_button "Login"
-      expect(page).to have_current_path("/login")
-      expect(page).to have_content("Sorry, your credentials are bad.")
-      expect(page).to have_content("Invalid password")
-    end
-
   describe "When I visit /login when I'm already logged in"
     it "If I am a regular user, I am redirected to my profile page" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)

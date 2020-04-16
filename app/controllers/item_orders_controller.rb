@@ -1,4 +1,4 @@
-class ItemOrdersController <ApplicationController
+class ItemOrdersController < ApplicationController
 
   def show
     @item_order = ItemOrder.find(item_order_params[:item_order_id])

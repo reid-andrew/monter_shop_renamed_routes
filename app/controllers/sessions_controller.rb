@@ -15,8 +15,6 @@ class SessionsController < ApplicationController
       redirect_by_role
     else
       flash[:error] = "Sorry, your credentials are bad."
-      flash[:error] += " Invalid email" if user.nil?
-      flash[:error] += " Invalid password" if user.present?
       render :new
     end
   end

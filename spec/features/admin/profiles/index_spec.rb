@@ -43,13 +43,13 @@ RSpec.describe("Admin Users Index Page") do
 
       within "#user_#{@user1.id}" do
         expect(page).to have_link("#{@user1.name}")
-        expect(page).to have_content(@user1.created_at)
+        expect(page).to have_content(@user1.created_at.strftime("%m/%d/%Y"))
         expect(page).to have_content(@user1.role)
       end
 
       within "#user_#{@user2.id}" do
         expect(page).to have_link("#{@user2.name}")
-        expect(page).to have_content(@user2.created_at)
+        expect(page).to have_content(@user2.created_at.strftime("%m/%d/%Y"))
         expect(page).to have_content(@user2.role)
       end
 
