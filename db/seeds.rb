@@ -8,6 +8,7 @@
 ItemOrder.destroy_all
 Item.destroy_all
 Order.destroy_all
+User.destroy_all
 Merchant.destroy_all
 
 # Merchants
