@@ -7,6 +7,7 @@ RSpec.describe "As a merchant employee" do
                                  city: 'Richmond',
                                  state: 'VA',
                                  zip: 23137)
+
     @employee = User.create(name: "Mike Dao",
                street_address: "1765 Larimer St",
                city: "Denver",
@@ -42,6 +43,7 @@ RSpec.describe "As a merchant employee" do
                             state: 'PA',
                             zip: "17033",
                             user: @user)
+
     @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 
     visit "/login"
@@ -57,6 +59,7 @@ RSpec.describe "As a merchant employee" do
     it "I see a link to add a new item" do
       expect(page).to have_link "Add New Item"
     end
+    
     it "I can click the link to add a new item, which brings me to a form" do
       click_link "Add New Item"
 

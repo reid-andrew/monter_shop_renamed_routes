@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "As a merchant employee, when I visit order showpage" do
-  before do
-
+  before(:each) do
     @bike_shop = Merchant.create(name: "Brian's Bike Shop",
                                  address: '123 Bike Rd.',
                                  city: 'Richmond',
@@ -15,6 +14,7 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
                                 state: 'TX',
                                 zip: 80802,
                                 active: true)
+                                
     @employee = User.create(name: "Mike Dao",
                street_address: "1765 Larimer St",
                city: "Denver",
@@ -33,6 +33,7 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
                email: "meg@example.com",
                password: "123456",
                role: 0)
+
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
                             price: 200,
@@ -54,6 +55,7 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
                             state: 'PA',
                             zip: "17033",
                             user: @user)
+
     @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
     @order_1.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 3)
     @order_1.item_orders.create!(item: @shirt, price: @shirt.price, quantity: 1)
@@ -68,7 +70,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
   end
 
   it "shows recipient's name and address, and do not see orders from other merchants" do
-
       click_link("#{@order_1.id}")
 
       expect(page).to have_content("#{@order_1.name}")
@@ -80,7 +81,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
   end
 
   it "items show name as a link to item show page, image, price, and quantity desired" do
-
     click_link("#{@order_1.id}")
 
     expect(page).to have_content("#{@tire.name}")
@@ -95,7 +95,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
   end
 
   it "shows fulfill button for unfulfilled items, routes to order showpage and flashes" do
-
     @book = @bike_shop.items.create(name: "The Life & Times of Javier Aguilar",
                             description: "An extensive biography",
                             price: 15,
@@ -120,7 +119,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
     end
 
     expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
-
     expect(page).to have_content("Item has been fulfilled")
 
     within("#item-#{@helmet.id}") do
@@ -135,7 +133,6 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
   end
 
   it "does not show a fulfill button for orders where desired quantity is greater than inventory" do
-
     @book = @bike_shop.items.create(name: "The Life & Times of Javier Aguilar",
                             description: "An extensive biography",
                             price: 15,
@@ -160,5 +157,4 @@ RSpec.describe "As a merchant employee, when I visit order showpage" do
       expect(page).to have_content("This item can not be fulfilled")
     end
   end
-  
 end

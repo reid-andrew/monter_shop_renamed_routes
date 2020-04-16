@@ -15,7 +15,6 @@ RSpec.describe 'User Order Show Page', type: :feature do
                 email: "test@turing.com",
                 password: "123456",
                 role: 0)
-
     @user2 = User.create(name: "Ana",
                 street_address: "2222 Rails St.",
                 city: "Denver",
@@ -185,7 +184,7 @@ RSpec.describe 'User Order Show Page', type: :feature do
 
       click_button "Login"
       visit "/profile"
-      
+
       click_link("My Orders")
       click_link("Order #: #{@order_1.id}")
 
