@@ -32,21 +32,17 @@ describe Order, type: :model do
                   password: "123456",
                   role: 0)
 
-# Pending Orders
       @order_1 = @user.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_1 = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, price: 100, quantity: 4)
 
-# Packaged Orders
       @order_2 = @user.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_2 = ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, price: 100, quantity: 4)
       @order_2.update(:status => "Packaged")
 
-# Cancelled Orders
       @order_3 = @user.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_3 = ItemOrder.create(order_id: @order_3.id, item_id: @tire.id, price: 100, quantity: 4)
       @order_3.update(:status => "Cancelled")
 
-# Shipped Orders
       @order_4 = @user.orders.create(name: "Ana", address: "2222 Rails St.", city: "Denver", state: "CO", zip: "80201")
       @line_item_4 = ItemOrder.create(order_id: @order_4.id, item_id: @paper.id, price: 20, quantity: 500)
       @order_4.update(:status => "Shipped")
@@ -101,6 +97,5 @@ describe Order, type: :model do
       expect(@order_1.items_by_merchant(@meg.id)).to eq([@tire])
       expect(@order_1.items_by_merchant(@meg.id)).not_to eq([@tire, @pull_toy])
     end
-
   end
 end

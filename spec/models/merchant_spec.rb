@@ -26,6 +26,7 @@ describe Merchant, type: :model do
                   password: "123456",
                   role: 0)
     end
+
     it 'no_orders' do
       expect(@meg.no_orders?).to eq(true)
 
@@ -58,8 +59,6 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
-
     end
-
   end
 end
