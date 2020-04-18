@@ -3,23 +3,13 @@ require 'rails_helper'
 RSpec.describe "As a merchant employee: " do
   before(:each) do
     @bike_shop = create :merchant
-    @employee = User.create(name: "Mike Dao",
-               street_address: "1765 Larimer St",
-               city: "Denver",
-               state: "CO",
-               zip: "80202",
-               email: "mike@example.com",
-               password: "123456",
-               password_confirmation: "123456",
-               role: 1,
-               merchant_id: @bike_shop.id)
+    @employee = create :user_merchant
+    @employee.update(merchant_id: @bike_shop.id)
     @discount_1 = @bike_shop.discounts.create(discount: 5, items: 5)
 
     visit "/login"
-
     fill_in :email, with: @employee.email
     fill_in :password, with: "123456"
-
     click_button "Login"
     click_link "Manage Bulk Discounts"
   end
@@ -89,7 +79,7 @@ RSpec.describe "As a merchant employee: " do
 
         click_button "Activate Discount"
         @discount_1.reload
-        
+
         expect(@discount_1.active).to eq(true)
         expect(current_path).to eq("/merchant/discounts")
       end
