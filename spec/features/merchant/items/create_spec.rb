@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "As a merchant employee" do
   before(:each) do
     @bike_shop = create :merchant
-    @employee = create :merchant_user
-    @user = create :regular_user
+    @employee = create :user_merchant
+    @user = create :user_regular
 
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",

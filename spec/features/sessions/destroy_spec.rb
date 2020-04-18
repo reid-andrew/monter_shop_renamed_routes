@@ -2,34 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "As a registered user, merchant, or admin" do
   before do
-    @user = User.create(name: "Mike Dao",
-                    street_address: "1765 Larimer St",
-                    city: "Denver",
-                    state: "CO",
-                    zip: "80202",
-                    email: "test@turing.com",
-                    password: "123456",
-                    password_confirmation: "123456",
-                    role: 0)
-    @merchant = User.create(name: "Mike Dao",
-                street_address: "1765 Larimer St",
-                city: "Denver",
-                state: "CO",
-                zip: "80202",
-                email: "test1@turing.com",
-                password: "123456",
-                password_confirmation: "123456",
-                role: 1)
-    @admin = User.create(name: "Mike Dao",
-                street_address: "1765 Larimer St",
-                city: "Denver",
-                state: "CO",
-                zip: "80202",
-                email: "test2@turing.com",
-                password: "123456",
-                password_confirmation: "123456",
-                role: 2)
-                
+    @user = create :user_regular
     @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
     @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
@@ -41,7 +14,7 @@ RSpec.describe "As a registered user, merchant, or admin" do
 
       visit "/login"
 
-      fill_in :email, with: "test@turing.com"
+      fill_in :email, with: "meg@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
