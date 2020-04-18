@@ -14,7 +14,6 @@
         <th>Sold By</th>
         <th>Price</th>
         <th>Quantity</th>
-        <th>Discount</th>
         <th>Subtotal</th>
       </tr>
       <% @cart.items.each do |item,quantity| %>
@@ -42,9 +41,6 @@
               <p><%= button_to "+", "/cart/#{item.id}", params: { quantity: :increase}, method: :patch %></p>
               <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
             </center>
-          </td>
-          <td>
-            <p> $0.00 </p>
           </td>
           <td>
             <p><%=number_to_currency(@cart.subtotal(item))%></p>

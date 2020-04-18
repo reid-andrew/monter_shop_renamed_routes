@@ -20,17 +20,32 @@ RSpec.describe "As a User" do
     xit "doesn't show up until I buy enough" do
       visit "/cart"
 
+      expect(page).to_not have_content("Discounts")
+
       within "#cart-item-#{@tire.id}" do
         click_button "+"
         click_button "+"
         click_button "+"
       end
 
+      expect(page).to_not have_content("Discounts")
+
       within "#cart-item-#{@tire.id}" do
+        click_button "+"
+        click_button "+"
+        click_button "+"
+        click_button "+"
+        click_button "+"
         click_button "+"
         click_button "+"
       end
       save_and_open_page
+      expect(page).to have_content("Discounts")
+
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to have_content("#{@discount_1.discount / 100 * @tire.price}")
+      end
+
     end
   end
 end
