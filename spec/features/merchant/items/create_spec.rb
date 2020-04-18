@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "As a merchant employee" do
-  before do
+  before(:each) do
+    @bike_shop = create :merchant
     @bike_shop = Merchant.create(name: "Brian's Bike Shop",
                                  address: '123 Bike Rd.',
                                  city: 'Richmond',
@@ -59,7 +60,7 @@ RSpec.describe "As a merchant employee" do
     it "I see a link to add a new item" do
       expect(page).to have_link "Add New Item"
     end
-    
+
     it "I can click the link to add a new item, which brings me to a form" do
       click_link "Add New Item"
 
