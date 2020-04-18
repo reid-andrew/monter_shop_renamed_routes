@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     get "/orders/:order_id", to: "orders#show"
     post "/orders/:order_id", to: "orders#update"
     resources :items
+    resources :discounts, only: [:index]
   end
 
   namespace :admin do
