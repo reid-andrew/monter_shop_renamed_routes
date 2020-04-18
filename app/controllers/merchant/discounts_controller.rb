@@ -2,6 +2,8 @@ class Merchant::DiscountsController < ApplicationController
 
   before_action :require_merchant
 
-  def index; end
+  def index
+    @merchant = @current_user.merchant
+  end
 
 end

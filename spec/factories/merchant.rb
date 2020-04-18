@@ -6,6 +6,5 @@ FactoryBot.define do
     state    { "VA" }
     zip      { 23137 }
     active   { true }
-
   end
 end

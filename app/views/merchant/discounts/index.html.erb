@@ -1,0 +1,10 @@
+<section>
+<h1><%= "#{@merchant.name}" %> Bulk Discounts</h1>
+
+<section>
+  <% @merchant.discounts.each do |discount| %>
+    <section id = <%= "discount_#{discount.id}"%>>
+      <%= "Discount ##{discount.id}: #{discount.discount}% on #{discount.items} items." %>
+    </section>
+  <% end %>
+</section>
