@@ -32,10 +32,26 @@ RSpec.describe "As a merchant employee: " do
 
     it "I can see all my bulk discounts on my index page" do
       click_link "Manage Bulk Discounts"
-      save_and_open_page
 
       within "#discount_#{@discount_1.id}" do
         expect(page).to have_content("Discount ##{@discount_1.id}: #{@discount_1.discount}% on #{@discount_1.items} items.")
+      end
+    end
+
+    it "can create a new bulk discount" do
+      click_link "Manage Bulk Discounts"
+      click_link "Create New Bulk Discount"
+
+      expect(current_path).to eq("/merchant/discounts/new")
+      fill_in :discount, with: 10
+      fill_in :items, with: 10
+      click_button "Save"
+
+      expect(current_path).to eq("/merchant/discounts")
+
+      new_disc = Discount.last
+      within "#discount_#{new_disc.id}" do
+        expect(page).to have_content("Discount ##{new_disc.id}: #{new_disc.discount}% on #{new_disc.items} items.")
       end
     end
   end
