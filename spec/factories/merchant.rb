@@ -1,4 +1,3 @@
-
 FactoryBot.define do
   factory :merchant, class: Merchant do
     name     { "Brian's Bike Shop" }
