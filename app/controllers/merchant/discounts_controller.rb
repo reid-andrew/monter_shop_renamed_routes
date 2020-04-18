@@ -10,6 +10,7 @@ class Merchant::DiscountsController < ApplicationController
 
   def create
     @current_user.merchant.discounts.create(discount_params)
+    flash[:success] = "You have created a new bulk discount."
     redirect_to "/merchant/discounts"
   end
 
@@ -24,15 +25,16 @@ class Merchant::DiscountsController < ApplicationController
   def update
     discount = Discount.find(discount_params[:id])
     discount.update(discount_params)
+    flash[:success] = "You have updated an existing bulk discount."
     redirect_to "/merchant/discounts"
   end
 
   def destroy
     discount = Discount.find(discount_params[:id])
     discount.delete
+    flash[:success] = "You have deleted an existing bulk discount."
     redirect_to "/merchant/discounts"
   end
-
 
   private
 

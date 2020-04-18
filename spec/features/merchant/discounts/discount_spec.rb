@@ -48,6 +48,7 @@ RSpec.describe "As a merchant employee: " do
       click_button "Save"
 
       expect(current_path).to eq("/merchant/discounts")
+      expect(page).to have_content("You have created a new bulk discount.")
 
       new_disc = Discount.last
       within "#discount_#{new_disc.id}" do
@@ -73,6 +74,7 @@ RSpec.describe "As a merchant employee: " do
       click_button "Save"
 
       expect(current_path).to eq("/merchant/discounts")
+      expect(page).to have_content("You have updated an existing bulk discount.")
 
       @discount_1.reload
       within "#discount_#{@discount_1.id}" do
@@ -89,6 +91,7 @@ RSpec.describe "As a merchant employee: " do
       click_link "Delete Discount"
 
       expect(current_path).to eq("/merchant/discounts")
+      expect(page).to have_content("You have deleted an existing bulk discount.")
       expect(page).to_not have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
     end
   end
