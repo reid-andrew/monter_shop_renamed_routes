@@ -21,17 +21,12 @@ RSpec.describe "As a merchant employee: " do
     fill_in :password, with: "123456"
 
     click_button "Login"
+    click_link "Manage Bulk Discounts"
   end
 
   describe "When I visit the Merchant Dashboard I can " do
-    it "visit my bulk discounts page" do
-      click_link "Manage Bulk Discounts"
-
-      expect(current_path).to eq("/merchant/discounts")
-    end
-
     it "I can see all my bulk discounts on my index page" do
-      click_link "Manage Bulk Discounts"
+      expect(current_path).to eq("/merchant/discounts")
 
       within "#discount_#{@discount_1.id}" do
         expect(page).to have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
@@ -39,7 +34,6 @@ RSpec.describe "As a merchant employee: " do
     end
 
     it "can create a new bulk discount" do
-      click_link "Manage Bulk Discounts"
       click_link "Create New Bulk Discount"
 
       expect(current_path).to eq("/merchant/discounts/new")
@@ -57,14 +51,12 @@ RSpec.describe "As a merchant employee: " do
     end
 
     it "can view and edit an existing bulk discount" do
-      click_link "Manage Bulk Discounts"
       within "#discount_#{@discount_1.id}" do
-        click_link "View Discount"
+        click_button "View Discount"
       end
 
       expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}")
       expect(page).to have_content("Discount of #{@discount_1.discount}% on #{@discount_1.items} items.")
-
       click_link "Edit Discount"
 
       expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
@@ -83,10 +75,29 @@ RSpec.describe "As a merchant employee: " do
       end
     end
 
-    it "can delete a discount" do
-      click_link "Manage Bulk Discounts"
+    it "can deactivate a discount" do
       within "#discount_#{@discount_1.id}" do
-        click_link "View Discount"
+        expect(@discount_1.active).to eq(true)
+        expect(page).to_not have_button("Activate Discount")
+
+        click_button "Deactivate Discount"
+        @discount_1.reload
+
+        expect(@discount_1.active).to eq(false)
+        expect(current_path).to eq("/merchant/discounts")
+        expect(page).to_not have_button("Deactivate Discount")
+
+        click_button "Activate Discount"
+        @discount_1.reload
+        
+        expect(@discount_1.active).to eq(true)
+        expect(current_path).to eq("/merchant/discounts")
+      end
+    end
+
+    it "can delete a discount" do
+      within "#discount_#{@discount_1.id}" do
+        click_button "View Discount"
       end
       click_link "Delete Discount"
 

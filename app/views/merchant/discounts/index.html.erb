@@ -9,7 +9,12 @@
   <% @merchant.discounts.each do |discount| %>
     <section id = <%= "discount_#{discount.id}"%>>
       <%= "#{discount.discount}% on #{discount.items} items." %>
-      <%= link_to "View Discount", "/merchant/discounts/#{discount.id}" %>
+      <%= button_to "View Discount", "/merchant/discounts/#{discount.id}", method: :get %>
+      <% if discount.active %>
+        <%= button_to "Deactivate Discount", "/merchant/discounts/#{discount.id}", method: :patch, params: {active: :false} %>
+      <% else %>
+        <%= button_to "Activate Discount", "/merchant/discounts/#{discount.id}", method: :patch, params: {active: :true} %>
+      <% end %>
     </section>
   <% end %>
 </section>

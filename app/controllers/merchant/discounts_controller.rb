@@ -39,6 +39,6 @@ class Merchant::DiscountsController < ApplicationController
   private
 
   def discount_params
-    params.permit(:id, :discount, :items)
+    params.permit(:id, :discount, :items, :active)
   end
 end
