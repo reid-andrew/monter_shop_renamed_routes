@@ -34,11 +34,6 @@
       <td>
         <p><%=number_to_currency(item.price)%></p>
       </td>
-      <td id= "discounts">
-        <% if quantity >= item.merchant.min_for_discount %>
-          <p><%= "Discount: #{item.merchant.applicable_discount}% for buying #{quantity} of #{@tire.name}" %></p>
-        <% end %>
-      </td>
       <td>
         <center>
           <p><%= button_to "-", "/cart/#{item.id}", params: { quantity: :decrease}, method: :patch %></p>
