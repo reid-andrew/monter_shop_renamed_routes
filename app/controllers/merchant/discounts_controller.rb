@@ -13,10 +13,24 @@ class Merchant::DiscountsController < ApplicationController
     redirect_to "/merchant/discounts"
   end
 
+  def show
+    @discount = Discount.find(discount_params[:id])
+  end
+
+  def edit
+    @discount = Discount.find(discount_params[:id])
+  end
+
+  def update
+    discount = Discount.find(discount_params[:id])
+    discount.update(discount_params)
+    redirect_to "/merchant/discounts"
+  end
+
+
   private
 
   def discount_params
-    params.permit(:discount, :items)
+    params.permit(:id, :discount, :items)
   end
-
 end

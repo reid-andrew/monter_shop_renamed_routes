@@ -34,7 +34,7 @@ RSpec.describe "As a merchant employee: " do
       click_link "Manage Bulk Discounts"
 
       within "#discount_#{@discount_1.id}" do
-        expect(page).to have_content("Discount ##{@discount_1.id}: #{@discount_1.discount}% on #{@discount_1.items} items.")
+        expect(page).to have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
       end
     end
 
@@ -51,7 +51,34 @@ RSpec.describe "As a merchant employee: " do
 
       new_disc = Discount.last
       within "#discount_#{new_disc.id}" do
-        expect(page).to have_content("Discount ##{new_disc.id}: #{new_disc.discount}% on #{new_disc.items} items.")
+        expect(page).to have_content("#{new_disc.discount}% on #{new_disc.items} items.")
+      end
+    end
+
+    it "can view and edit an existing bulk discount" do
+      click_link "Manage Bulk Discounts"
+      within "#discount_#{@discount_1.id}" do
+        click_link "View Discount"
+      end
+
+
+      expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}")
+      expect(page).to have_content("Discount of #{@discount_1.discount}% on #{@discount_1.items} items.")
+
+      click_link "Edit Discount"
+
+      expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
+
+      fill_in :discount, with: 25
+      fill_in :items, with: 25
+      click_button "Save"
+
+      expect(current_path).to eq("/merchant/discounts")
+
+      @discount_1.reload
+      within "#discount_#{@discount_1.id}" do
+        expect(page).to have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
+        expect(page).to have_content("25% on 25 items.")
       end
     end
   end

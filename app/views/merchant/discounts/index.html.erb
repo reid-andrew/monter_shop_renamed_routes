@@ -8,7 +8,8 @@
 <section>
   <% @merchant.discounts.each do |discount| %>
     <section id = <%= "discount_#{discount.id}"%>>
-      <%= "Discount ##{discount.id}: #{discount.discount}% on #{discount.items} items." %>
+      <%= "#{discount.discount}% on #{discount.items} items." %>
+      <%= link_to "View Discount", "/merchant/discounts/#{discount.id}" %>
     </section>
   <% end %>
 </section>
