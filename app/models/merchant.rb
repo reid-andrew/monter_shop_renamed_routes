@@ -25,4 +25,11 @@ class Merchant < ApplicationRecord
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
   end
+
+  def min_for_discount
+    discounts.minimum(:items)
+  end
+
+  def applicable_discount
+  end
 end
