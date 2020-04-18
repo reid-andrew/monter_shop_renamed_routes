@@ -2,41 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "As a visitor" do
   before do
-    @bike_shop = Merchant.create(name: "Brian's Bike Shop",
-                                 address: '123 Bike Rd.',
-                                 city: 'Richmond',
-                                 state: 'VA',
-                                 zip: 23137,
-                                 active: true)
-
-    @user = User.create(name: "Mike Dao",
-                street_address: "1765 Larimer St",
-                city: "Denver",
-                state: "CO",
-                zip: "80202",
-                email: "test@turing.com",
-                password: "123456",
-                password_confirmation: "123456",
-                role: 0)
-    @merchant = User.create(name: "Mike Dao",
-                street_address: "1765 Larimer St",
-                city: "Denver",
-                state: "CO",
-                zip: "80202",
-                email: "test1@turing.com",
-                password: "123456",
-                password_confirmation: "123456",
-                role: 1,
-                merchant_id: @bike_shop.id)
-    @admin = User.create(name: "Mike Dao",
-                street_address: "1765 Larimer St",
-                city: "Denver",
-                state: "CO",
-                zip: "80202",
-                email: "test2@turing.com",
-                password: "123456",
-                password_confirmation: "123456",
-                role: 2)
+    @bike_shop = create :merchant
+    @user = create :user_regular
+    @merchant = create :user_merchant
+    @admin = create :user_admin
   end
 
   describe "When I visit /login"
@@ -52,7 +21,7 @@ RSpec.describe "As a visitor" do
 
       visit "/login"
 
-      fill_in :email, with: "test@turing.com"
+      fill_in :email, with: "meg@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
@@ -63,7 +32,7 @@ RSpec.describe "As a visitor" do
     it "If I am a merchant user, I am redirected to my merchant dashboard page" do
       visit "/login"
 
-      fill_in :email, with: "test1@turing.com"
+      fill_in :email, with: "mike@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
@@ -76,7 +45,7 @@ RSpec.describe "As a visitor" do
 
       visit "/login"
 
-      fill_in :email, with: "test2@turing.com"
+      fill_in :email, with: "cory@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
@@ -102,7 +71,7 @@ RSpec.describe "As a visitor" do
 
       visit "/login"
 
-      fill_in :email, with: "test@turing.com"
+      fill_in :email, with: "meg@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
@@ -115,7 +84,7 @@ RSpec.describe "As a visitor" do
     it "If I am a merchant user, I am redirected to my merchant dashboard page" do
       visit "/login"
 
-      fill_in :email, with: "test1@turing.com"
+      fill_in :email, with: "mike@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
@@ -131,7 +100,7 @@ RSpec.describe "As a visitor" do
 
       visit "/login"
 
-      fill_in :email, with: "test2@turing.com"
+      fill_in :email, with: "cory@example.com"
       fill_in :password, with: "123456"
 
       click_button "Login"
