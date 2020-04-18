@@ -5,8 +5,11 @@ RSpec.describe "As a User" do
     before(:each) do
       @bike_shop = create :merchant
       @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 100)
-      @discount_1 = @bike_shop.discounts.create(discount: 5, items: 10)
-      @discount_2 = @bike_shop.discounts.create(discount: 10, items: 25)
+      @discount_1 = @bike_shop.discounts.create(discount: 1, items: 5)
+      @discount_2 = @bike_shop.discounts.create(discount: 5, items: 10)
+      @discount_3 = @bike_shop.discounts.create(discount: 10, items: 25)
+      @discount_4 = @bike_shop.discounts.create(discount: 15, items: 50)
+
       @user = create :user_regular
 
       visit "/login"
@@ -17,35 +20,42 @@ RSpec.describe "As a User" do
       click_on "Add To Cart"
     end
 
-    xit "doesn't show up until I buy enough" do
-      visit "/cart"
-
-      expect(page).to_not have_content("Discounts")
-
-      within "#cart-item-#{@tire.id}" do
-        click_button "+"
-        click_button "+"
-        click_button "+"
+  it "doesn't show up until I buy enough" do
+    visit "/cart"
+    within "#cart-item-#{@tire.id}" do
+      within "##{@tire.id}_discount"
+        expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_4.discount / 100.0 * @tire.price}")
       end
 
-      expect(page).to_not have_content("Discounts")
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
 
-      within "#cart-item-#{@tire.id}" do
-        click_button "+"
-        click_button "+"
-        click_button "+"
-        click_button "+"
-        click_button "+"
-        click_button "+"
-        click_button "+"
-      end
-      save_and_open_page
-      expect(page).to have_content("Discounts")
-
-      within "#cart-item-#{@tire.id}" do
-        expect(page).to have_content("#{@discount_1.discount / 100 * @tire.price}")
+      within "##{@tire.id}_discount" do
+        expect(page).to have_content("#{@discount_1.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_4.discount / 100.0 * @tire.price}")
       end
 
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+
+      within "##{@tire.id}_discount" do
+        expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
+        expect(page).to have_content("#{@discount_2.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_4.discount / 100.0 * @tire.price}")
+      end
     end
   end
 end

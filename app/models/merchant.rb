@@ -29,4 +29,11 @@ class Merchant < ApplicationRecord
   def minimum_for_discount
     discounts.minimum(:items)
   end
+
+  def applicable_discount(quantity, price)
+    discount_to_apply = discounts.select("discounts.*").where("items <= ?", quantity).order("items DESC").limit(1)
+    discount_to_apply.first.discount / 100.0 * price
+  end
+
+
 end
