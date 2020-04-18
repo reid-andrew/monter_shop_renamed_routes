@@ -61,7 +61,6 @@ RSpec.describe "As a merchant employee: " do
         click_link "View Discount"
       end
 
-
       expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}")
       expect(page).to have_content("Discount of #{@discount_1.discount}% on #{@discount_1.items} items.")
 
@@ -80,6 +79,17 @@ RSpec.describe "As a merchant employee: " do
         expect(page).to have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
         expect(page).to have_content("25% on 25 items.")
       end
+    end
+
+    it "can delete a discount" do
+      click_link "Manage Bulk Discounts"
+      within "#discount_#{@discount_1.id}" do
+        click_link "View Discount"
+      end
+      click_link "Delete Discount"
+
+      expect(current_path).to eq("/merchant/discounts")
+      expect(page).to_not have_content("#{@discount_1.discount}% on #{@discount_1.items} items.")
     end
   end
 end
