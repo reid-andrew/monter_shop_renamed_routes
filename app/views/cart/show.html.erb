@@ -44,7 +44,7 @@
             </center>
           </td>
           <td id= <%= "#{item.id}_discount" %>>
-            <% if item.merchant.discounts != [] && quantity >= item.merchant.minimum_for_discount %>
+            <% if item.merchant.offers_discounts? && quantity >= item.merchant.minimum_for_discount %>
               <p><%= number_to_currency(item.merchant.applicable_discount(quantity, item.price)) %></p>
             <% end %>
           </td>
