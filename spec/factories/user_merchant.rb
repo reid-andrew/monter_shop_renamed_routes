@@ -1,5 +1,5 @@
 FactoryBot.define do
- factory :merchant_user, class: User do
+ factory :user_merchant, class: User do
    name     { "Mike Dao" }
    street_address  { "1765 Larimer St" }
    city     { "Denver" }

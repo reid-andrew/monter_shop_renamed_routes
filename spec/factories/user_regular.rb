@@ -1,5 +1,5 @@
 FactoryBot.define do
- factory :regular_user, class: User do
+ factory :user_regular, class: User do
    name     { "Meg" }
    street_address  { "123 Stang Ave" }
    city     { "Hershey" }
