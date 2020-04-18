@@ -17,7 +17,7 @@ RSpec.describe "As a User" do
       click_on "Add To Cart"
     end
 
-    it "doesn't show up until I buy enough" do
+    xit "doesn't show up until I buy enough" do
       visit "/cart"
 
       within "#cart-item-#{@tire.id}" do
@@ -30,6 +30,7 @@ RSpec.describe "As a User" do
         click_button "+"
         click_button "+"
       end
+      save_and_open_page
     end
   end
 end
