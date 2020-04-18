@@ -1,31 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "As a merchant employee" do
-  before do
-    @bike_shop = Merchant.create(name: "Brian's Bike Shop",
-                                 address: '123 Bike Rd.',
-                                 city: 'Richmond',
-                                 state: 'VA',
-                                 zip: 23137)
-
-    @employee = User.create(name: "Mike Dao",
-               street_address: "1765 Larimer St",
-               city: "Denver",
-               state: "CO",
-               zip: "80202",
-               email: "mike@example.com",
-               password: "123456",
-               password_confirmation: "123456",
-               role: 1,
-               merchant_id: @bike_shop.id)
-    @user = User.create(name: "Meg",
-               street_address: "123 Stang Ave",
-               city: "Hershey",
-               state: "PA",
-               zip: "17033",
-               email: "meg@example.com",
-               password: "123456",
-               role: 0)
+  before(:each) do
+    @bike_shop = create :merchant
+    @employee = create :merchant_user
+    @user = create :regular_user
 
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
@@ -59,7 +38,7 @@ RSpec.describe "As a merchant employee" do
     it "I see a link to add a new item" do
       expect(page).to have_link "Add New Item"
     end
-    
+
     it "I can click the link to add a new item, which brings me to a form" do
       click_link "Add New Item"
 
