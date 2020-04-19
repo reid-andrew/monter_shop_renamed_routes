@@ -10,6 +10,7 @@ Item.destroy_all
 Order.destroy_all
 User.destroy_all
 Merchant.destroy_all
+Discount.destroy_all
 
 # Merchants
 bike_shop = Merchant.create(name: "Brian's Bike Shop",
@@ -22,6 +23,12 @@ clothing_store = Merchant.create(name: "Clothing Store",
                             city: 'Houston',
                             state: 'TX',
                             zip: 80802)
+
+#Bulk Discounts
+bike_shop.discounts.create(discount: 5, items: 5)
+bike_shop.discounts.create(discount: 10, items: 10)
+bike_shop.discounts.create(discount: 15, items: 15)
+
 
 # Users
 admin = User.create(name: "The Boss",
@@ -58,12 +65,12 @@ tire = bike_shop.items.create(name: "Bike Tire",
                         description: "They'll never pop!",
                         price: 200,
                         image: "https://mk0completetrid5cejy.kinstacdn.com/wp-content/uploads/2013-Shimano-Wheels-WH9000-C50-tubular-clincher.jpg",
-                        inventory: 10)
+                        inventory: 100)
 helmet = bike_shop.items.create(name: "Bike Helmet",
                         description: "They'll never crack!",
                         price: 100,
                         image: "https://cdn.shopify.com/s/files/1/0836/6919/products/vintage_bike_helmet_001_2000x.jpg?v=1585087482",
-                        inventory: 12)
+                        inventory: 200)
 
 # Clothing Store Items
 shirt = clothing_store.items.create(name: "Red T-Shirt",
@@ -82,4 +89,3 @@ order_1 = Order.create(name: 'Meg',
 order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
 order_1.item_orders.create!(item: helmet, price: helmet.price, quantity: 3)
 order_1.item_orders.create!(item: shirt, price: shirt.price, quantity: 1)
-

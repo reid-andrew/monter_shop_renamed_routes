@@ -60,5 +60,42 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
     end
+
+    it 'merchant#offer_discounts?' do
+      expect(@meg.offers_discounts?).to eq(false)
+
+      meg_discount = @meg.discounts.create(discount: 5, items: 5)
+      expect(@meg.offers_discounts?).to eq(true)
+
+      meg_discount.update(active: false)
+      expect(@meg.offers_discounts?).to eq(false)
+    end
+
+    it 'merchant#minimum_for_discount' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.minimum_for_discount).to eq(5)
+    end
+
+    it 'merchant#applicable_discount' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.applicable_discount(5, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(6, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(24, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(25, 100)).to eq(25.0)
+      expect(@meg.applicable_discount(35, 100)).to eq(25.0)
+    end
+
+    it 'merchant#discount_eligible' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.discount_eligible(4, 100)).to eq(0)
+      expect(@meg.discount_eligible(5, 100)).to eq(5.0)
+      expect(@meg.discount_eligible(25, 100)).to eq(25.0)
+    end
   end
 end
