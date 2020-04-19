@@ -76,5 +76,24 @@ RSpec.describe "As a User" do
       expect(page).to_not have_content("Total: $1,200.00")
       expect(page).to have_content("Total: $1,140.00")
     end
+
+    it "the discount shows up at checkout too" do
+      visit "/cart"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_link "Checkout"
+      expect(page).to have_content("Discount")
+      expect(page).to_not have_content("Total: $1,200.00")
+      expect(page).to have_content("Total: $1,140.00")
+    end
   end
 end
