@@ -27,7 +27,7 @@ clothing_store = Merchant.create(name: "Clothing Store",
 #Bulk Discounts
 bike_shop.discounts.create(discount: 5, items: 5)
 bike_shop.discounts.create(discount: 10, items: 10)
-bike_shop.discounts.create(discount: 10, items: 15)
+bike_shop.discounts.create(discount: 15, items: 15)
 
 
 # Users
