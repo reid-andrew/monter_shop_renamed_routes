@@ -38,4 +38,12 @@ class Merchant < ApplicationRecord
     discount_to_apply = discounts.select("discounts.*").where("items <= ?", quantity).order("items DESC").limit(1)
     discount_to_apply.first.discount / 100.0 * price
   end
+
+  def discount_eligible(quantity, price)
+    if offers_discounts? && quantity >= minimum_for_discount
+      applicable_discount(quantity, price)
+    else
+      0
+    end
+  end
 end

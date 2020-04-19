@@ -72,9 +72,14 @@ RSpec.describe "As a User" do
       click_button "+"
       click_button "+"
       save_and_open_page
-      within "##{@tire.id}_discount" do
-        expect(page).to_not have_content("#{number_to_currency(@tire.price) * 12}")
+
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to_not have_content("$1,200.00")
+        expect(page).to have_content("$1,140.00")
       end
+
+      expect(page).to_not have_content("Total: $1,200.00")
+      expect(page).to have_content("Total: $1,140.00")
     end
   end
 end
