@@ -38,7 +38,7 @@ class Cart
   end
 
   def quantity_zero?(item_id)
-    Item.find(item_id).inventory == 0
+    @contents[item_id] == 0
   end
 
   def add_quantity(item_id)
