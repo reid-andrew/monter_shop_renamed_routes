@@ -95,5 +95,43 @@ RSpec.describe "As a User" do
       expect(page).to_not have_content("Total: $1,200.00")
       expect(page).to have_content("Total: $1,140.00")
     end
+
+    it "gets stored in item orders when the order is placed" do
+      visit "/cart"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_link "Checkout"
+      fill_in :name, with: "Mike Dao"
+      fill_in :address, with: "1765 Larimer St"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: "80202"
+      click_button("Create Order")
+
+      within "#order_#{Order.last.id}" do
+        expect(page).to_not have_content("Order Grand Total: 1200.0")
+        expect(page).to have_content("Order Grand Total: 1140.0")
+        click_link "Order #: #{Order.last.id}"
+      end
+
+      expect(page).to_not have_content("Order Grand Total: 1200.0")
+      expect(page).to have_content("Order Grand Total: 1140.0")
+
+      within "#item-#{ItemOrder.last.id}" do
+        expect(page).to_not have_content("Price Per Item: $100.00")
+        expect(page).to have_content("Price Per Item: $95.00")
+        expect(page).to_not have_content("Subtotal: $1,200.00")
+        expect(page).to have_content("Subtotal: $1,140.00")
+      end
+    end
   end
 end
