@@ -133,5 +133,31 @@ RSpec.describe "As a User" do
         expect(page).to have_content("Subtotal: $1,140.00")
       end
     end
+
+    it "doesn't apply deactivated discounts" do
+      @discount_1.update(active: false)
+      @discount_2.update(active: false)
+      @discount_3.update(active: false)
+
+      visit "/cart"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      expect(page).to_not have_content("Discount")
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to_not have_css("##{@tire.id}_discount")
+        expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
+      end
+    end
   end
 end

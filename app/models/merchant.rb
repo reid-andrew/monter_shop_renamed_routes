@@ -27,7 +27,7 @@ class Merchant < ApplicationRecord
   end
 
   def offers_discounts?
-    discounts == [] ? false : true
+    discounts.where("active = true") == [] ? false : true
   end
 
   def minimum_for_discount
