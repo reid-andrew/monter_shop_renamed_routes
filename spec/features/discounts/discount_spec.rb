@@ -19,7 +19,7 @@ RSpec.describe "As a User" do
       click_on "Add To Cart"
     end
 
-    it "doesn't show up until I buy enough" do
+    it "the discount doesn't show up until I buy enough" do
       visit "/cart"
       within "#cart-item-#{@tire.id}" do
         within "##{@tire.id}_discount" do
@@ -55,6 +55,25 @@ RSpec.describe "As a User" do
           expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
           expect(page).to_not have_content("#{@discount_0.discount / 100.0 * @tire.price}")
         end
+      end
+    end
+
+    it "the total & subtotal of the order are updated" do
+      visit "/cart"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      click_button "+"
+      save_and_open_page
+      within "##{@tire.id}_discount" do
+        expect(page).to_not have_content("#{number_to_currency(@tire.price) * 12}")
       end
     end
   end
