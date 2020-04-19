@@ -6,7 +6,6 @@ RSpec.describe "As a User" do
       @user = create :user_regular
       @bike_shop = create :merchant
       @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 100)
-      @discount_0 = @bike_shop.discounts.create(discount: 15, items: 50)
       @discount_1 = @bike_shop.discounts.create(discount: 1, items: 5)
       @discount_2 = @bike_shop.discounts.create(discount: 5, items: 10)
       @discount_3 = @bike_shop.discounts.create(discount: 10, items: 25)
@@ -21,13 +20,12 @@ RSpec.describe "As a User" do
 
     it "the discount doesn't show up until I buy enough" do
       visit "/cart"
+      expect(page).to_not have_content("Discount")
       within "#cart-item-#{@tire.id}" do
-        within "##{@tire.id}_discount" do
-          expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
-          expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
-          expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
-          expect(page).to_not have_content("#{@discount_0.discount / 100.0 * @tire.price}")
-        end
+        expect(page).to_not have_css("##{@tire.id}_discount")
+        expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
+        expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
 
         click_button "+"
         click_button "+"
@@ -38,7 +36,6 @@ RSpec.describe "As a User" do
           expect(page).to have_content("#{@discount_1.discount / 100.0 * @tire.price}")
           expect(page).to_not have_content("#{@discount_2.discount / 100.0 * @tire.price}")
           expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
-          expect(page).to_not have_content("#{@discount_0.discount / 100.0 * @tire.price}")
         end
 
         click_button "+"
@@ -53,7 +50,6 @@ RSpec.describe "As a User" do
           expect(page).to_not have_content("#{@discount_1.discount / 100.0 * @tire.price}")
           expect(page).to have_content("#{@discount_2.discount / 100.0 * @tire.price}")
           expect(page).to_not have_content("#{@discount_3.discount / 100.0 * @tire.price}")
-          expect(page).to_not have_content("#{@discount_0.discount / 100.0 * @tire.price}")
         end
       end
     end
@@ -71,7 +67,6 @@ RSpec.describe "As a User" do
       click_button "+"
       click_button "+"
       click_button "+"
-      save_and_open_page
 
       within "#cart-item-#{@tire.id}" do
         expect(page).to_not have_content("$1,200.00")

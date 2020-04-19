@@ -1,3 +1,4 @@
+
 <h1>Cart</h1>
 <% unless current_user %>
   <section class = "notice">
@@ -14,7 +15,9 @@
         <th>Sold By</th>
         <th>Price</th>
         <th>Quantity</th>
-        <th>Discount</th>
+        <% if @cart.discounted_item_in_cart %>
+          <th>Discount</th>
+        <% end %>
         <th>Subtotal</th>
       </tr>
       <% @cart.items.each do |item,quantity| %>
@@ -43,11 +46,13 @@
               <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
             </center>
           </td>
-          <td id= <%= "#{item.id}_discount" %>>
-            <% if item.merchant.discount_eligible(quantity, item.price) > 0 %>
-              <p><%= number_to_currency(item.merchant.applicable_discount(quantity, item.price)) %></p>
-            <% end %>
-          </td>
+          <% if @cart.discounted_item_in_cart %>
+            <td id= <%= "#{item.id}_discount" %>>
+              <% if item.merchant.discount_eligible(quantity, item.price) > 0 %>
+                <p><%= number_to_currency(item.merchant.applicable_discount(quantity, item.price)) %></p>
+              <% end %>
+            </td>
+          <% end %>
           <td>
             <p><%=number_to_currency(@cart.subtotal(item))%></p>
           </td>
