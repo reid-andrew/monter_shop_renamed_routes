@@ -31,7 +31,7 @@ bike_shop.discounts.create(discount: 15, items: 15)
 
 
 # Users
-admin = User.create(name: "The Boss",
+User.create(name: "The Boss",
            street_address: "1765 Larimer St",
            city: "Denver",
            state: "CO",
@@ -40,7 +40,7 @@ admin = User.create(name: "The Boss",
            password: "password_admin",
            password_confirmation: "password_admin",
            role: 2)
-employee = User.create(name: "Mike Dao",
+User.create(name: "Mike Dao",
            street_address: "1765 Larimer St",
            city: "Denver",
            state: "CO",
