@@ -106,5 +106,50 @@ describe Merchant, type: :model do
 
       expect(@meg.placeholder_image_items).to eq([shifters])
     end
+
+    it 'merchants#unfilled_orders' do
+      expect(@meg.unfilled_orders).to eq([])
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_orders).to eq([order_1])
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_orders).to eq([])
+    end
+
+    it 'merchants#unfilled_count' do
+      expect(@meg.unfilled_count).to eq(0)
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_count).to eq(1)
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_count).to eq(0)
+    end
+
+    it 'merchants#unfilled_value' do
+      expect(@meg.unfilled_value).to eq(0)
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_value).to eq(200)
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_value).to eq(0)
+    end
   end
 end

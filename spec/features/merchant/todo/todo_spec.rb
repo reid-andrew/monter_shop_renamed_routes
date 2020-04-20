@@ -5,6 +5,7 @@ RSpec.describe "As a merchant " do
     @bike_shop = create :merchant
     @employee = create :user_merchant
     @employee.update(merchant_id: @bike_shop.id)
+    @user = create :user_regular
     @tire = @bike_shop.items.create(name: "Bike Tire",
                             description: "They'll never pop!",
                             price: 200,
@@ -25,6 +26,21 @@ RSpec.describe "As a merchant " do
                             price: 100,
                             image: "",
                             inventory: 10)
+    @order_1 = Order.create(name: 'Meg',
+                            address: '123 Stang Ave',
+                            city: 'Hershey',
+                            state: 'PA',
+                            zip: "17033",
+                            user: @user)
+    @order_2 = Order.create(name: 'Meg',
+                            address: '123 Stang Ave',
+                            city: 'Hershey',
+                            state: 'PA',
+                            zip: "17033",
+                            user: @user)
+    @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+    @order_2.item_orders.create!(item: @helmet, price: @helmet.price, quantity: 1)
+
     visit "/login"
     fill_in :email, with: @employee.email
     fill_in :password, with: "123456"
@@ -56,5 +72,18 @@ RSpec.describe "As a merchant " do
     end
   end
 
+  it 'can see unfilled orders stats' do
+    within "#to_do_list" do
+      within "#unfilled_orders" do
+        expect(page).to have_content("You have 2 unfilled orders worth $500.00.")
+      end
 
+      @order_1.update(status: "Shipped")
+      visit "/merchant"
+
+      within "#unfilled_orders" do
+        expect(page).to have_content("You have 1 unfilled order worth $100.00.")
+      end
+    end
+  end
 end

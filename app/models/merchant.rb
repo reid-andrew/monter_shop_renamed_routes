@@ -50,4 +50,20 @@ class Merchant < ApplicationRecord
   def placeholder_image_items
     items.where("image = ?", "https://semantic-ui.com/images/wireframe/image.png")
   end
+
+  def unfilled_orders
+    orders.where(status: "Pending")
+  end
+
+  def unfilled_count
+    unfilled_orders.size
+  end
+
+  def unfilled_value
+    value = 0
+    unfilled_orders.each do |order|
+      value += order.grandtotal
+    end
+    value
+  end
 end

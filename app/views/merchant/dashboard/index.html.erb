@@ -27,4 +27,9 @@
       <% end %>
     </section>
   <% end %>
+  <% if @merchant.unfilled_count > 0 %>
+    <section id = "unfilled_orders">
+      <p><%= "You have #{pluralize(@merchant.unfilled_count, 'unfilled order')} worth #{number_to_currency(@merchant.unfilled_value)}." %>
+    </section>
+  <% end %>
 </section>
