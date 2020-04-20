@@ -1,21 +1,30 @@
-<section>
 <h1>Merchant Dashboard</h1>
 
-  <center>
-    <%= link_to "View Merchant Items", "/merchant/items" %> <br>
-    <%= link_to "Manage Bulk Discounts", "/merchant/discounts" %>
-  </center>
+<center>
+  <%= link_to "View Merchant Items", "/merchant/items" %> <br>
+  <%= link_to "Manage Bulk Discounts", "/merchant/discounts" %>
+</center>
 
-  <section>
-      <h2>Merchant:</h2>
-      <%= @merchant.name %>
-      <br />
-      <%= @merchant.address %>
-      <%= @merchant.city %>
-      <%= @merchant.state %>
-      <%= @merchant.zip %>
+<section>
+    <h2>Merchant:</h2>
+    <%= @merchant.name %>
+    <br />
+    <%= @merchant.address %>
+    <%= @merchant.city %>
+    <%= @merchant.state %>
+    <%= @merchant.zip %>
 
-      <%= render partial: '/merchant/pending_orders' %>
-
+    <%= render partial: '/merchant/pending_orders' %>
+</section>
+<br>
+<section id = "to_do_list">
+  <h2>To Do List</h2>
+  <% if @merchant.placeholder_image_items.size > 0 %>
+    <section id = "placeholder_image_items">
+      <h4>Items With Placeholder Images</h4>
+      <% @merchant.placeholder_image_items.each do |item| %>
+        <%= link_to "#{item.name}", "/items/#{item.id}" %>
+      <% end %>
     </section>
+  <% end %>
 </section>

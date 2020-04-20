@@ -46,4 +46,8 @@ class Merchant < ApplicationRecord
       0
     end
   end
+
+  def placeholder_image_items
+    items.where("image = ?", "https://semantic-ui.com/images/wireframe/image.png")
+  end
 end

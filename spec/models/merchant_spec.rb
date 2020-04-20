@@ -97,5 +97,14 @@ describe Merchant, type: :model do
       expect(@meg.discount_eligible(5, 100)).to eq(5.0)
       expect(@meg.discount_eligible(25, 100)).to eq(25.0)
     end
+
+    it 'merchants#placeholder_image_items' do
+      expect(@meg.placeholder_image_items).to eq([])
+
+      shifters = @meg.items.create(name: "Shimano", description: "They'll never break!", price: 600, image: "", inventory: 12)
+      @meg.reload
+
+      expect(@meg.placeholder_image_items).to eq([shifters])
+    end
   end
 end
