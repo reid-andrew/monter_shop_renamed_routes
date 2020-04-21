@@ -23,12 +23,13 @@ class Cart
   end
 
   def subtotal(item)
-    item.price * @contents[item.id.to_s]
+    discount = item.merchant.discount_eligible(@contents[item.id.to_s], item.price)
+    (item.price - discount) * @contents[item.id.to_s]
   end
 
   def total
     @contents.sum do |item_id,quantity|
-      Item.find(item_id).price * quantity
+      subtotal(Item.find(item_id))
     end
   end
 
@@ -37,7 +38,7 @@ class Cart
   end
 
   def quantity_zero?(item_id)
-    Item.find(item_id).inventory == 0
+    @contents[item_id] == 0
   end
 
   def add_quantity(item_id)
@@ -46,5 +47,17 @@ class Cart
 
   def subtract_quantity(item_id)
     @contents[item_id] -= 1 unless quantity_zero?(item_id)
+  end
+
+  def discounted_item_in_cart
+    discounted_item = false
+    @contents.each do |item_id,quantity|
+      item = Item.find(item_id)
+      if item.merchant.discount_eligible(quantity, item.price) > 0
+        discounted_item = true
+        break
+      end
+    end
+    discounted_item
   end
 end

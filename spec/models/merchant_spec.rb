@@ -60,5 +60,96 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
     end
+
+    it 'merchant#offer_discounts?' do
+      expect(@meg.offers_discounts?).to eq(false)
+
+      meg_discount = @meg.discounts.create(discount: 5, items: 5)
+      expect(@meg.offers_discounts?).to eq(true)
+
+      meg_discount.update(active: false)
+      expect(@meg.offers_discounts?).to eq(false)
+    end
+
+    it 'merchant#minimum_for_discount' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.minimum_for_discount).to eq(5)
+    end
+
+    it 'merchant#applicable_discount' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.applicable_discount(5, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(6, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(24, 100)).to eq(5.0)
+      expect(@meg.applicable_discount(25, 100)).to eq(25.0)
+      expect(@meg.applicable_discount(35, 100)).to eq(25.0)
+    end
+
+    it 'merchant#discount_eligible' do
+      @meg.discounts.create(discount: 5, items: 5)
+      @meg.discounts.create(discount: 25, items: 25)
+
+      expect(@meg.discount_eligible(4, 100)).to eq(0)
+      expect(@meg.discount_eligible(5, 100)).to eq(5.0)
+      expect(@meg.discount_eligible(25, 100)).to eq(25.0)
+    end
+
+    it 'merchants#placeholder_image_items' do
+      expect(@meg.placeholder_image_items).to eq([])
+
+      shifters = @meg.items.create(name: "Shimano", description: "They'll never break!", price: 600, image: "", inventory: 12)
+      @meg.reload
+
+      expect(@meg.placeholder_image_items).to eq([shifters])
+    end
+
+    it 'merchants#unfilled_orders' do
+      expect(@meg.unfilled_orders).to eq([])
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_orders).to eq([order_1])
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_orders).to eq([])
+    end
+
+    it 'merchants#unfilled_count' do
+      expect(@meg.unfilled_count).to eq(0)
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_count).to eq(1)
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_count).to eq(0)
+    end
+
+    it 'merchants#unfilled_value' do
+      expect(@meg.unfilled_value).to eq(0)
+
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: @user)
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @meg.reload
+
+      expect(@meg.unfilled_value).to eq(200)
+
+      order_1.update(status: "Shipped")
+      @meg.reload
+
+      expect(@meg.unfilled_value).to eq(0)
+    end
   end
 end

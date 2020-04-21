@@ -3,7 +3,7 @@ class CartController < ApplicationController
   before_action :require_not_admin
 
   def show
-    @items = cart.items
+    @cart = cart
   end
 
   def update

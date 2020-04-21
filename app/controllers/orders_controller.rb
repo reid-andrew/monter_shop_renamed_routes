@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
         order.item_orders.create({
           item: item,
           quantity: quantity,
-          price: item.price
+          price: item.price - item.merchant.discount_eligible(quantity, item.price)
           })
       end
       flash[:success] = "Your order has been submitted!"
